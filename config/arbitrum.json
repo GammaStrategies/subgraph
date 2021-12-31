@@ -1,0 +1,34 @@
+{
+    "network": "arbitrum-one",
+    "VisrToken": [{
+        "name": "VisrToken",
+        "address": "0x995c235521820f2637303ca1970c7c044583df44",
+        "startBlock": 364449
+    }],
+    "VisorFactory": [{
+        "name": "VisorFactory",
+        "address": "0x3beda0fc7d1dfa38091492c03a90955b16815a0f",
+        "startBlock": 364302
+    }],
+    "uniswapV3HypervisorFactory": [
+        {
+            "name": "UniswapV3HypervisorFactory",
+            "address": "0x3C5e1BFA4CE09e3F8494C98aAE6960B5fB389aBC",
+            "startBlock": 746075
+        }
+    ],
+    "uniswapV3HypervisorOrphan": [
+        {
+            "name": "vETH-USDT",
+            "address": "0x0e0f25eefe70e6f7ceb9a943be9191c312d23f6b",
+            "startBlock": 1923369
+        }
+    ],
+    "uniswapV3PoolOrphan": [
+        {
+            "name": "WETH-VISR",
+            "address": "0x4985C5b657d916bA745Afb16ace048c0a03ca2f5",
+            "startBlock": 746075
+        }
+    ]
+}

@@ -1,0 +1,343 @@
+type GammaToken @entity {
+  id: ID!
+  name: String!
+  decimals: Int!
+  totalSupply: BigInt!
+  totalStaked: BigInt!
+  totalDistributed: BigInt!
+  totalDistributedUSD: BigDecimal!
+}
+
+type GammaDistribution @entity {
+  id: ID!
+  timestamp: BigInt!
+  visor: Visor!
+  amount: BigInt!
+  amountUSD: BigDecimal!
+}
+
+type EthToken @entity {
+  id: ID!
+  decimals: Int!
+  totalDistributed: BigInt!
+  totalDistributedUSD: BigDecimal!
+}
+
+type EthDistribution @entity {
+  id: ID!
+  timestamp: BigInt!
+  visor: Visor!
+  amount: BigInt!
+  amountUSD: BigDecimal!
+  tx: String!
+  index: Int!
+}
+
+type RewardHypervisor @entity {
+  id: ID!
+  totalGamma: BigInt!
+  totalSupply: BigInt!
+  shares: [RewardHypervisorShare!]! @derivedFrom(field: "rewardHypervisor")
+}
+
+type RewardHypervisorShare @entity {
+  id: ID!
+  visor: Visor!
+  rewardHypervisor: RewardHypervisor!
+  shares: BigInt!
+}
+
+type GammaTokenDayData @entity {
+  id: ID!
+  date: BigInt!
+  timezone: String!
+  # Total GAMMA staked at the end of the day
+  totalStaked: BigInt!
+  # GAMMA distributed for the day
+  distributed: BigInt!
+  distributedUSD: BigDecimal!
+}
+
+type EthDayData @entity {
+  id: ID!
+  date: BigInt!
+  timezone: String!
+  distributed: BigInt!
+  distributedUSD: BigDecimal!
+}
+
+type Factory @entity {
+    id: ID!
+    owner: Bytes!
+}
+
+type Hypervisor @entity {
+  id: ID!
+  owner: Bytes!
+  stakingToken: Token!
+  totalStakedAmount: BigInt
+  rewardToken: Token!
+  rewardPool: Bytes
+  rewardPoolAmount: BigInt
+  powerSwitch: Bytes
+  bonusTokens: [Bytes!]
+  vaultFactory: Factory
+}
+
+type Visor @entity {
+    id: ID!
+    owner: User!
+    operator: User
+    tokenId: BigInt
+    gammaDeposited: BigInt!
+    gammaEarnedRealized: BigInt!
+    ethEarned: BigInt!
+    staked: [StakedToken!] @derivedFrom(field: "visor")
+    rewardClaimed: [RewardedToken!] @derivedFrom(field: "visor")
+    rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "visor")
+    hypervisorCount: BigInt!
+    hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
+    gammaDistributions: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
+}
+
+type VisorTemplate @entity {
+  id: ID!
+  address: Bytes!
+  active: Boolean!
+}
+
+type User @entity {
+  id: ID!
+  activeVisor: Visor!
+  visorsOwned: [Visor!] @derivedFrom(field: "owner")  # Visors owned by this user
+  visorsApproved: [Visor!] @derivedFrom(field: "operator")  # Visors where this user is approved as an operator
+  operators: [OwnerOperator!] @derivedFrom(field: "operator")  # Operators this users delegates to
+  operatorFor: [OwnerOperator!] @derivedFrom(field: "owner")   # Other users that this user is an operator for
+}
+
+type OwnerOperator @entity {
+  id: ID!
+  owner: User!
+  operator: User!
+  approved: Boolean!
+}
+
+type StakedToken @entity {
+    id: ID!  # Vault address-Token address
+    token: Token!
+    visor: Visor!
+    amount: BigInt!
+}
+
+type RewardedToken @entity {
+    id: ID!  # Vault address-Token address
+    token: Token!
+    visor: Visor!
+    amount: BigInt!
+}
+
+type Token @entity {
+  # token address
+  id: ID!
+  # token symbol
+  symbol: String!
+  # token name
+  name: String!
+  # token decimals
+  decimals: Int!
+}
+
+type UniswapV3Pool @entity {
+  # Pool address
+  id: ID!
+  token0: Token!
+  token1: Token!
+  # Fee tier: 50, 3000, 10000
+  fee: Int!
+  sqrtPriceX96: BigInt!
+  hypervisors: [String!]!
+  lastSwapTime: BigInt!
+}
+
+type UniswapV3HypervisorFactory @entity {
+  # Hypervisor address
+  id: ID!
+  # Number of hypervisors created by factory
+  hypervisorCount: BigInt!
+  # Cumulative fees claimed by hypervisors from Uniswap
+  grossFeesClaimedUSD: BigDecimal!
+  # Cumulative fees collected by protocol from hypervisors
+  protocolFeesCollectedUSD: BigDecimal!
+  # Cumulative fees reinvested into pools by hypervisors
+  feesReinvestedUSD: BigDecimal!
+  # TVL of all hypervisors under one factory
+  tvlUSD: BigDecimal!
+  hypervisors: [UniswapV3Hypervisor!]! @derivedFrom(field: "factory")
+}
+
+type UniswapV3Hypervisor @entity {
+  # Hypervisor address
+  id: ID!
+  factory: UniswapV3HypervisorFactory!
+  owner: Bytes!
+  created: Int!
+  symbol: String!
+  pool: UniswapV3Pool!
+  tick: Int!
+  # Lower tick of base position
+  baseLower: Int!
+  # Upper tick of base position
+  baseUpper: Int!
+  # Lower tick of limit position
+  limitLower: Int!
+  # Upper tick of limit position
+  limitUpper: Int!
+  # All time Gross Fees claimed
+  deposit0Max: BigInt!
+  deposit1Max: BigInt!
+  totalSupply: BigInt!
+  maxTotalSupply: BigInt!
+  grossFeesClaimed0: BigInt!
+  grossFeesClaimed1: BigInt!
+  grossFeesClaimedUSD: BigDecimal!
+  # All time Protocol fees for GAMMA buyback
+  protocolFeesCollected0: BigInt!
+  protocolFeesCollected1: BigInt!
+  protocolFeesCollectedUSD: BigDecimal!
+  # All time Gross fees minus protocol fees
+  feesReinvested0: BigInt!
+  feesReinvested1: BigInt!
+  feesReinvestedUSD: BigDecimal!
+  # TVL updated every deposit/rebalance/withdraw
+  tvl0: BigInt!
+  tvl1: BigInt!
+  tvlUSD: BigDecimal!
+  pricePerShare: BigDecimal!
+  conversion: UniswapV3HypervisorConversion!
+  # Number of visors deposited into hypervisor
+  visorCount: BigInt!
+  deposits: [UniswapV3Deposit!]! @derivedFrom(field: "hypervisor")
+  rebalances: [UniswapV3Rebalance!]! @derivedFrom(field: "hypervisor")
+  withdraws: [UniswapV3Withdraw!]! @derivedFrom(field: "hypervisor")
+  dayData: [UniswapV3HypervisorDayData!]! @derivedFrom(field: "hypervisor")
+  lastUpdated: BigInt!
+}
+
+type UniswapV3Deposit @entity {
+  id: ID!
+  hypervisor: UniswapV3Hypervisor!
+  timestamp: BigInt!
+  sender: Bytes!
+  to: Bytes!
+  shares: BigInt!
+  amount0: BigInt!
+  amount1: BigInt!
+  amountUSD: BigDecimal!
+}
+
+type UniswapV3Rebalance @entity {
+  id: ID!
+  hypervisor: UniswapV3Hypervisor!
+  timestamp: BigInt!
+  tick: Int!
+  baseLower: Int!
+  baseUpper: Int!
+  limitLower: Int!
+  limitUpper: Int!
+  totalAmount0: BigInt!
+  totalAmount1: BigInt!
+  totalAmountUSD: BigDecimal!
+  grossFees0: BigInt!
+  grossFees1: BigInt!
+  grossFeesUSD: BigDecimal!
+  protocolFees0: BigInt!
+  protocolFees1: BigInt!
+  protocolFeesUSD: BigDecimal!
+  netFees0: BigInt!
+  netFees1: BigInt!
+  netFeesUSD: BigDecimal!
+  totalSupply: BigInt!
+}
+
+type UniswapV3Withdraw @entity {
+  id: ID!
+  hypervisor: UniswapV3Hypervisor!
+  timestamp: BigInt!
+  sender: Bytes!
+  to: Bytes!
+  shares: BigInt!
+  amount0: BigInt!
+  amount1: BigInt!
+  amountUSD: BigDecimal!
+}
+
+type UniswapV3HypervisorDayData @entity {
+  id: ID!
+  date: BigInt!
+  hypervisor: UniswapV3Hypervisor!
+  # Deposits for the day
+  deposited0: BigInt!
+  deposited1: BigInt!
+  depositedUSD: BigDecimal!
+  # withdraws for the day
+  withdrawn0: BigInt!
+  withdrawn1: BigInt!
+  withdrawnUSD: BigDecimal!
+  # Gross Fees claimed for the day
+  grossFeesClaimed0: BigInt!
+  grossFeesClaimed1: BigInt!
+  grossFeesClaimedUSD: BigDecimal!
+  # Protocol fees for GAMMA buyback for the day
+  protocolFeesCollected0: BigInt!
+  protocolFeesCollected1: BigInt!
+  protocolFeesCollectedUSD: BigDecimal!
+  # Gross fees minus protocol fees for the day
+  feesReinvested0: BigInt!
+  feesReinvested1: BigInt!
+  feesReinvestedUSD: BigDecimal!
+  totalSupply: BigInt!
+  # Last TVL for the day
+  tvl0: BigInt!
+  tvl1: BigInt!
+  tvlUSD: BigDecimal!
+  open: BigDecimal!
+  high: BigDecimal!
+  low: BigDecimal!
+  close: BigDecimal!
+}
+
+type UniswapV3HypervisorShare @entity {
+  id: ID!  # HypervisorAddress-VisorAddress
+  visor: Visor!
+  hypervisor: UniswapV3Hypervisor!
+  shares: BigInt!
+  initialToken0: BigInt!
+  initialToken1: BigInt!
+  initialUSD: BigDecimal!
+}
+
+type UniswapV3HypervisorConversion @entity {
+  # Hypervisor ID
+  id: ID!
+  hypervisor: UniswapV3Hypervisor!
+  # Whether the base token token0 or token1
+  baseTokenIndex: Int!
+  # The base token
+  baseToken: Token!
+  # The BASE/USD pool in uniswap V3
+  usdPool: String!
+  # Whether the USD token in usdPool is token0 or token1
+  usdTokenIndex: Int!
+  priceTokenInBase: BigDecimal!
+  priceBaseInUSD: BigDecimal!
+}
+
+type RewardLog @entity {
+  id: ID!
+  address: String!
+  gammaStaked: String!
+  gammaEarned: String!
+  amount: String!
+  before: String!
+  after: String!
+}

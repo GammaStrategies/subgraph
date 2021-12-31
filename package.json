@@ -1,0 +1,34 @@
+{
+  "name": "subgraph",
+  "version": "0.0.1",
+  "repository": "https://github.com/gammastrategies/subgraph",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/gamma",
+    "deploy-loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
+    "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-arbitrum",
+    "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
+    "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:arbitrum": "mustache config/arbitrum.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:v3only-mainnet": "mustache config/mainnet.json v3only.template.yaml > subgraph.yaml",
+    "test": "graph test"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.23.2",
+    "@graphprotocol/graph-ts": "^0.23.1",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "mustache": "^4.2.0",
+    "prettier": "2.4.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "matchstick-as": "^0.2.0"
+  }
+}

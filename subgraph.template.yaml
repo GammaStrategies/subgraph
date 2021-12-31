@@ -1,0 +1,421 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  {{#VisrToken}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: ERC20
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - VisrToken
+        - VisrTokenDayData
+        - VisrDistribution
+        - Visor
+        - RewardHypervisor
+        - RewardHypervisorShare
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/visrToken.ts
+  {{/VisrToken}}
+  {{#vVisrToken}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: ERC20
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - VisrToken
+        - RewardHypervisor
+        - RewardHypervisorShare
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/vVisrToken.ts
+  {{/vVisrToken}}
+  {{#VisorFactory}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: VisorFactory
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Factory
+        - Visor
+        - VisorTemplate
+        - User
+        - OwnerOperator
+      abis:
+        - name: VisorFactory
+          file: ./abis/VisorFactory.json
+        - name: Visor
+          file: ./abis/Visor.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: InstanceAdded(address)
+          handler: handleInstanceAdded
+        - event: InstanceRemoved(address)
+          handler: handleInstanceRemoved
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TemplateActive(indexed bytes32,indexed address)
+          handler: handleTemplateActive
+        - event: TemplateAdded(indexed bytes32,indexed address)
+          handler: handleTemplateAdded
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/visorFactory.ts
+  {{/VisorFactory}}
+  {{#liquidityMining}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: Hypervisor
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Hypervisor
+        - StakedToken
+        - RewardToken
+      abis:
+        - name: Hypervisor
+          file: ./abis/Hypervisor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: BonusTokenRegistered(address)
+          handler: handleBonusTokenRegistered
+        - event: HypervisorCreated(address,address)
+          handler: handleHypervisorCreated
+        - event: HypervisorFunded(uint256,uint256)
+          handler: handleHypervisorFunded
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RewardClaimed(address,address,address,uint256)
+          handler: handleRewardClaimed
+        - event: Staked(address,uint256)
+          handler: handleStaked
+        - event: Unstaked(address,uint256)
+          handler: handleUnstaked
+        - event: VaultFactoryRegistered(address)
+          handler: handleVaultFactoryRegistered
+        - event: VaultFactoryRemoved(address)
+          handler: handleVaultFactoryRemoved
+      file: ./src/mappings/hypervisor.ts
+  {{/liquidityMining}}
+  {{#uniswapV3HypervisorFactory}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: UniswapV3HypervisorFactory
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisorFactory.ts
+      entities:
+        - UniswapV3HypervisorFactory
+        - UniswapV3Hypervisor
+      abis:
+        - name: UniswapV3HypervisorFactory
+          file: ./abis/UniswapV3HypervisorFactory.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: HypervisorCreated(address,address,uint24,address,uint256)
+          handler: handleHypervisorCreated
+  {{/uniswapV3HypervisorFactory}}
+  {{#uniswapV3HypervisorOrphan}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: UniswapV3Hypervisor
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Visor
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      callHandlers:
+        - function: setDepositMax(uint256,uint256)
+          handler: handleSetDepositMax
+        - function: setMaxTotalSupply(uint256)
+          handler: handleSetMaxTotalSupply
+  {{/uniswapV3HypervisorOrphan}}
+  {{#uniswapV3PoolOrphan}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: UniswapV3Pool
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/pool.ts
+      entities:
+        - UniswapV3Hypervisor
+        - UniswapV3HypervisorDayData
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
+  {{/uniswapV3PoolOrphan}}
+  {{#hypeRegistry}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: HypeRegistry
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/hypeRegistry.ts
+      entities:
+        - UniswapV3Hypervisor
+        - UniswapV3HypervisorDayData
+      abis:
+        - name: HypeRegistry
+          file: ./abis/HypeRegistry.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: HypeAdded(address,uint256)
+          handler: handleHypeAdded
+  {{/hypeRegistry}}
+  {{#feeDistributor}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: FeeDistributor
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/feeDistributor.ts
+      entities:
+        - Visor
+        - EthToken
+        - EthDistribution
+        - EthDayData
+      abis:
+        - name: FeeDistributor
+          file: ./abis/FeeDistributor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: Multisended(uint256,address)
+          handler: handleMultisended
+      callHandlers:
+        - function: multisendEther(address[],uint256[])
+          handler: handleMultisendEther
+  {{/feeDistributor}}
+  {{#swapContract}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: SwapContract
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/swap.ts
+      entities:
+        - VisrToken
+        - VisrTokenDayData
+      abis:
+        - name: SwapContract
+          file: ./abis/SwapContract.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: SwapVISR(address,address,uint256)
+          handler: handleSwapVISR
+  {{/swapContract}}
+  {{#uniProxy}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: UniProxy
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniProxy.ts
+      entities:
+        - UniswapV3Hypervisor
+      abis:
+        - name: UniProxy
+          file: ./abis/UniProxy.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      callHandlers:
+        - function: customDeposit(address,uint256,uint256,uint256)
+          handler: handleCustomDepositCall
+  {{/uniProxy}}
+templates:
+  - name: UniswapV3Hypervisor
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: UniswapV3Hypervisor
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Visor
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      callHandlers:
+        - function: setDepositMax(uint256,uint256)
+          handler: handleSetDepositMax
+        - function: setMaxTotalSupply(uint256)
+          handler: handleSetMaxTotalSupply
+  - name: UniswapV3Pool
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: UniswapV3Pool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/pool.ts
+      entities:
+        - UniswapV3Hypervisor
+        - UniswapV3HypervisorDayData
+      abis:
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
