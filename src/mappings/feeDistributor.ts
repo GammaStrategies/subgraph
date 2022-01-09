@@ -1,6 +1,6 @@
 import { Address, log } from '@graphprotocol/graph-ts'
 import { MultisendEtherCall, Multisended } from "../../generated/FeeDistributor/FeeDistributor"
-import { recordEthDistribution, updateEthDistributionTotals } from "../utils/feeDistributor"
+import { updateEthDistributionTotals } from "../utils/feeDistributor"
 import { getOrCreateVisor } from "../utils/visorFactory"
 
 

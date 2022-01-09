@@ -6,9 +6,9 @@ dataSources:
     name: VisrToken
     network: mainnet
     source:
-      address: "0xF938424F7210f31dF2Aee3011291b658f872e91e"
+      address: "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197"
       abi: ERC20
-      startBlock: 12025310
+      startBlock: 13864627
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -16,6 +16,8 @@ dataSources:
       entities:
         - VisrToken
         - VisrTokenDayData
+        - ProtocolDistribution
+        - DistributionDayData
         - VisrDistribution
         - Visor
         - RewardHypervisor
@@ -33,9 +35,9 @@ dataSources:
     name: vVisrToken
     network: mainnet
     source:
-      address: "0x3a84ad5d16adbe566baa6b3dafe39db3d5e261e5"
+      address: "0x26805021988f1a45dc708b5fb75fc75f21747d8c"
       abi: ERC20
-      startBlock: 13148639
+      startBlock: 13882716
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -878,6 +880,8 @@ dataSources:
         - EthToken
         - EthDistribution
         - EthDayData
+        - ProtocolDistribution
+        - DistributionDayData
       abis:
         - name: FeeDistributor
           file: ./abis/FeeDistributor.json
@@ -906,6 +910,8 @@ dataSources:
         - EthToken
         - EthDistribution
         - EthDayData
+        - ProtocolDistribution
+        - DistributionDayData
       abis:
         - name: FeeDistributor
           file: ./abis/FeeDistributor.json
@@ -932,6 +938,8 @@ dataSources:
       entities:
         - VisrToken
         - VisrTokenDayData
+        - ProtocolDistribution
+        - DistributionDayData
       abis:
         - name: SwapContract
           file: ./abis/SwapContract.json

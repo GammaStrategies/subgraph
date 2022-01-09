@@ -105,6 +105,20 @@ export function getOrCreateToken(tokenAddress: Address): Token {
   return token as Token
 }
 
+export function getOrCreateEthToken(): Token {
+
+  let token = Token.load('ETH')
+
+  if (token == null) {
+    token = new Token('ETH')
+    token.symbol = 'ETH'
+    token.name = "ETH"
+    token.decimals = 18
+  }
+
+  return token as Token
+}
+
 export function getOrCreateStakedToken(vaultAddress: Address, tokenAddress: Address): StakedToken {
 
   let token = getOrCreateToken(tokenAddress)

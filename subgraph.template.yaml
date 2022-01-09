@@ -17,6 +17,8 @@ dataSources:
       entities:
         - VisrToken
         - VisrTokenDayData
+        - ProtocolDistribution
+        - DistributionDayData
         - VisrDistribution
         - Visor
         - RewardHypervisor
@@ -292,6 +294,8 @@ dataSources:
         - EthToken
         - EthDistribution
         - EthDayData
+        - ProtocolDistribution
+        - DistributionDayData
       abis:
         - name: FeeDistributor
           file: ./abis/FeeDistributor.json
@@ -320,6 +324,8 @@ dataSources:
       entities:
         - VisrToken
         - VisrTokenDayData
+        - ProtocolDistribution
+        - DistributionDayData
       abis:
         - name: SwapContract
           file: ./abis/SwapContract.json

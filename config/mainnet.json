@@ -2,13 +2,13 @@
     "network": "mainnet",
     "VisrToken": [{
         "name": "VisrToken",
-        "address": "0xF938424F7210f31dF2Aee3011291b658f872e91e",
-        "startBlock": 12025310
+        "address": "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197",
+        "startBlock": 13864627
     }],
     "vVisrToken": [{
         "name": "vVisrToken",
-        "address": "0x3a84ad5d16adbe566baa6b3dafe39db3d5e261e5",
-        "startBlock": 13148639
+        "address": "0x26805021988f1a45dc708b5fb75fc75f21747d8c",
+        "startBlock": 13882716
     }],
     "VisorFactory": [{
         "name": "VisorFactory",

@@ -1,4 +1,4 @@
-type GammaToken @entity {
+type VisrToken @entity {
   id: ID!
   name: String!
   decimals: Int!
@@ -8,14 +8,6 @@ type GammaToken @entity {
   totalDistributedUSD: BigDecimal!
 }
 
-type GammaDistribution @entity {
-  id: ID!
-  timestamp: BigInt!
-  visor: Visor!
-  amount: BigInt!
-  amountUSD: BigDecimal!
-}
-
 type EthToken @entity {
   id: ID!
   decimals: Int!
@@ -23,19 +15,15 @@ type EthToken @entity {
   totalDistributedUSD: BigDecimal!
 }
 
-type EthDistribution @entity {
+type ProtocolDistribution @entity {
   id: ID!
-  timestamp: BigInt!
-  visor: Visor!
-  amount: BigInt!
-  amountUSD: BigDecimal!
-  tx: String!
-  index: Int!
+  distributed: BigInt!
+  distributedUSD: BigDecimal!
 }
 
 type RewardHypervisor @entity {
   id: ID!
-  totalGamma: BigInt!
+  totalVisr: BigInt!
   totalSupply: BigInt!
   shares: [RewardHypervisorShare!]! @derivedFrom(field: "rewardHypervisor")
 }
@@ -47,13 +35,22 @@ type RewardHypervisorShare @entity {
   shares: BigInt!
 }
 
-type GammaTokenDayData @entity {
+type DistributionDayData @entity {
   id: ID!
   date: BigInt!
   timezone: String!
-  # Total GAMMA staked at the end of the day
+  token: Token!
+  distributed: BigInt!
+  distributedUSD: BigDecimal!
+}
+
+type VisrTokenDayData @entity {
+  id: ID!
+  date: BigInt!
+  timezone: String!
+  # Total VISR staked at the end of the day
   totalStaked: BigInt!
-  # GAMMA distributed for the day
+  # VISR distributed for the day
   distributed: BigInt!
   distributedUSD: BigDecimal!
 }
@@ -89,15 +86,15 @@ type Visor @entity {
     owner: User!
     operator: User
     tokenId: BigInt
-    gammaDeposited: BigInt!
-    gammaEarnedRealized: BigInt!
+    visrDeposited: BigInt!
+    visrEarnedRealized: BigInt!
     ethEarned: BigInt!
     staked: [StakedToken!] @derivedFrom(field: "visor")
     rewardClaimed: [RewardedToken!] @derivedFrom(field: "visor")
     rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "visor")
     hypervisorCount: BigInt!
     hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
-    gammaDistributions: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
+    visrDistributions: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
 }
 
 type VisorTemplate @entity {
@@ -145,6 +142,7 @@ type Token @entity {
   name: String!
   # token decimals
   decimals: Int!
+  totalSupply: BigInt
 }
 
 type UniswapV3Pool @entity {
@@ -200,7 +198,7 @@ type UniswapV3Hypervisor @entity {
   grossFeesClaimed0: BigInt!
   grossFeesClaimed1: BigInt!
   grossFeesClaimedUSD: BigDecimal!
-  # All time Protocol fees for GAMMA buyback
+  # All time Protocol fees for VISR buyback
   protocolFeesCollected0: BigInt!
   protocolFeesCollected1: BigInt!
   protocolFeesCollectedUSD: BigDecimal!
@@ -287,7 +285,7 @@ type UniswapV3HypervisorDayData @entity {
   grossFeesClaimed0: BigInt!
   grossFeesClaimed1: BigInt!
   grossFeesClaimedUSD: BigDecimal!
-  # Protocol fees for GAMMA buyback for the day
+  # Protocol fees for VISR buyback for the day
   protocolFeesCollected0: BigInt!
   protocolFeesCollected1: BigInt!
   protocolFeesCollectedUSD: BigDecimal!
@@ -330,14 +328,4 @@ type UniswapV3HypervisorConversion @entity {
   usdTokenIndex: Int!
   priceTokenInBase: BigDecimal!
   priceBaseInUSD: BigDecimal!
-}
-
-type RewardLog @entity {
-  id: ID!
-  address: String!
-  gammaStaked: String!
-  gammaEarned: String!
-  amount: String!
-  before: String!
-  after: String!
 }

@@ -2,7 +2,9 @@
 import { BigInt, BigDecimal, TypedMap } from '@graphprotocol/graph-ts'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
-export const REWARD_HYPERVISOR_ADDRESS = "0xc9f27a50f82571c1c8423a42970613b8dbda14ef"
+export const REWARD_HYPERVISOR_ADDRESS = "0x26805021988f1a45dc708b5fb75fc75f21747d8c"
+
+export const GAMMA_START_BLOCK = BigInt.fromI32(13864627)
 
 export let ZERO_BI = BigInt.fromI32(0)
 export let ONE_BI = BigInt.fromI32(1)
@@ -17,8 +19,10 @@ export class constantAddresses {
         let lookup = new TypedMap<string, string>()
         lookup.set('USDC', '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48');
         lookup.set('VISR', '0xf938424f7210f31df2aee3011291b658f872e91e');
+        lookup.set('GAMMA', '0x6bea7cfef803d1e3d5f7c0103f7ded065644e197');
         lookup.set('WETH-USDC', '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8');
-        lookup.set('WETH-VISR', '0x9a9cf34c3892acdb61fb7ff17941d8d81d279c75')
+        lookup.set('WETH-VISR', '0x9a9cf34c3892acdb61fb7ff17941d8d81d279c75');
+        lookup.set('GAMMA-WETH', '0x4006bed7bf103d70a1c6b7f1cef4ad059193dc25');
 
         return lookup as TypedMap<string, string>
     }

@@ -9,6 +9,7 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/gamma",
     "deploy-loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
     "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-arbitrum",
+    "deploy-lab": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/laboratory",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",

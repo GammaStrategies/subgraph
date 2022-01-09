@@ -11,7 +11,6 @@ export function getExchangeRate(poolAddress: Address, baseTokenIndex: i32): BigD
     let pool = UniswapV3Pool.load(poolAddress.toHex()) as UniswapV3Pool
     let sqrtPriceX96 = pool.sqrtPriceX96
     let num = sqrtPriceX96.times(sqrtPriceX96).toBigDecimal()
-    //let denom = BigDecimal.fromString(Q192.toString())
     let Q192_BI = BigInt.fromI32(2).pow(192)
     let denom = new BigDecimal(Q192_BI)
 
@@ -33,6 +32,19 @@ export function getEthRateInUSDC(): BigDecimal{
     let rate = ethInUsdcRate / BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())
 
     return rate as BigDecimal
+}
+
+export function getGammaRateInUSDC(): BigDecimal{
+
+    let addressLookup = constantAddresses.network(dataSource.network())
+    let poolAddressGamma = addressLookup.get("GAMMA-WETH") as string
+    let poolAddressUsdc = addressLookup.get("WETH-USDC") as string
+
+    let gammaInEthRate = getExchangeRate(Address.fromString(poolAddressGamma), 1)
+    let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddressUsdc), 0)
+    let rate = gammaInEthRate * ethInUsdcRate / BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())
+
+    return rate as BigDecimal    
 }
 
 export function getVisrRateInUSDC(): BigDecimal{

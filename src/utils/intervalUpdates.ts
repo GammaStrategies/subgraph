@@ -1,13 +1,14 @@
 /* eslint-disable prefer-const */
-import { ethereum, BigInt } from '@graphprotocol/graph-ts'
+import { ethereum, BigInt, BigDecimal } from '@graphprotocol/graph-ts'
 import {
     EthDayData,
     VisrTokenDayData,
+    DistributionDayData,
     UniswapV3HypervisorDayData,
     UniswapV3Hypervisor 
 } from '../../generated/schema'
 import { getOrCreateVisrToken } from './visrToken'
-import { getVisrRateInUSDC } from './pricing'
+import { getGammaRateInUSDC } from './pricing'
 import { ZERO_BI, ZERO_BD } from './constants'
 
 let SECONDS_IN_HOUR = BigInt.fromI32(60 * 60)
@@ -52,7 +53,7 @@ export function updateVisrTokenDayData(distributed: BigInt, timestamp: BigInt, u
         visrDayData.distributedUSD = ZERO_BD
     }
 
-    let visrRate = getVisrRateInUSDC()
+    let visrRate = getGammaRateInUSDC()
     let visr = getOrCreateVisrToken()
 
     visrDayData.totalStaked = visr.totalStaked
@@ -63,6 +64,34 @@ export function updateVisrTokenDayData(distributed: BigInt, timestamp: BigInt, u
     return visrDayData as VisrTokenDayData
 }
 
+export function updateDistributionDayData(
+    tokenId: string,
+    distributed: BigInt,
+    distributedUSD: BigDecimal,
+    timestamp: BigInt,
+    utcDiffHours: BigInt
+): DistributionDayData {
+    let utcDiffSeconds = utcDiffHours * SECONDS_IN_HOUR
+    let timezone = (utcDiffHours == ZERO_BI) ? 'UTC' : "UTC" + utcDiffHours.toString() 
+
+    let dayNumber = (timestamp + utcDiffSeconds) / SECONDS_IN_DAY
+    let dayStartTimestamp = dayNumber * SECONDS_IN_DAY - utcDiffSeconds
+    let dayId = timezone + '-' + dayNumber.toString()
+
+    let distDayData = DistributionDayData.load(dayId)
+    if (distDayData == null) {
+        distDayData = new DistributionDayData(dayId)
+        distDayData.date = dayStartTimestamp
+        distDayData.timezone = timezone
+        distDayData.token = tokenId
+    }
+
+    distDayData.distributed += distributed
+    distDayData.distributedUSD += distributedUSD
+    distDayData.save()
+
+    return distDayData as DistributionDayData
+}
 
 export function updateAndGetUniswapV3HypervisorDayData(hypervisorAddress: string): UniswapV3HypervisorDayData {
     let hypervisor = UniswapV3Hypervisor.load(hypervisorAddress) as UniswapV3Hypervisor
@@ -100,25 +129,6 @@ function getOrCreateHypervisorDayData(hypervisorAddress: string, utcDiffHours: B
         hypervisorDayData = new UniswapV3HypervisorDayData(dayHypervisorId)
         hypervisorDayData.date = dayStartTimestamp
         hypervisorDayData.hypervisor = hypervisorAddress
-        hypervisorDayData.deposited0 = ZERO_BI
-        hypervisorDayData.deposited1 = ZERO_BI
-        hypervisorDayData.depositedUSD = ZERO_BD
-        hypervisorDayData.withdrawn0 = ZERO_BI
-        hypervisorDayData.withdrawn1 = ZERO_BI
-        hypervisorDayData.withdrawnUSD = ZERO_BD
-        hypervisorDayData.grossFeesClaimed0 = ZERO_BI
-        hypervisorDayData.grossFeesClaimed1 = ZERO_BI
-        hypervisorDayData.grossFeesClaimedUSD = ZERO_BD
-        hypervisorDayData.protocolFeesCollected0 = ZERO_BI
-        hypervisorDayData.protocolFeesCollected1 = ZERO_BI
-        hypervisorDayData.protocolFeesCollectedUSD = ZERO_BD
-        hypervisorDayData.feesReinvested0 = ZERO_BI
-        hypervisorDayData.feesReinvested1 = ZERO_BI
-        hypervisorDayData.feesReinvestedUSD = ZERO_BD
-        hypervisorDayData.totalSupply = ZERO_BI
-        hypervisorDayData.tvl0 = ZERO_BI
-        hypervisorDayData.tvl1 = ZERO_BI
-        hypervisorDayData.tvlUSD = ZERO_BD
         hypervisorDayData.open = hypervisor.pricePerShare
         hypervisorDayData.close = hypervisor.pricePerShare
         hypervisorDayData.low = hypervisor.pricePerShare

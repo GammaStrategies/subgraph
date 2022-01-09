@@ -1,12 +1,14 @@
 /* eslint-disable prefer-const */
-import { Address, BigInt } from '@graphprotocol/graph-ts'
+import { dataSource, Address, BigInt } from '@graphprotocol/graph-ts'
 import { Transfer as TransferEvent } from "../../generated/VisrToken/ERC20"
-import { updateVisrTokenDayData } from '../utils/intervalUpdates'
-import { ADDRESS_ZERO, ZERO_BI, ZERO_BD, REWARD_HYPERVISOR_ADDRESS } from '../utils/constants'
-import { getVisrRateInUSDC } from '../utils/pricing'
+import { updateVisrTokenDayData, updateDistributionDayData } from '../utils/intervalUpdates'
+import { ADDRESS_ZERO, ZERO_BI, ZERO_BD, REWARD_HYPERVISOR_ADDRESS, constantAddresses } from '../utils/constants'
+import { getGammaRateInUSDC } from '../utils/pricing'
 import { getOrCreateRewardHypervisor } from '../utils/rewardHypervisor'
 import { getOrCreateVisrToken, unstakeVisrFromVisor } from '../utils/visrToken'
 import { getActiveVisor } from '../utils/visor'
+import { getOrCreateVisor } from '../utils/visorFactory'
+import { getOrCreateProtocolDistribution } from '../utils/entities'
 
 
 let DISTRIBUTORS: Array<Address> = [
@@ -30,53 +32,89 @@ export function handleTransfer(event: TransferEvent): void {
 	}
 
 	let distributed = ZERO_BI
+	let distributedUSD = ZERO_BD
 
 	// Check if either from or to address are VISOR vaults
 	let visorTo = getActiveVisor(event.params.to.toHexString())
 	let visorFrom = getActiveVisor(event.params.from.toHexString())
 
 	let vVisr = getOrCreateRewardHypervisor()
+
+	let addressLookup = constantAddresses.network(dataSource.network())
+	let gammaAddress = addressLookup.get("GAMMA") as string
+	let protocolDist = getOrCreateProtocolDistribution(gammaAddress)
 	
 	if (event.params.to == REWARD_HYPERVISOR) {
 		vVisr.totalVisr += visrAmount
 		visr.totalStaked += visrAmount
 		if (DISTRIBUTORS.includes(event.params.from)) {
 			// VISR distribution event into rewards hypervisor
-			visrRate = getVisrRateInUSDC()
-			distributed += visrAmount
+			visrRate = getGammaRateInUSDC()
+			distributed = visrAmount
+			distributedUSD = distributed.toBigDecimal() * visrRate
 			// Tracks all time distributed
+			// redundant
 			visr.totalDistributed += distributed
-			visr.totalDistributedUSD += distributed.toBigDecimal() * visrRate
+			visr.totalDistributedUSD += distributedUSD
+
+			protocolDist.distributed += distributed
+			protocolDist.distributedUSD += distributedUSD
 		} else {
 			// User deposit into reward hypervisor
-			if (visorFrom != null) {
+			if (visorFrom == null) {
 				// Skip if address is not a visor vault
-				visorFrom.visrDeposited += visrAmount
-				visorFrom.save()
+				visorFrom = getOrCreateVisor(event.params.from.toHexString())
 			}
+			visorFrom.visrDeposited += visrAmount
+			visorFrom.save()
 		}
 	} else if (event.params.from == REWARD_HYPERVISOR) {
 		// User withdraw from reward hypervisor
 		// update visor entity
 		if (!DISTRIBUTORS.includes(event.params.to) && visorTo != null) {
 			// Skip if address is not a visor vault
-			unstakeVisrFromVisor(visorTo.id.toString(), visrAmount, event.transaction.hash.toHex())
+			unstakeVisrFromVisor(visorTo.id.toString(), visrAmount)
 		}
 		vVisr.totalVisr -= visrAmount
 		visr.totalStaked -= visrAmount
 	} else if (DISTRIBUTORS.includes(event.params.from)  && visorTo != null) {
-		visrRate = getVisrRateInUSDC()
-		distributed += visrAmount
-		visr.totalDistributed += distributed
-		visr.totalDistributedUSD += distributed.toBigDecimal() * visrRate
+		visrRate = getGammaRateInUSDC()
+		distributed = visrAmount
+		distributedUSD = distributed.toBigDecimal() * visrRate
+		// redundant
+		visr.totalDistributed = distributed
+		visr.totalDistributedUSD = distributedUSD
+
+		protocolDist.distributed = distributed
+		protocolDist.distributedUSD = distributedUSD
 	}
 
 	vVisr.save()
 	visr.save()	
+	protocolDist.save()
 
 	// Update daily distributed data
+	// need to update
 	if (distributed > ZERO_BI) {
 		let visrTokenDayDataUTC = updateVisrTokenDayData(distributed, event.block.timestamp, ZERO_BI)
 		let visrTokenDayDataEST = updateVisrTokenDayData(distributed, event.block.timestamp, BigInt.fromI32(-5))
+		
+		// UTC
+		updateDistributionDayData(
+			gammaAddress,
+			distributed,
+			distributedUSD,
+			event.block.timestamp,
+			ZERO_BI
+		)
+		// EST
+		updateDistributionDayData(
+			gammaAddress,
+			distributed,
+			distributedUSD,
+			event.block.timestamp,
+			BigInt.fromI32(-5)
+		)
+	
 	}
 }
