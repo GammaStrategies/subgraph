@@ -3,7 +3,7 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: VisrToken
+    name: GammaToken
     network: mainnet
     source:
       address: "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197"
@@ -14,8 +14,6 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
         - VisrDistribution
@@ -32,7 +30,7 @@ dataSources:
           handler: handleTransfer
       file: ./src/mappings/visrToken.ts
   - kind: ethereum/contract
-    name: vVisrToken
+    name: xgammaToken
     network: mainnet
     source:
       address: "0x26805021988f1a45dc708b5fb75fc75f21747d8c"
@@ -43,7 +41,6 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
         - RewardHypervisor
         - RewardHypervisorShare
       abis:
@@ -52,7 +49,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/vVisrToken.ts
+      file: ./src/mappings/xgammaToken.ts
   - kind: ethereum/contract
     name: VisorFactory
     network: mainnet
@@ -877,9 +874,6 @@ dataSources:
       file: ./src/mappings/feeDistributor.ts
       entities:
         - Visor
-        - EthToken
-        - EthDistribution
-        - EthDayData
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -907,9 +901,6 @@ dataSources:
       file: ./src/mappings/feeDistributor.ts
       entities:
         - Visor
-        - EthToken
-        - EthDistribution
-        - EthDayData
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -936,8 +927,6 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/swap.ts
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
       abis:

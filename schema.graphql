@@ -1,20 +1,3 @@
-type VisrToken @entity {
-  id: ID!
-  name: String!
-  decimals: Int!
-  totalSupply: BigInt!
-  totalStaked: BigInt!
-  totalDistributed: BigInt!
-  totalDistributedUSD: BigDecimal!
-}
-
-type EthToken @entity {
-  id: ID!
-  decimals: Int!
-  totalDistributed: BigInt!
-  totalDistributedUSD: BigDecimal!
-}
-
 type ProtocolDistribution @entity {
   id: ID!
   distributed: BigInt!
@@ -23,7 +6,7 @@ type ProtocolDistribution @entity {
 
 type RewardHypervisor @entity {
   id: ID!
-  totalVisr: BigInt!
+  totalGamma: BigInt!
   totalSupply: BigInt!
   shares: [RewardHypervisorShare!]! @derivedFrom(field: "rewardHypervisor")
 }
@@ -40,25 +23,6 @@ type DistributionDayData @entity {
   date: BigInt!
   timezone: String!
   token: Token!
-  distributed: BigInt!
-  distributedUSD: BigDecimal!
-}
-
-type VisrTokenDayData @entity {
-  id: ID!
-  date: BigInt!
-  timezone: String!
-  # Total VISR staked at the end of the day
-  totalStaked: BigInt!
-  # VISR distributed for the day
-  distributed: BigInt!
-  distributedUSD: BigDecimal!
-}
-
-type EthDayData @entity {
-  id: ID!
-  date: BigInt!
-  timezone: String!
   distributed: BigInt!
   distributedUSD: BigDecimal!
 }
@@ -86,15 +50,14 @@ type Visor @entity {
     owner: User!
     operator: User
     tokenId: BigInt
-    visrDeposited: BigInt!
-    visrEarnedRealized: BigInt!
+    gammaDeposited: BigInt!
+    gammaEarnedRealized: BigInt!
     ethEarned: BigInt!
     staked: [StakedToken!] @derivedFrom(field: "visor")
     rewardClaimed: [RewardedToken!] @derivedFrom(field: "visor")
     rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "visor")
     hypervisorCount: BigInt!
     hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
-    visrDistributions: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
 }
 
 type VisorTemplate @entity {
@@ -198,7 +161,7 @@ type UniswapV3Hypervisor @entity {
   grossFeesClaimed0: BigInt!
   grossFeesClaimed1: BigInt!
   grossFeesClaimedUSD: BigDecimal!
-  # All time Protocol fees for VISR buyback
+  # All time Protocol fees for GAMMA buyback
   protocolFeesCollected0: BigInt!
   protocolFeesCollected1: BigInt!
   protocolFeesCollectedUSD: BigDecimal!
@@ -285,7 +248,7 @@ type UniswapV3HypervisorDayData @entity {
   grossFeesClaimed0: BigInt!
   grossFeesClaimed1: BigInt!
   grossFeesClaimedUSD: BigDecimal!
-  # Protocol fees for VISR buyback for the day
+  # Protocol fees for GAMMA buyback for the day
   protocolFeesCollected0: BigInt!
   protocolFeesCollected1: BigInt!
   protocolFeesCollectedUSD: BigDecimal!

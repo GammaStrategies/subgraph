@@ -1,14 +1,15 @@
 /* eslint-disable prefer-const */
 import { dataSource, Address, BigInt } from '@graphprotocol/graph-ts'
-import { Transfer as TransferEvent } from "../../generated/VisrToken/ERC20"
-import { updateVisrTokenDayData, updateDistributionDayData } from '../utils/intervalUpdates'
+import { Transfer as TransferEvent } from "../../generated/GammaToken/ERC20"
+import { updateDistributionDayData } from '../utils/intervalUpdates'
 import { ADDRESS_ZERO, ZERO_BI, ZERO_BD, REWARD_HYPERVISOR_ADDRESS, constantAddresses } from '../utils/constants'
 import { getGammaRateInUSDC } from '../utils/pricing'
 import { getOrCreateRewardHypervisor } from '../utils/rewardHypervisor'
-import { getOrCreateVisrToken, unstakeVisrFromVisor } from '../utils/visrToken'
+import { unstakeGammaFromVisor } from '../utils/visrToken'
 import { getActiveVisor } from '../utils/visor'
 import { getOrCreateVisor } from '../utils/visorFactory'
 import { getOrCreateProtocolDistribution } from '../utils/entities'
+import { getOrCreateToken } from '../utils/tokens'
 
 
 let DISTRIBUTORS: Array<Address> = [
@@ -22,13 +23,17 @@ let DISTRIBUTORS: Array<Address> = [
 let REWARD_HYPERVISOR = Address.fromString(REWARD_HYPERVISOR_ADDRESS)
 
 export function handleTransfer(event: TransferEvent): void {
-	let visrRate = ZERO_BD
-	let visrAmount = event.params.value
+	let addressLookup = constantAddresses.network(dataSource.network())
+	let gammaAddress = addressLookup.get("GAMMA") as string
 
-	let visr = getOrCreateVisrToken()
+	let gammaRate = ZERO_BD
+	let gammaAmount = event.params.value
+
+	let gamma = getOrCreateToken(Address.fromString(gammaAddress))
 	if (event.params.from == Address.fromString(ADDRESS_ZERO)) {
 		// Mint event
-		visr.totalSupply += visrAmount
+		gamma.totalSupply += gammaAmount
+		gamma.save()
 	}
 
 	let distributed = ZERO_BI
@@ -38,25 +43,20 @@ export function handleTransfer(event: TransferEvent): void {
 	let visorTo = getActiveVisor(event.params.to.toHexString())
 	let visorFrom = getActiveVisor(event.params.from.toHexString())
 
-	let vVisr = getOrCreateRewardHypervisor()
+	let xgamma = getOrCreateRewardHypervisor()
 
-	let addressLookup = constantAddresses.network(dataSource.network())
-	let gammaAddress = addressLookup.get("GAMMA") as string
 	let protocolDist = getOrCreateProtocolDistribution(gammaAddress)
 	
 	if (event.params.to == REWARD_HYPERVISOR) {
-		vVisr.totalVisr += visrAmount
-		visr.totalStaked += visrAmount
+		xgamma.totalGamma += gammaAmount
+		// visr.totalStaked += gammaAmount  // Already tracked in hypervisor
 		if (DISTRIBUTORS.includes(event.params.from)) {
 			// VISR distribution event into rewards hypervisor
-			visrRate = getGammaRateInUSDC()
-			distributed = visrAmount
-			distributedUSD = distributed.toBigDecimal() * visrRate
-			// Tracks all time distributed
-			// redundant
-			visr.totalDistributed += distributed
-			visr.totalDistributedUSD += distributedUSD
-
+			gammaRate = getGammaRateInUSDC()
+			distributed = gammaAmount
+			distributedUSD = distributed.toBigDecimal() * gammaRate
+			
+			// Tracks all time distribute
 			protocolDist.distributed += distributed
 			protocolDist.distributedUSD += distributedUSD
 		} else {
@@ -65,7 +65,7 @@ export function handleTransfer(event: TransferEvent): void {
 				// Skip if address is not a visor vault
 				visorFrom = getOrCreateVisor(event.params.from.toHexString())
 			}
-			visorFrom.visrDeposited += visrAmount
+			visorFrom.gammaDeposited += gammaAmount
 			visorFrom.save()
 		}
 	} else if (event.params.from == REWARD_HYPERVISOR) {
@@ -73,32 +73,24 @@ export function handleTransfer(event: TransferEvent): void {
 		// update visor entity
 		if (!DISTRIBUTORS.includes(event.params.to) && visorTo != null) {
 			// Skip if address is not a visor vault
-			unstakeVisrFromVisor(visorTo.id.toString(), visrAmount)
+			unstakeGammaFromVisor(visorTo.id.toString(), gammaAmount)
 		}
-		vVisr.totalVisr -= visrAmount
-		visr.totalStaked -= visrAmount
+		xgamma.totalGamma -= gammaAmount
+		//visr.totalStaked -= gammaAmount // Already tracked in hypervisor
 	} else if (DISTRIBUTORS.includes(event.params.from)  && visorTo != null) {
-		visrRate = getGammaRateInUSDC()
-		distributed = visrAmount
-		distributedUSD = distributed.toBigDecimal() * visrRate
-		// redundant
-		visr.totalDistributed = distributed
-		visr.totalDistributedUSD = distributedUSD
+		gammaRate = getGammaRateInUSDC()
+		distributed = gammaAmount
+		distributedUSD = distributed.toBigDecimal() * gammaRate
 
 		protocolDist.distributed = distributed
 		protocolDist.distributedUSD = distributedUSD
 	}
 
-	vVisr.save()
-	visr.save()	
+	xgamma.save()
 	protocolDist.save()
 
 	// Update daily distributed data
-	// need to update
-	if (distributed > ZERO_BI) {
-		let visrTokenDayDataUTC = updateVisrTokenDayData(distributed, event.block.timestamp, ZERO_BI)
-		let visrTokenDayDataEST = updateVisrTokenDayData(distributed, event.block.timestamp, BigInt.fromI32(-5))
-		
+	if (distributed > ZERO_BI) {		
 		// UTC
 		updateDistributionDayData(
 			gammaAddress,

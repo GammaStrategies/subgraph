@@ -2,7 +2,7 @@ specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
-  {{#VisrToken}}
+  {{#GammaToken}}
   - kind: ethereum/contract
     name: {{name}}
     network: {{network}}
@@ -15,8 +15,6 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
         - VisrDistribution
@@ -32,8 +30,8 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mappings/visrToken.ts
-  {{/VisrToken}}
-  {{#vVisrToken}}
+  {{/GammaToken}}
+  {{#xgammaToken}}
   - kind: ethereum/contract
     name: {{name}}
     network: {{network}}
@@ -46,7 +44,6 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
         - RewardHypervisor
         - RewardHypervisorShare
       abis:
@@ -55,8 +52,8 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/vVisrToken.ts
-  {{/vVisrToken}}
+      file: ./src/mappings/xgammaToken.ts
+  {{/xgammaToken}}
   {{#VisorFactory}}
   - kind: ethereum/contract
     name: {{name}}
@@ -291,9 +288,6 @@ dataSources:
       file: ./src/mappings/feeDistributor.ts
       entities:
         - Visor
-        - EthToken
-        - EthDistribution
-        - EthDayData
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -322,8 +316,6 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/swap.ts
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
       abis:

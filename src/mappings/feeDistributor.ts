@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { Address, log } from '@graphprotocol/graph-ts'
 import { MultisendEtherCall, Multisended } from "../../generated/FeeDistributor/FeeDistributor"
 import { updateEthDistributionTotals } from "../utils/feeDistributor"
@@ -17,8 +18,7 @@ export function handleMultisendEther(call: MultisendEtherCall): void {
 }
 
 export function handleMultisended(event: Multisended): void {
-	log.warning("{}", [event.params.tokenAddress.toHex()])
-	let ethAddress = Address.fromString("0x000000000000000000000000000000000000beef")
+	let ethAddress = Address.fromString("0x000000000000000000000000000000000000beef") // Contract uses this to represent ETH
 	if (event.params.tokenAddress == ethAddress) {
 		updateEthDistributionTotals(event)
 	}
