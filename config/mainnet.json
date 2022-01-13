@@ -116,6 +116,11 @@
             "name": "WETH-VISR",
             "address": "0x9a9cf34c3892acdb61fb7ff17941d8d81d279c75",
             "startBlock": 12376475
+        },
+        {
+            "name": "GAMMA-WETH",
+            "address": "0x4006bed7bf103d70a1c6b7f1cef4ad059193dc25",
+            "startBlock": 13869998
         }
     ],
     "hypeRegistry": [

@@ -1,8 +1,8 @@
 /* eslint-disable prefer-const */
-import { Address, log } from '@graphprotocol/graph-ts'
+import { Address } from '@graphprotocol/graph-ts'
 import { MultisendEtherCall, Multisended } from "../../generated/FeeDistributor/FeeDistributor"
 import { updateEthDistributionTotals } from "../utils/feeDistributor"
-import { getOrCreateVisor } from "../utils/visorFactory"
+import { getOrCreateAccount } from "../utils/entities"
 
 
 export function handleMultisendEther(call: MultisendEtherCall): void {
@@ -11,9 +11,9 @@ export function handleMultisendEther(call: MultisendEtherCall): void {
 
 	// for (let i = 0; i < visors.length; i++) {
 	// 	recordEthDistribution(call, i)
-	// 	let visor = getOrCreateVisor(visors[i].toHex())
-	// 	visor.ethEarned += amounts[i]
-	// 	visor.save()
+	// 	let account = getOrCreateAccount(visors[i].toHex())
+	// 	account.ethEarned += amounts[i]
+	// 	account.save()
 	// }
 }
 

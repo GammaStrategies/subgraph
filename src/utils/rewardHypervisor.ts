@@ -2,6 +2,7 @@
 import { BigInt } from '@graphprotocol/graph-ts'
 import { ZERO_BI, REWARD_HYPERVISOR_ADDRESS } from './constants'
 import { RewardHypervisor, RewardHypervisorShare } from "../../generated/schema"
+import { getOrCreateUser, getOrCreateAccount } from './entities'
 
 
 export function getOrCreateRewardHypervisor(): RewardHypervisor {
@@ -23,9 +24,14 @@ export function getOrCreateRewardHypervisorShare(visorAddress: string): RewardHy
 
 	let xgammaShare = RewardHypervisorShare.load(id)
 	if (!xgammaShare) {
+		let account = getOrCreateAccount(visorAddress, true)
+		if (account.type === 'non visor') {
+			getOrCreateUser(account.parent, true)
+		}
+
 		xgammaShare = new RewardHypervisorShare(id)
 		xgammaShare.rewardHypervisor = REWARD_HYPERVISOR_ADDRESS
-		xgammaShare.visor = visorAddress
+		xgammaShare.account = visorAddress
 		xgammaShare.shares = ZERO_BI
 	}
 

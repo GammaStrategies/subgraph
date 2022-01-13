@@ -7,7 +7,7 @@ import {
   Rebalance as RebalanceEvent,
 } from "../../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
 import {
-  Visor,
+  Account,
   UniswapV3Hypervisor,
   UniswapV3Deposit,
   UniswapV3Rebalance,
@@ -152,16 +152,16 @@ export function getOrCreateHypervisorShare(
   if (hypervisorShare == null) {
     hypervisorShare = new UniswapV3HypervisorShare(id);
     hypervisorShare.hypervisor = hypervisorAddress;
-    hypervisorShare.visor = visorAddress;
+    hypervisorShare.account = visorAddress;
     hypervisorShare.shares = ZERO_BI;
     hypervisorShare.initialToken0 = ZERO_BI;
     hypervisorShare.initialToken1 = ZERO_BI;
     hypervisorShare.initialUSD = ZERO_BD;
     // increment counts
-    let visor = Visor.load(visorAddress);
-    if (visor != null) {
-      visor.hypervisorCount += ONE_BI;
-      visor.save();
+    let account = Account.load(visorAddress);
+    if (account != null) {
+      account.hypervisorCount += ONE_BI;
+      account.save();
     }
     let hypervisor = UniswapV3Hypervisor.load(hypervisorAddress) as UniswapV3Hypervisor;
     hypervisor.visorCount += ONE_BI;

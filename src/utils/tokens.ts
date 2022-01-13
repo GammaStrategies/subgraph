@@ -129,7 +129,7 @@ export function getOrCreateStakedToken(vaultAddress: Address, tokenAddress: Addr
   if (stakedToken == null) {
     stakedToken = new StakedToken(stakedTokenId)
     stakedToken.token = tokenAddress.toHexString()
-    stakedToken.visor = vaultAddress.toHexString()
+    stakedToken.account = vaultAddress.toHexString()
     stakedToken.amount = ZERO_BI
   }
 
@@ -144,7 +144,7 @@ export function createRewardedToken(vaultAddress: Address, tokenAddress: Address
   let rewardedTokenId = vaultAddress.toHexString() + "-" + tokenAddress.toHexString() 
   let rewardedToken = new RewardedToken(rewardedTokenId)
   rewardedToken.token = tokenAddress.toHexString()
-  rewardedToken.visor = vaultAddress.toHexString()
+  rewardedToken.account = vaultAddress.toHexString()
   rewardedToken.amount = ZERO_BI
 
   return rewardedToken as RewardedToken

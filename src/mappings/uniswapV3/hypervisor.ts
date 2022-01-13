@@ -9,7 +9,7 @@ import {
 	SetMaxTotalSupplyCall
 } from "../../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor"
 import {
-	Visor,
+	Account,
 	UniswapV3HypervisorShare,
 	UniswapV3HypervisorConversion
 } from "../../../generated/schema"
@@ -173,17 +173,17 @@ export function handleWithdraw(event: WithdrawEvent): void {
 	withdraw.save()
 
 	// Update visor shares
-	let visorId = event.params.sender.toHex()
-	let hypervisorShareId = hypervisorId + "-" + visorId
+	let accountId = event.params.sender.toHex()
+	let hypervisorShareId = hypervisorId + "-" + accountId
 	let hypervisorShare = UniswapV3HypervisorShare.load(hypervisorShareId)
 	if (hypervisorShare != null) {
 		if (hypervisorShare.shares == withdraw.shares ) {
 			// If all shares are withdrawn, remove entity
 			store.remove('UniswapV3HypervisorShare', hypervisorShareId)
-			let visor = Visor.load(visorId)
-			if (visor != null) {
-				visor.hypervisorCount -= ONE_BI
-				visor.save()
+			let account = Account.load(accountId)
+			if (account != null) {
+				account.hypervisorCount -= ONE_BI
+				account.save()
 			}
 			hypervisor.visorCount -= ONE_BI
 		} else {
@@ -236,13 +236,13 @@ export function handleTransfer(event: TransferEvent): void {
 
 export function handleSetDepositMax(call: SetDepositMaxCall): void {
 	let hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp)
-	hypervisor.deposit0Max = call.inputValues[0].value.toBigInt()
-	hypervisor.deposit1Max = call.inputValues[1].value.toBigInt()
+	hypervisor.deposit0Max = call.inputs._deposit0Max
+	hypervisor.deposit1Max = call.inputs._deposit1Max
 	hypervisor.save()
 }
 
 export function handleSetMaxTotalSupply(call: SetMaxTotalSupplyCall): void {
 	let hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp)
-	hypervisor.maxTotalSupply = call.inputValues[0].value.toBigInt()
+	hypervisor.maxTotalSupply = call.inputs._maxTotalSupply
 	hypervisor.save()
 }
