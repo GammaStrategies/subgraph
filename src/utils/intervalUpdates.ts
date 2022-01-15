@@ -2,6 +2,7 @@
 import { BigInt, BigDecimal } from '@graphprotocol/graph-ts'
 import {
     DistributionDayData,
+    RewardHypervisorDayData,
     UniswapV3HypervisorDayData,
     UniswapV3Hypervisor 
 } from '../../generated/schema'
@@ -38,6 +39,33 @@ export function updateDistributionDayData(
     distDayData.save()
 
     return distDayData as DistributionDayData
+}
+
+export function updateRewardHypervisorDayData(
+    totalGamma: BigInt,
+    totalSupply: BigInt,
+    timestamp: BigInt,
+    utcDiffHours: BigInt
+): RewardHypervisorDayData {
+    let utcDiffSeconds = utcDiffHours * SECONDS_IN_HOUR
+    let timezone = (utcDiffHours == ZERO_BI) ? 'UTC' : "UTC" + utcDiffHours.toString() 
+
+    let dayNumber = (timestamp + utcDiffSeconds) / SECONDS_IN_DAY
+    let dayStartTimestamp = dayNumber * SECONDS_IN_DAY - utcDiffSeconds
+    let dayId = timezone + '-' + dayNumber.toString()
+
+    let rewardHypervisorDayData = RewardHypervisorDayData.load(dayId)
+    if (rewardHypervisorDayData == null) {
+        rewardHypervisorDayData = new RewardHypervisorDayData(dayId)
+        rewardHypervisorDayData.date = dayStartTimestamp
+        rewardHypervisorDayData.timezone = timezone
+    }
+
+    rewardHypervisorDayData.totalGamma += totalGamma
+    rewardHypervisorDayData.totalSupply += totalSupply
+    rewardHypervisorDayData.save()
+
+    return rewardHypervisorDayData as RewardHypervisorDayData
 }
 
 export function updateAndGetUniswapV3HypervisorDayData(hypervisorAddress: string): UniswapV3HypervisorDayData {

@@ -1,13 +1,15 @@
 /* eslint-disable prefer-const */
-import { dataSource, BigInt } from '@graphprotocol/graph-ts'
+import { dataSource } from '@graphprotocol/graph-ts'
 import { SwapVISR } from '../../generated/SwapContract/SwapContract'
 import { getGammaRateInUSDC, getVisrRateInUSDC } from '../utils/pricing'
 import { updateDistributionDayData } from '../utils/intervalUpdates'
 import { 
 	constantAddresses,
 	REWARD_HYPERVISOR_ADDRESS,
-	ZERO_BI,
-	GAMMA_START_BLOCK } from '../utils/constants'
+	GAMMA_START_BLOCK,
+	TZ_UTC,
+	TZ_EST
+} from '../utils/constants'
 import { getOrCreateProtocolDistribution } from '../utils/entities'
 
 
@@ -34,7 +36,7 @@ export function handleSwapVISR(event: SwapVISR): void {
 			distributed,
 			distributedUSD,
 			event.block.timestamp,
-			ZERO_BI
+			TZ_UTC
 		)
 		// EST
 		updateDistributionDayData(
@@ -42,7 +44,7 @@ export function handleSwapVISR(event: SwapVISR): void {
 			distributed,
 			distributedUSD,
 			event.block.timestamp,
-			BigInt.fromI32(-5)
+			TZ_EST
 		)
 	}
 }

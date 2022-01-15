@@ -1,6 +1,10 @@
 {
     "network": "mainnet",
-    "GammaToken": [{
+    "features": [{
+        "base": "QmQ23dHHkH2YTDzaAwb2tU1ZBi53RtvvTTt6mKAvs43H1H",
+        "block": 13882716
+    }],
+    "gammaToken": [{
         "name": "GammaToken",
         "address": "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197",
         "startBlock": 13864627

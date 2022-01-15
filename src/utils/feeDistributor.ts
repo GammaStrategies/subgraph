@@ -1,9 +1,8 @@
 /* eslint-disable prefer-const */
-import { BigInt } from '@graphprotocol/graph-ts'
 import { MultisendEtherCall, Multisended } from "../../generated/FeeDistributor/FeeDistributor"
 import { getEthRateInUSDC } from "./pricing"
 import { updateDistributionDayData } from "./intervalUpdates"
-import { ZERO_BI } from "./constants"
+import { TZ_UTC, TZ_EST } from "./constants"
 import { getOrCreateProtocolDistribution } from './entities'
 import { getOrCreateEthToken } from './tokens'
 
@@ -46,7 +45,7 @@ export function updateEthDistributionTotals(event: Multisended): void {
 		total,
 		totalUSD,
 		event.block.timestamp,
-		ZERO_BI
+		TZ_UTC
 	)
 	// EST
 	updateDistributionDayData(
@@ -54,6 +53,6 @@ export function updateEthDistributionTotals(event: Multisended): void {
 		total,
 		totalUSD,
 		event.block.timestamp,
-		BigInt.fromI32(-5)
+		TZ_EST
 	)
 }

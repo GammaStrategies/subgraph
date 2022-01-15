@@ -1,14 +1,16 @@
 /* eslint-disable prefer-const */
-import { dataSource, Address, BigInt } from '@graphprotocol/graph-ts'
+import { dataSource, Address } from '@graphprotocol/graph-ts'
 import { Transfer as TransferEvent } from "../../generated/GammaToken/ERC20"
-import { updateDistributionDayData } from '../utils/intervalUpdates'
+import { updateDistributionDayData, updateRewardHypervisorDayData } from '../utils/intervalUpdates'
 import {
 	ADDRESS_ZERO,
 	ZERO_BI,
 	ZERO_BD,
 	REWARD_HYPERVISOR_ADDRESS,
 	SWAPPER_ADDRESS,
-	constantAddresses
+	constantAddresses,
+	TZ_UTC,
+	TZ_EST
 } from '../utils/constants'
 import { getOrCreateRewardHypervisor } from '../utils/rewardHypervisor'
 import { unstakeGammaFromAccount } from '../utils/gammaToken'
@@ -56,9 +58,9 @@ export function handleTransfer(event: TransferEvent): void {
 		}
 	} else if (event.params.from == REWARD_HYPERVISOR) {
 		// User withdraw from reward hypervisor
-		xgamma.totalGamma -= gammaAmount
 		// update account
 		unstakeGammaFromAccount(event.params.to.toHexString(), gammaAmount)
+		xgamma.totalGamma -= gammaAmount
 	}
 
 	xgamma.save()
@@ -72,7 +74,7 @@ export function handleTransfer(event: TransferEvent): void {
 			distributed,
 			distributedUSD,
 			event.block.timestamp,
-			ZERO_BI
+			TZ_UTC
 		)
 		// EST
 		updateDistributionDayData(
@@ -80,8 +82,23 @@ export function handleTransfer(event: TransferEvent): void {
 			distributed,
 			distributedUSD,
 			event.block.timestamp,
-			BigInt.fromI32(-5)
+			TZ_EST
 		)
 	
+	}
+
+	if (event.params.to === REWARD_HYPERVISOR || event.params.from === REWARD_HYPERVISOR) {
+		updateRewardHypervisorDayData(
+			xgamma.totalGamma,
+			xgamma.totalSupply,
+			event.block.timestamp,
+			TZ_UTC
+		)
+		updateRewardHypervisorDayData(
+			xgamma.totalGamma,
+			xgamma.totalSupply,
+			event.block.timestamp,
+			TZ_EST
+		)
 	}
 }

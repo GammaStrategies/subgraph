@@ -1,8 +1,15 @@
 specVersion: 0.0.4
+{{#features}}
+features:
+  - grafting
+graft:
+  base: {{base}}
+  block: {{block}}
+{{/features}}
 schema:
   file: ./schema.graphql
 dataSources:
-  {{#GammaToken}}
+  {{#gammaToken}}
   - kind: ethereum/contract
     name: {{name}}
     network: {{network}}
@@ -29,7 +36,7 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mappings/gammaToken.ts
-  {{/GammaToken}}
+  {{/gammaToken}}
   {{#xgammaToken}}
   - kind: ethereum/contract
     name: {{name}}

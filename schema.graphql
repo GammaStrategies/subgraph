@@ -33,6 +33,14 @@ type DistributionDayData @entity {
   distributedUSD: BigDecimal!
 }
 
+type RewardHypervisorDayData @entity {
+  id: ID!
+  date: BigInt!
+  timezone: String!
+  totalGamma: BigInt!
+  totalSupply: BigInt!
+}
+
 type Factory @entity {
     id: ID!
     owner: Bytes!

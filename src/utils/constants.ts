@@ -12,6 +12,9 @@ export let ONE_BI = BigInt.fromI32(1)
 export let ZERO_BD = BigDecimal.fromString('0')
 export let ONE_BD = BigDecimal.fromString('1')
 
+export let TZ_UTC = ZERO_BI
+export let TZ_EST = BigInt.fromI32(-5)
+
 export const DEFAULT_DECIMAL = 18
 
 export class constantAddresses {
