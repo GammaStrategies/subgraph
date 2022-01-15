@@ -1,7 +1,8 @@
-import { Address, log } from '@graphprotocol/graph-ts'
+/* eslint-disable prefer-const */
+import { Address } from '@graphprotocol/graph-ts'
 import { MultisendEtherCall, Multisended } from "../../generated/FeeDistributor/FeeDistributor"
 import { updateEthDistributionTotals } from "../utils/feeDistributor"
-import { getOrCreateVisor } from "../utils/visorFactory"
+import { getOrCreateAccount } from "../utils/entities"
 
 
 export function handleMultisendEther(call: MultisendEtherCall): void {
@@ -10,15 +11,14 @@ export function handleMultisendEther(call: MultisendEtherCall): void {
 
 	// for (let i = 0; i < visors.length; i++) {
 	// 	recordEthDistribution(call, i)
-	// 	let visor = getOrCreateVisor(visors[i].toHex())
-	// 	visor.ethEarned += amounts[i]
-	// 	visor.save()
+	// 	let account = getOrCreateAccount(visors[i].toHex())
+	// 	account.ethEarned += amounts[i]
+	// 	account.save()
 	// }
 }
 
 export function handleMultisended(event: Multisended): void {
-	log.warning("{}", [event.params.tokenAddress.toHex()])
-	let ethAddress = Address.fromString("0x000000000000000000000000000000000000beef")
+	let ethAddress = Address.fromString("0x000000000000000000000000000000000000beef") // Contract uses this to represent ETH
 	if (event.params.tokenAddress == ethAddress) {
 		updateEthDistributionTotals(event)
 	}

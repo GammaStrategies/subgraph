@@ -1,8 +1,15 @@
 specVersion: 0.0.4
+{{#features}}
+features:
+  - grafting
+graft:
+  base: {{base}}
+  block: {{block}}
+{{/features}}
 schema:
   file: ./schema.graphql
 dataSources:
-  {{#VisrToken}}
+  {{#gammaToken}}
   - kind: ethereum/contract
     name: {{name}}
     network: {{network}}
@@ -15,12 +22,9 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
-        - VisrDistribution
-        - Visor
+        - Account
         - RewardHypervisor
         - RewardHypervisorShare
       abis:
@@ -31,9 +35,9 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/visrToken.ts
-  {{/VisrToken}}
-  {{#vVisrToken}}
+      file: ./src/mappings/gammaToken.ts
+  {{/gammaToken}}
+  {{#xgammaToken}}
   - kind: ethereum/contract
     name: {{name}}
     network: {{network}}
@@ -46,7 +50,6 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
         - RewardHypervisor
         - RewardHypervisorShare
       abis:
@@ -55,8 +58,8 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/vVisrToken.ts
-  {{/vVisrToken}}
+      file: ./src/mappings/xgammaToken.ts
+  {{/xgammaToken}}
   {{#VisorFactory}}
   - kind: ethereum/contract
     name: {{name}}
@@ -71,7 +74,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Factory
-        - Visor
+        - Account
         - VisorTemplate
         - User
         - OwnerOperator
@@ -81,10 +84,6 @@ dataSources:
         - name: Visor
           file: ./abis/Visor.json
       eventHandlers:
-        - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
-        - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
         - event: InstanceAdded(address)
           handler: handleInstanceAdded
         - event: InstanceRemoved(address)
@@ -188,7 +187,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -290,10 +289,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/feeDistributor.ts
       entities:
-        - Visor
-        - EthToken
-        - EthDistribution
-        - EthDayData
+        - Account
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -322,8 +318,6 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/swap.ts
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -379,7 +373,7 @@ templates:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance

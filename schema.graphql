@@ -1,36 +1,25 @@
-type VisrToken @entity {
-  id: ID!
-  name: String!
-  decimals: Int!
-  totalSupply: BigInt!
-  totalStaked: BigInt!
-  totalDistributed: BigInt!
-  totalDistributedUSD: BigDecimal!
-}
-
-type EthToken @entity {
-  id: ID!
-  decimals: Int!
-  totalDistributed: BigInt!
-  totalDistributedUSD: BigDecimal!
-}
-
 type ProtocolDistribution @entity {
+  "Address of distributed token"
   id: ID!
+  "Cumulative distributed amount"
   distributed: BigInt!
+  "Cumulative distributed amount in USD at the time of distribution"
   distributedUSD: BigDecimal!
 }
 
 type RewardHypervisor @entity {
   id: ID!
-  totalVisr: BigInt!
+  "Total GAMMA staked in the reward hypervisor"
+  totalGamma: BigInt!
+  "Total supply of XGAMMA"
   totalSupply: BigInt!
+  "XGAMMA shares held by stakers"
   shares: [RewardHypervisorShare!]! @derivedFrom(field: "rewardHypervisor")
 }
 
 type RewardHypervisorShare @entity {
   id: ID!
-  visor: Visor!
+  account: Account!
   rewardHypervisor: RewardHypervisor!
   shares: BigInt!
 }
@@ -44,23 +33,12 @@ type DistributionDayData @entity {
   distributedUSD: BigDecimal!
 }
 
-type VisrTokenDayData @entity {
+type RewardHypervisorDayData @entity {
   id: ID!
   date: BigInt!
   timezone: String!
-  # Total VISR staked at the end of the day
-  totalStaked: BigInt!
-  # VISR distributed for the day
-  distributed: BigInt!
-  distributedUSD: BigDecimal!
-}
-
-type EthDayData @entity {
-  id: ID!
-  date: BigInt!
-  timezone: String!
-  distributed: BigInt!
-  distributedUSD: BigDecimal!
+  totalGamma: BigInt!
+  totalSupply: BigInt!
 }
 
 type Factory @entity {
@@ -81,21 +59,18 @@ type Hypervisor @entity {
   vaultFactory: Factory
 }
 
-type Visor @entity {
-    id: ID!
-    owner: User!
-    operator: User
-    tokenId: BigInt
-    visrDeposited: BigInt!
-    visrEarnedRealized: BigInt!
-    ethEarned: BigInt!
-    staked: [StakedToken!] @derivedFrom(field: "visor")
-    rewardClaimed: [RewardedToken!] @derivedFrom(field: "visor")
-    rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "visor")
-    hypervisorCount: BigInt!
-    hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
-    visrDistributions: [UniswapV3HypervisorShare!]! @derivedFrom(field: "visor")
+"Each account is an address, this can either be an normal wallet or a visor vault"
+type Account @entity {
+  id: ID!
+  type: String!
+  parent: User!
+  gammaDeposited: BigInt!
+  gammaEarnedRealized: BigInt!
+  rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "account")
+  hypervisorCount: BigInt!
+  hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "account")
 }
+
 
 type VisorTemplate @entity {
   id: ID!
@@ -105,31 +80,21 @@ type VisorTemplate @entity {
 
 type User @entity {
   id: ID!
-  activeVisor: Visor!
-  visorsOwned: [Visor!] @derivedFrom(field: "owner")  # Visors owned by this user
-  visorsApproved: [Visor!] @derivedFrom(field: "operator")  # Visors where this user is approved as an operator
-  operators: [OwnerOperator!] @derivedFrom(field: "operator")  # Operators this users delegates to
-  operatorFor: [OwnerOperator!] @derivedFrom(field: "owner")   # Other users that this user is an operator for
-}
-
-type OwnerOperator @entity {
-  id: ID!
-  owner: User!
-  operator: User!
-  approved: Boolean!
+  activeAccount: Account!
+  accountsOwned: [Account!] @derivedFrom(field: "parent")  # Visors owned by this user
 }
 
 type StakedToken @entity {
     id: ID!  # Vault address-Token address
     token: Token!
-    visor: Visor!
+    account: Account!
     amount: BigInt!
 }
 
 type RewardedToken @entity {
     id: ID!  # Vault address-Token address
     token: Token!
-    visor: Visor!
+    account: Account!
     amount: BigInt!
 }
 
@@ -142,7 +107,7 @@ type Token @entity {
   name: String!
   # token decimals
   decimals: Int!
-  totalSupply: BigInt
+  totalSupply: BigInt!
 }
 
 type UniswapV3Pool @entity {
@@ -198,7 +163,7 @@ type UniswapV3Hypervisor @entity {
   grossFeesClaimed0: BigInt!
   grossFeesClaimed1: BigInt!
   grossFeesClaimedUSD: BigDecimal!
-  # All time Protocol fees for VISR buyback
+  # All time Protocol fees for GAMMA buyback
   protocolFeesCollected0: BigInt!
   protocolFeesCollected1: BigInt!
   protocolFeesCollectedUSD: BigDecimal!
@@ -285,7 +250,7 @@ type UniswapV3HypervisorDayData @entity {
   grossFeesClaimed0: BigInt!
   grossFeesClaimed1: BigInt!
   grossFeesClaimedUSD: BigDecimal!
-  # Protocol fees for VISR buyback for the day
+  # Protocol fees for GAMMA buyback for the day
   protocolFeesCollected0: BigInt!
   protocolFeesCollected1: BigInt!
   protocolFeesCollectedUSD: BigDecimal!
@@ -306,7 +271,7 @@ type UniswapV3HypervisorDayData @entity {
 
 type UniswapV3HypervisorShare @entity {
   id: ID!  # HypervisorAddress-VisorAddress
-  visor: Visor!
+  account: Account!
   hypervisor: UniswapV3Hypervisor!
   shares: BigInt!
   initialToken0: BigInt!

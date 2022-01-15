@@ -3,7 +3,7 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: VisrToken
+    name: GammaToken
     network: mainnet
     source:
       address: "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197"
@@ -14,12 +14,9 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
-        - VisrDistribution
-        - Visor
+        - Account
         - RewardHypervisor
         - RewardHypervisorShare
       abis:
@@ -30,9 +27,9 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/visrToken.ts
+      file: ./src/mappings/gammaToken.ts
   - kind: ethereum/contract
-    name: vVisrToken
+    name: xgammaToken
     network: mainnet
     source:
       address: "0x26805021988f1a45dc708b5fb75fc75f21747d8c"
@@ -43,7 +40,6 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - VisrToken
         - RewardHypervisor
         - RewardHypervisorShare
       abis:
@@ -52,7 +48,7 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/vVisrToken.ts
+      file: ./src/mappings/xgammaToken.ts
   - kind: ethereum/contract
     name: VisorFactory
     network: mainnet
@@ -66,7 +62,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Factory
-        - Visor
+        - Account
         - VisorTemplate
         - User
         - OwnerOperator
@@ -76,10 +72,6 @@ dataSources:
         - name: Visor
           file: ./abis/Visor.json
       eventHandlers:
-        - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
-        - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
         - event: InstanceAdded(address)
           handler: handleInstanceAdded
         - event: InstanceRemoved(address)
@@ -359,7 +351,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -403,7 +395,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -447,7 +439,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -491,7 +483,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -535,7 +527,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -579,7 +571,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -623,7 +615,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -667,7 +659,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -711,7 +703,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -755,7 +747,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance
@@ -836,6 +828,31 @@ dataSources:
       eventHandlers:
         - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
           handler: handleSwap
+  - name: GAMMA-WETH
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      address: "0x4006bed7bf103d70a1c6b7f1cef4ad059193dc25"
+      abi: UniswapV3Pool
+      startBlock: 13869998
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/pool.ts
+      entities:
+        - UniswapV3Hypervisor
+        - UniswapV3HypervisorDayData
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
   - name: HypeRegistry
     kind: ethereum/contract
     network: mainnet
@@ -876,10 +893,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/feeDistributor.ts
       entities:
-        - Visor
-        - EthToken
-        - EthDistribution
-        - EthDayData
+        - Account
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -906,10 +920,7 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/feeDistributor.ts
       entities:
-        - Visor
-        - EthToken
-        - EthDistribution
-        - EthDayData
+        - Account
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -936,8 +947,6 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/swap.ts
       entities:
-        - VisrToken
-        - VisrTokenDayData
         - ProtocolDistribution
         - DistributionDayData
       abis:
@@ -990,7 +999,7 @@ templates:
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
-        - Visor
+        - Account
         - UniswapV3Hypervisor
         - UniswapV3Deposit
         - UniswapV3Rebalance

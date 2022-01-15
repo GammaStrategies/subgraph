@@ -1,14 +1,13 @@
 /* eslint-disable prefer-const */
-import { BigInt } from '@graphprotocol/graph-ts'
 import { MultisendEtherCall, Multisended } from "../../generated/FeeDistributor/FeeDistributor"
-import { EthToken } from '../../generated/schema'
 import { getEthRateInUSDC } from "./pricing"
-import { getEthDayData, updateDistributionDayData } from "./intervalUpdates"
-import { ZERO_BI, ZERO_BD } from "./constants"
+import { updateDistributionDayData } from "./intervalUpdates"
+import { TZ_UTC, TZ_EST } from "./constants"
 import { getOrCreateProtocolDistribution } from './entities'
+import { getOrCreateEthToken } from './tokens'
 
 
-// export function recordEthDistribution(call: MultisendEtherCall, index: i32): void {
+export function recordEthDistribution(call: MultisendEtherCall, index: i32): void {
 // 	let visors = call.inputs._contributors
 // 	let visor = visors[index].toHex()
 // 	let amounts = call.inputs._balances
@@ -24,41 +23,21 @@ import { getOrCreateProtocolDistribution } from './entities'
 // 	ethDistribution.tx = call.transaction.hash.toHex()
 // 	ethDistribution.index = index
 // 	ethDistribution.save()
-// }
+}
 
 export function updateEthDistributionTotals(event: Multisended): void {
 	let total = event.params.total
 	
-	// Redundant
-	let eth = EthToken.load("0")
-	if (eth === null) {
-		eth = new EthToken("0")
-		eth.decimals = 18
-	}
+	let ethToken = getOrCreateEthToken()
+	ethToken.save()
 
 	let ethRate = getEthRateInUSDC()
 	let totalUSD = total.toBigDecimal() * ethRate
-
-	// redundant
-	eth.totalDistributed += total
-	eth.totalDistributedUSD += totalUSD
-	eth.save()
 
 	let protocolDist = getOrCreateProtocolDistribution('ETH')
 	protocolDist.distributed += total
 	protocolDist.distributedUSD += totalUSD
 	protocolDist.save()
-
-	//need fixing
-	let ethDayDataUTC = getEthDayData(event, ZERO_BI)
-	ethDayDataUTC.distributed += total
-	ethDayDataUTC.distributedUSD += totalUSD
-	ethDayDataUTC.save()
-
-	let ethDayDataEST = getEthDayData(event, BigInt.fromI32(-5))
-	ethDayDataEST.distributed += total
-	ethDayDataEST.distributedUSD += totalUSD
-	ethDayDataEST.save()
 
 	// UTC
 	updateDistributionDayData(
@@ -66,7 +45,7 @@ export function updateEthDistributionTotals(event: Multisended): void {
 		total,
 		totalUSD,
 		event.block.timestamp,
-		ZERO_BI
+		TZ_UTC
 	)
 	// EST
 	updateDistributionDayData(
@@ -74,6 +53,6 @@ export function updateEthDistributionTotals(event: Multisended): void {
 		total,
 		totalUSD,
 		event.block.timestamp,
-		BigInt.fromI32(-5)
+		TZ_EST
 	)
 }

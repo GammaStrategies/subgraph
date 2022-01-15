@@ -1,49 +1,50 @@
+/* eslint-disable prefer-const */
 import { BigInt } from '@graphprotocol/graph-ts'
-import { getOrCreateVisrToken } from './visrToken'
 import { ZERO_BI, REWARD_HYPERVISOR_ADDRESS } from './constants'
 import { RewardHypervisor, RewardHypervisorShare } from "../../generated/schema"
+import { getOrCreateUser, getOrCreateAccount } from './entities'
 
 
 export function getOrCreateRewardHypervisor(): RewardHypervisor {
 	
-	let rhypervisor = RewardHypervisor.load(REWARD_HYPERVISOR_ADDRESS)
-	if (rhypervisor == null) {
-		rhypervisor = new RewardHypervisor(REWARD_HYPERVISOR_ADDRESS)
-		rhypervisor.totalVisr = ZERO_BI
-		rhypervisor.totalSupply = ZERO_BI
-		rhypervisor.save()
-
-		// Reset total staked VISR at this point. To track VISR staked in rewards hypervisor only
-		let visr = getOrCreateVisrToken()
-		visr.totalStaked = ZERO_BI
-		visr.save()
+	let xgamma = RewardHypervisor.load(REWARD_HYPERVISOR_ADDRESS)
+	if (!xgamma) {
+		xgamma = new RewardHypervisor(REWARD_HYPERVISOR_ADDRESS)
+		xgamma.totalGamma = ZERO_BI
+		xgamma.totalSupply = ZERO_BI
+		xgamma.save()
 	}
 
-	return rhypervisor as RewardHypervisor
+	return xgamma as RewardHypervisor
 }
 
 export function getOrCreateRewardHypervisorShare(visorAddress: string): RewardHypervisorShare {
 	
 	let id = REWARD_HYPERVISOR_ADDRESS + "-" + visorAddress
 
-	let vVisrShare = RewardHypervisorShare.load(id)
-	if (vVisrShare == null) {
-		vVisrShare = new RewardHypervisorShare(id)
-		vVisrShare.rewardHypervisor = REWARD_HYPERVISOR_ADDRESS
-		vVisrShare.visor = visorAddress
-		vVisrShare.shares = ZERO_BI
+	let xgammaShare = RewardHypervisorShare.load(id)
+	if (!xgammaShare) {
+		let account = getOrCreateAccount(visorAddress, true)
+		if (account.type === 'non visor') {
+			getOrCreateUser(account.parent, true)
+		}
+
+		xgammaShare = new RewardHypervisorShare(id)
+		xgammaShare.rewardHypervisor = REWARD_HYPERVISOR_ADDRESS
+		xgammaShare.account = visorAddress
+		xgammaShare.shares = ZERO_BI
 	}
 
-	return vVisrShare as RewardHypervisorShare
+	return xgammaShare as RewardHypervisorShare
 }
 
 export function decreaseRewardHypervisorShares(visorAddress: string, shares: BigInt): void {
 
 	let id = REWARD_HYPERVISOR_ADDRESS + "-" + visorAddress
 
-	let vVisrShare = RewardHypervisorShare.load(id)
-	if (vVisrShare != null) {
-		vVisrShare.shares -= shares
-		vVisrShare.save()
+	let xgammaShare = RewardHypervisorShare.load(id)
+	if (xgammaShare) {
+		xgammaShare.shares -= shares
+		xgammaShare.save()
 	}
 }

@@ -1,9 +1,7 @@
 /* eslint-disable prefer-const */
 import { store } from '@graphprotocol/graph-ts'
-import { visorAddressFromTokenId } from "../utils/visor"
+import { visorAddressFromTokenId } from "../utils/account"
 import { 
-	Approval,
-	ApprovalForAll,
 	InstanceAdded,
 	InstanceRemoved,
 	OwnershipTransferred,
@@ -11,34 +9,21 @@ import {
 	TemplateAdded,
 	Transfer
 } from "../../generated/VisorFactory/VisorFactory"
-import { Factory, OwnerOperator, VisorTemplate } from "../../generated/schema"
-import { getOrCreateUser, getOrCreateVisor } from "../utils/visorFactory"
+import { Factory, VisorTemplate } from "../../generated/schema"
+import { getOrCreateUser, getOrCreateAccount } from "../utils/entities"
 
-export function handleApproval(event: Approval): void {
-	let visorId = visorAddressFromTokenId(event.params.tokenId)
-	let visor = getOrCreateVisor(visorId)
-	visor.operator = event.params.approved.toHex()
-	visor.save()
-}
-
-export function handleApprovalForAll(event: ApprovalForAll): void {
-	let ownerOperator = new OwnerOperator(event.params.owner.toHex() + "-" + event.params.operator.toHex())
-	ownerOperator.owner = event.params.owner.toHex()
-	ownerOperator.operator = event.params.operator.toHex()
-	ownerOperator.approved = event.params.approved
-	ownerOperator.save()
-}
 
 export function handleInstanceAdded(event: InstanceAdded): void {
 	let visorString = event.params.instance.toHex()
 	let ownerString = event.transaction.from.toHex()
 	let user = getOrCreateUser(ownerString)
-	user.activeVisor = visorString
+	user.activeAccount = visorString
 	user.save()
 
-	let visor = getOrCreateVisor(visorString)
-	visor.owner = ownerString
-	visor.save()
+	let account = getOrCreateAccount(visorString)
+	account.type = "visor"
+	account.parent = ownerString
+	account.save()
 }
 
 export function handleInstanceRemoved(event: InstanceRemoved): void {
@@ -70,12 +55,14 @@ export function handleTemplateAdded(event: TemplateAdded): void {
 
 export function handleTransfer(event: Transfer): void {
 	let ownerString = event.params.to.toHex()
-	let user = getOrCreateUser(ownerString)
-	user.save()
+	getOrCreateUser(ownerString, true)
 
 	let visorId = visorAddressFromTokenId(event.params.tokenId)
-	let visor = getOrCreateVisor(visorId)
-	visor.tokenId = event.params.tokenId
-	visor.owner = ownerString
-	visor.save()
+	let account = getOrCreateAccount(visorId)
+	// visor.tokenId = event.params.tokenId
+
+	getOrCreateUser(ownerString, true)
+
+	account.parent = ownerString
+	account.save()
 }

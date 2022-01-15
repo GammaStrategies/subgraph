@@ -1,14 +1,15 @@
 /* eslint-disable prefer-const */
-import { dataSource, BigInt } from '@graphprotocol/graph-ts'
+import { dataSource } from '@graphprotocol/graph-ts'
 import { SwapVISR } from '../../generated/SwapContract/SwapContract'
 import { getGammaRateInUSDC, getVisrRateInUSDC } from '../utils/pricing'
-import { getOrCreateVisrToken } from '../utils/visrToken'
-import { updateVisrTokenDayData, updateDistributionDayData } from '../utils/intervalUpdates'
+import { updateDistributionDayData } from '../utils/intervalUpdates'
 import { 
 	constantAddresses,
 	REWARD_HYPERVISOR_ADDRESS,
-	ZERO_BI,
-	GAMMA_START_BLOCK } from '../utils/constants'
+	GAMMA_START_BLOCK,
+	TZ_UTC,
+	TZ_EST
+} from '../utils/constants'
 import { getOrCreateProtocolDistribution } from '../utils/entities'
 
 
@@ -19,32 +20,23 @@ export function handleSwapVISR(event: SwapVISR): void {
 		const targetToken = addressLookup.get(targetTokenName) as string
 		let protocolDist = getOrCreateProtocolDistribution(targetToken)
 		
-		let visr = getOrCreateVisrToken()  // Redundant
 		let tokenRate = (targetTokenName === "GAMMA") ? getGammaRateInUSDC() : getVisrRateInUSDC()
 
 		let distributed = event.params.amountOut
 		let distributedUSD = distributed.toBigDecimal() * tokenRate
 
-		// visr redundant
-		visr.totalDistributed += distributed
-		visr.totalDistributedUSD += distributedUSD
-		visr.save()
-
 		protocolDist.distributed += distributed
 		protocolDist.distributedUSD += distributedUSD
 		protocolDist.save()
 
-		// Needs to update
-		updateVisrTokenDayData(distributed, event.block.timestamp, ZERO_BI)
-		updateVisrTokenDayData(distributed, event.block.timestamp, BigInt.fromI32(-5))  // EST
-
+		// Update Daily Data
 		// UTC
 		updateDistributionDayData(
 			targetToken,
 			distributed,
 			distributedUSD,
 			event.block.timestamp,
-			ZERO_BI
+			TZ_UTC
 		)
 		// EST
 		updateDistributionDayData(
@@ -52,7 +44,7 @@ export function handleSwapVISR(event: SwapVISR): void {
 			distributed,
 			distributedUSD,
 			event.block.timestamp,
-			BigInt.fromI32(-5)
+			TZ_EST
 		)
 	}
 }
