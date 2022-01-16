@@ -23,7 +23,7 @@ import {
 import { updateAndGetUniswapV3HypervisorDayData } from "../../utils/intervalUpdates"
 import { getExchangeRate, getBaseTokenRateInUSDC } from "../../utils/pricing"
 import { resetAggregates, updateAggregates, updateTvl } from "../../utils/aggregation"
-import { ADDRESS_ZERO, ONE_BI, ZERO_BD, ZERO_BI } from "../../utils/constants"
+import { ADDRESS_ZERO, ONE_BI, ZERO_BD } from "../../utils/constants"
 
 
 export function handleDeposit(event: DepositEvent): void {
@@ -221,8 +221,18 @@ export function handleTransfer(event: TransferEvent): void {
 		let fromShare = getOrCreateHypervisorShare(hypervisorId, fromAddress)
 		let toShare = getOrCreateHypervisorShare(hypervisorId, toAddress)
 
-		if (shares > fromShare.shares) {
-			fromShare.shares = ZERO_BI
+		if (shares >= fromShare.shares) {
+			// If all shares are withdrawn, remove entity
+			let hypervisorShareId = hypervisorId + "-" + fromAddress
+			store.remove('UniswapV3HypervisorShare', hypervisorShareId)
+			let accountFrom = Account.load(fromAddress)
+			if (accountFrom != null) {
+				accountFrom.hypervisorCount -= ONE_BI
+				accountFrom.save()
+			}
+			let hypervisor = getOrCreateHypervisor(event.address, event.block.timestamp)
+			hypervisor.visorCount -= ONE_BI
+			hypervisor.save()
 		} else {
 			fromShare.shares -= shares
 		}

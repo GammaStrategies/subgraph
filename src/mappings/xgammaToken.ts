@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { Address, } from '@graphprotocol/graph-ts'
+import { Address } from '@graphprotocol/graph-ts'
 import { ADDRESS_ZERO, TZ_UTC, TZ_EST } from '../utils/constants'
 import { Transfer as TransferEvent } from "../../generated/GammaToken/ERC20"
 import { 
@@ -8,6 +8,7 @@ import {
 	decreaseRewardHypervisorShares
 } from '../utils/rewardHypervisor'
 import { updateRewardHypervisorDayData } from '../utils/intervalUpdates'
+
 
 export function handleTransfer(event: TransferEvent): void {
 	let xgamma = getOrCreateRewardHypervisor()
@@ -19,18 +20,23 @@ export function handleTransfer(event: TransferEvent): void {
 
 	if (mintEvent) {
 		// Mint shares
+		xgamma.totalSupply += shares
+	} else {
+		// Decrease shares of from account
+		decreaseRewardHypervisorShares(event.params.from.toHex(), shares)
+	}
+	
+	if (burnEvent) {
+		// Burn shares
+		xgamma.totalSupply -= shares
+	} else {
+		// Increase shares of to account
 		let xgammaShare = getOrCreateRewardHypervisorShare(event.params.to.toHex())
 		xgammaShare.shares += shares
-		xgamma.totalSupply += shares
-
 		xgammaShare.save()
-		xgamma.save()
-	} else if (burnEvent) {
-		// Burn shares
-		decreaseRewardHypervisorShares(event.params.from.toHex(), shares)
-		xgamma.totalSupply -= shares
-		xgamma.save()
 	}
+	
+	xgamma.save()
 
 	if (mintEvent || burnEvent) {
 		updateRewardHypervisorDayData(

@@ -142,13 +142,6 @@
             "startBlock": 13129208  
         }
     ],
-    "swapContract": [
-        {
-            "name": "SwapContract",
-            "address": "0x0B7D3aE92b6F4a440bacc4B9826ad2b4C35a12C8",
-            "startBlock": 13404912
-        }
-    ],
     "uniProxy": [
         {
             "name": "UniProxy",
