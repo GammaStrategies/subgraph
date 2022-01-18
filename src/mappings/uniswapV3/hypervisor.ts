@@ -235,11 +235,10 @@ export function handleTransfer(event: TransferEvent): void {
 			hypervisor.save()
 		} else {
 			fromShare.shares -= shares
+			fromShare.save()
 		}
 
 		toShare.shares += shares
-
-		fromShare.save()
 		toShare.save()
 	}	
 }
