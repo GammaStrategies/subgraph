@@ -103,7 +103,17 @@
         {
             "name": "BABL-ETH 3000",
             "address": "0xF19F91d7889668A533F14d076aDc187be781a458",
-            "startBlock": "13691975"
+            "startBlock": 13691975
+        },
+        {
+            "name": "ETH-BABL2 3000",
+            "address": "0x5e6c481de496554b66657dd1ca1f70c61cf11660",
+            "startBlock": 13934335
+        },
+        {
+            "name": "FLOAT-ETH2 3000",
+            "address": "0xc86b1e7fa86834cac1468937cdd53ba3ccbc1153",
+            "startBlock": 13615043
         }
     ],
     "uniswapV3PoolOrphan": [
@@ -140,13 +150,6 @@
             "name": "FeeDistributor1",
             "address": "0x8451122f06616baff7feb10afc2c4f4132fc4709",
             "startBlock": 13129208  
-        }
-    ],
-    "swapContract": [
-        {
-            "name": "SwapContract",
-            "address": "0x0B7D3aE92b6F4a440bacc4B9826ad2b4C35a12C8",
-            "startBlock": 13404912
         }
     ],
     "uniProxy": [

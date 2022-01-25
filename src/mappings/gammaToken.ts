@@ -4,8 +4,6 @@ import { Transfer as TransferEvent } from "../../generated/GammaToken/ERC20"
 import { updateDistributionDayData, updateRewardHypervisorDayData } from '../utils/intervalUpdates'
 import {
 	ADDRESS_ZERO,
-	ZERO_BI,
-	ZERO_BD,
 	REWARD_HYPERVISOR_ADDRESS,
 	SWAPPER_ADDRESS,
 	constantAddresses,
@@ -20,6 +18,7 @@ import {
 	getOrCreateProtocolDistribution
 } from '../utils/entities'
 import { getOrCreateToken } from '../utils/tokens'
+import { getGammaRateInUSDC } from '../utils/pricing'
 
 
 let REWARD_HYPERVISOR = Address.fromString(REWARD_HYPERVISOR_ADDRESS)
@@ -28,7 +27,6 @@ let SWAPPER = Address.fromString(SWAPPER_ADDRESS)
 export function handleTransfer(event: TransferEvent): void {
 	let addressLookup = constantAddresses.network(dataSource.network())
 	let gammaAddress = addressLookup.get("GAMMA") as string
-
 	let gammaAmount = event.params.value
 
 	let gamma = getOrCreateToken(Address.fromString(gammaAddress))
@@ -38,17 +36,42 @@ export function handleTransfer(event: TransferEvent): void {
 		gamma.save()
 	}
 
-	let distributed = ZERO_BI
-	let distributedUSD = ZERO_BD
-
 	let xgamma = getOrCreateRewardHypervisor()
-	let protocolDist = getOrCreateProtocolDistribution(gammaAddress)
 	
 	if (event.params.to == REWARD_HYPERVISOR) {
 		xgamma.totalGamma += gammaAmount
 		// Deposit into reward hypervisor
-		if (event.params.from !== SWAPPER) {
-			// If not from swapper, this is deposit by user
+		if (event.params.from == SWAPPER) {
+			// Distribution event if from swapper
+			let protocolDist = getOrCreateProtocolDistribution(gammaAddress)
+			let tokenRate = getGammaRateInUSDC()
+
+			let distributed = gammaAmount
+			let distributedUSD = gammaAmount.toBigDecimal() * tokenRate
+
+			protocolDist.distributed += distributed
+			protocolDist.distributedUSD += distributedUSD
+			protocolDist.save()
+
+			// Update daily distributed data
+			// UTC
+			updateDistributionDayData(
+				gammaAddress,
+				distributed,
+				distributedUSD,
+				event.block.timestamp,
+				TZ_UTC
+			)
+			// EST
+			updateDistributionDayData(
+				gammaAddress,
+				distributed,
+				distributedUSD,
+				event.block.timestamp,
+				TZ_EST
+			)
+		} else {
+			// If not from swapper, this is a deposit by user
 			let accountFrom = getOrCreateAccount(event.params.from.toHexString())
 			if (accountFrom.type === 'non visor') {
 				getOrCreateUser(accountFrom.parent, true)
@@ -64,41 +87,9 @@ export function handleTransfer(event: TransferEvent): void {
 	}
 
 	xgamma.save()
-	protocolDist.save()
-
-	// Update daily distributed data
-	if (distributed > ZERO_BI) {		
-		// UTC
-		updateDistributionDayData(
-			gammaAddress,
-			distributed,
-			distributedUSD,
-			event.block.timestamp,
-			TZ_UTC
-		)
-		// EST
-		updateDistributionDayData(
-			gammaAddress,
-			distributed,
-			distributedUSD,
-			event.block.timestamp,
-			TZ_EST
-		)
-	
-	}
 
 	if (event.params.to === REWARD_HYPERVISOR || event.params.from === REWARD_HYPERVISOR) {
-		updateRewardHypervisorDayData(
-			xgamma.totalGamma,
-			xgamma.totalSupply,
-			event.block.timestamp,
-			TZ_UTC
-		)
-		updateRewardHypervisorDayData(
-			xgamma.totalGamma,
-			xgamma.totalSupply,
-			event.block.timestamp,
-			TZ_EST
-		)
+		updateRewardHypervisorDayData(event.block.timestamp, TZ_UTC)
+		updateRewardHypervisorDayData(event.block.timestamp, TZ_EST)
 	}
 }

@@ -18,29 +18,29 @@ export function getOrCreateRewardHypervisor(): RewardHypervisor {
 	return xgamma as RewardHypervisor
 }
 
-export function getOrCreateRewardHypervisorShare(visorAddress: string): RewardHypervisorShare {
+export function getOrCreateRewardHypervisorShare(accountAddress: string): RewardHypervisorShare {
 	
-	let id = REWARD_HYPERVISOR_ADDRESS + "-" + visorAddress
+	let id = REWARD_HYPERVISOR_ADDRESS + "-" + accountAddress
 
 	let xgammaShare = RewardHypervisorShare.load(id)
 	if (!xgammaShare) {
-		let account = getOrCreateAccount(visorAddress, true)
+		let account = getOrCreateAccount(accountAddress, true)
 		if (account.type === 'non visor') {
 			getOrCreateUser(account.parent, true)
 		}
 
 		xgammaShare = new RewardHypervisorShare(id)
 		xgammaShare.rewardHypervisor = REWARD_HYPERVISOR_ADDRESS
-		xgammaShare.account = visorAddress
+		xgammaShare.account = accountAddress
 		xgammaShare.shares = ZERO_BI
 	}
 
 	return xgammaShare as RewardHypervisorShare
 }
 
-export function decreaseRewardHypervisorShares(visorAddress: string, shares: BigInt): void {
+export function decreaseRewardHypervisorShares(accountAddress: string, shares: BigInt): void {
 
-	let id = REWARD_HYPERVISOR_ADDRESS + "-" + visorAddress
+	let id = REWARD_HYPERVISOR_ADDRESS + "-" + accountAddress
 
 	let xgammaShare = RewardHypervisorShare.load(id)
 	if (xgammaShare) {

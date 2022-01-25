@@ -120,6 +120,7 @@ dist
 #Subgraph generated
 build/
 generated/
+.bin/
 
 # script to check for deployment errors
 check_error.py

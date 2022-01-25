@@ -19,6 +19,7 @@ import { getOrCreatePool } from "../uniswapV3/pool";
 import { createConversion } from "../tokens";
 import { ADDRESS_ZERO, ZERO_BI, ONE_BI, ZERO_BD } from "../constants";
 
+
 export function getOrCreateHypervisor(
   hypervisorAddress: Address,
   timestamp: BigInt
@@ -143,22 +144,22 @@ export function createWithdraw(event: WithdrawEvent): UniswapV3Withdraw {
 
 export function getOrCreateHypervisorShare(
   hypervisorAddress: string,
-  visorAddress: string,
+  accountAddress: string,
 ): UniswapV3HypervisorShare {
 
-  let id = hypervisorAddress + "-" + visorAddress;
+  let id = hypervisorAddress + "-" + accountAddress;
 
   let hypervisorShare = UniswapV3HypervisorShare.load(id);
   if (hypervisorShare == null) {
     hypervisorShare = new UniswapV3HypervisorShare(id);
     hypervisorShare.hypervisor = hypervisorAddress;
-    hypervisorShare.account = visorAddress;
+    hypervisorShare.account = accountAddress;
     hypervisorShare.shares = ZERO_BI;
     hypervisorShare.initialToken0 = ZERO_BI;
     hypervisorShare.initialToken1 = ZERO_BI;
     hypervisorShare.initialUSD = ZERO_BD;
     // increment counts
-    let account = Account.load(visorAddress);
+    let account = Account.load(accountAddress);
     if (account != null) {
       account.hypervisorCount += ONE_BI;
       account.save();

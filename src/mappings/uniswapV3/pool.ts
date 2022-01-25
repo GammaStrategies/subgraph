@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { Address } from '@graphprotocol/graph-ts'
 import { Swap } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool"
 import { resetAggregates, updateAggregates, updateTvl } from "../../utils/aggregation"

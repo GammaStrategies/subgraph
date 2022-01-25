@@ -6,6 +6,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
+    "clean": "rimraf generated build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/gamma",
     "deploy-loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
     "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-arbitrum",
@@ -15,21 +16,19 @@
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
     "prepare:arbitrum": "mustache config/arbitrum.json subgraph.template.yaml > subgraph.yaml",
-    "prepare:v3only-mainnet": "mustache config/mainnet.json v3only.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.23.2",
-    "@graphprotocol/graph-ts": "^0.23.1",
-    "@typescript-eslint/eslint-plugin": "^5.1.0",
-    "@typescript-eslint/parser": "^5.1.0",
-    "eslint": "^7.32.0",
+    "@graphprotocol/graph-cli": "^0.25.3",
+    "@graphprotocol/graph-ts": "^0.24.1",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
+    "matchstick-as": "^0.2.3",
     "mustache": "^4.2.0",
-    "prettier": "2.4.1",
-    "typescript": "^4.4.3"
-  },
-  "dependencies": {
-    "matchstick-as": "^0.2.0"
+    "prettier": "2.5.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.4"
   }
 }
