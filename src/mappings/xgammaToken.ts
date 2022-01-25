@@ -39,17 +39,7 @@ export function handleTransfer(event: TransferEvent): void {
 	xgamma.save()
 
 	if (mintEvent || burnEvent) {
-		updateRewardHypervisorDayData(
-			xgamma.totalGamma,
-			xgamma.totalSupply,
-			event.block.timestamp,
-			TZ_UTC
-		)
-		updateRewardHypervisorDayData(
-			xgamma.totalGamma,
-			xgamma.totalSupply,
-			event.block.timestamp,
-			TZ_EST
-		)
+		updateRewardHypervisorDayData(event.block.timestamp, TZ_UTC)
+		updateRewardHypervisorDayData(event.block.timestamp, TZ_EST)
 	}
 }

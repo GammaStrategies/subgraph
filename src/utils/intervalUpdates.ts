@@ -7,6 +7,7 @@ import {
     UniswapV3Hypervisor 
 } from '../../generated/schema'
 import { ZERO_BI } from './constants'
+import { getOrCreateRewardHypervisor } from './rewardHypervisor'
 
 let SECONDS_IN_HOUR = BigInt.fromI32(60 * 60)
 let SECONDS_IN_DAY = BigInt.fromI32(60 * 60 * 24)
@@ -42,8 +43,6 @@ export function updateDistributionDayData(
 }
 
 export function updateRewardHypervisorDayData(
-    totalGamma: BigInt,
-    totalSupply: BigInt,
     timestamp: BigInt,
     utcDiffHours: BigInt
 ): RewardHypervisorDayData {
@@ -61,8 +60,10 @@ export function updateRewardHypervisorDayData(
         rewardHypervisorDayData.timezone = timezone
     }
 
-    rewardHypervisorDayData.totalGamma += totalGamma
-    rewardHypervisorDayData.totalSupply += totalSupply
+    let xgamma = getOrCreateRewardHypervisor()
+
+    rewardHypervisorDayData.totalGamma = xgamma.totalGamma
+    rewardHypervisorDayData.totalSupply = xgamma.totalSupply
     rewardHypervisorDayData.save()
 
     return rewardHypervisorDayData as RewardHypervisorDayData
