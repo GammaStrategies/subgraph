@@ -68,7 +68,7 @@ export function getOrCreateHypervisor(
     hypervisor.tvl1 = ZERO_BI;
     hypervisor.tvlUSD = ZERO_BD;
     hypervisor.pricePerShare = ZERO_BD;
-    hypervisor.visorCount = ZERO_BI;
+    hypervisor.accountCount = ZERO_BI;
     hypervisor.conversion = hypervisorId;
     hypervisor.lastUpdated = timestamp;
     hypervisor.save();
@@ -119,10 +119,21 @@ export function createRebalance(event: RebalanceEvent): UniswapV3Rebalance {
 
   // Read rebalance limits from contract as not available in event
   let hypervisorContract = HypervisorContract.bind(event.address);
+
+  let basePosition = hypervisorContract.getBasePosition();
+  let limitPosition = hypervisorContract.getLimitPosition()
+  
   rebalance.baseLower = hypervisorContract.baseLower();
   rebalance.baseUpper = hypervisorContract.baseUpper();
+  rebalance.baseLiquidity = basePosition.value0
+  rebalance.baseAmount0 = basePosition.value1
+  rebalance.baseAmount1 = basePosition.value2
+
   rebalance.limitLower = hypervisorContract.limitLower();
   rebalance.limitUpper = hypervisorContract.limitUpper();
+  rebalance.limitLiquidity = limitPosition.value0
+  rebalance.limitAmount0 = limitPosition.value1
+  rebalance.limitAmount1 = limitPosition.value2
 
   return rebalance as UniswapV3Rebalance;
 }
@@ -165,9 +176,13 @@ export function getOrCreateHypervisorShare(
       account.save();
     }
     let hypervisor = UniswapV3Hypervisor.load(hypervisorAddress) as UniswapV3Hypervisor;
-    hypervisor.visorCount += ONE_BI;
+    hypervisor.accountCount += ONE_BI;
     hypervisor.save();
   }
 
   return hypervisorShare as UniswapV3HypervisorShare;
+}
+
+export function updateLiquidity(hypervisorId: string): void {
+  // Need current price, current
 }

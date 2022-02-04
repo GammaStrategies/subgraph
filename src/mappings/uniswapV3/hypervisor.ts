@@ -126,6 +126,12 @@ export function handleRebalance(event: RebalanceEvent): void {
 	hypervisor.baseUpper = rebalance.baseUpper
 	hypervisor.limitLower = rebalance.limitLower
 	hypervisor.limitUpper = rebalance.limitUpper
+	hypervisor.baseLiquidity = rebalance.baseLiquidity
+	hypervisor.baseAmount0 = rebalance.baseAmount0
+	hypervisor.baseAmount1 = rebalance.baseAmount1
+	hypervisor.limitLiquidity = rebalance.limitLiquidity
+	hypervisor.limitAmount0 = rebalance.limitAmount0
+	hypervisor.limitAmount1 = rebalance.limitAmount1
 	hypervisor.save()
 
 	updateTvl(event.address)
@@ -185,7 +191,7 @@ export function handleWithdraw(event: WithdrawEvent): void {
 				account.hypervisorCount -= ONE_BI
 				account.save()
 			}
-			hypervisor.visorCount -= ONE_BI
+			hypervisor.accountCount -= ONE_BI
 		} else {
 			let remainingShares = hypervisorShare.shares - withdraw.shares
 			hypervisorShare.initialToken0 = hypervisorShare.initialToken0 * remainingShares / hypervisorShare.shares
@@ -231,7 +237,7 @@ export function handleTransfer(event: TransferEvent): void {
 				accountFrom.save()
 			}
 			let hypervisor = getOrCreateHypervisor(event.address, event.block.timestamp)
-			hypervisor.visorCount -= ONE_BI
+			hypervisor.accountCount -= ONE_BI
 			hypervisor.save()
 		} else {
 			fromShare.shares -= shares
