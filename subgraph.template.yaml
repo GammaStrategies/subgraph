@@ -27,6 +27,7 @@ dataSources:
         - Account
         - RewardHypervisor
         - RewardHypervisorShare
+        - RewardHypervisorTx
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
@@ -52,6 +53,7 @@ dataSources:
       entities:
         - RewardHypervisor
         - RewardHypervisorShare
+        - RewardHypervisorTx
       abis:
         - name: ERC20
           file: ./abis/ERC20.json
