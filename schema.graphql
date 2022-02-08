@@ -24,6 +24,20 @@ type RewardHypervisorShare @entity {
   shares: BigInt!
 }
 
+type RewardHypervisorTx @entity {
+  id: ID!
+  timestamp: BigInt!
+  "stake or unstake"
+  action: String!
+  account: Account!
+  gammaAmount: BigInt!
+  xgammaAmount: BigInt!
+  xgammaAmountBefore: BigInt!
+  xgammaAmountAfter: BigInt!
+  xgammaSupplyBefore: BigInt!
+  xgammaSupplyAfter: BigInt!
+}
+
 type DistributionDayData @entity {
   id: ID!
   date: BigInt!

@@ -15,7 +15,8 @@ import { unstakeGammaFromAccount } from '../utils/gammaToken'
 import { 
 	getOrCreateAccount,
 	getOrCreateUser,
-	getOrCreateProtocolDistribution
+	getOrCreateProtocolDistribution,
+	getOrCreateRewardHypervisorTx
 } from '../utils/entities'
 import { getOrCreateToken } from '../utils/tokens'
 import { getGammaRateInUSDC } from '../utils/pricing'
@@ -37,6 +38,9 @@ export function handleTransfer(event: TransferEvent): void {
 	}
 
 	let xgamma = getOrCreateRewardHypervisor()
+	
+	let xgammaTx = getOrCreateRewardHypervisorTx(event.transaction.hash.toHex())
+	xgammaTx.gammaAmount = gammaAmount
 	
 	if (event.params.to == REWARD_HYPERVISOR) {
 		xgamma.totalGamma += gammaAmount
@@ -72,8 +76,9 @@ export function handleTransfer(event: TransferEvent): void {
 			)
 		} else {
 			// If not from swapper, this is a deposit by user
+			xgammaTx.save()  // Preserve Tx
 			let accountFrom = getOrCreateAccount(event.params.from.toHexString())
-			if (accountFrom.type === 'non visor') {
+			if (accountFrom.type === 'non-visor') {
 				getOrCreateUser(accountFrom.parent, true)
 			}
 			accountFrom.gammaDeposited += gammaAmount
@@ -82,7 +87,8 @@ export function handleTransfer(event: TransferEvent): void {
 	} else if (event.params.from == REWARD_HYPERVISOR) {
 		// User withdraw from reward hypervisor
 		// update account
-		unstakeGammaFromAccount(event.params.to.toHexString(), gammaAmount)
+		xgammaTx.save()  // Save gammaAmount value before unstake
+		unstakeGammaFromAccount(event.params.to.toHexString(), event.transaction.hash.toHex())
 		xgamma.totalGamma -= gammaAmount
 	}
 

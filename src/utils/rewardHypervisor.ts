@@ -25,7 +25,7 @@ export function getOrCreateRewardHypervisorShare(accountAddress: string): Reward
 	let xgammaShare = RewardHypervisorShare.load(id)
 	if (!xgammaShare) {
 		let account = getOrCreateAccount(accountAddress, true)
-		if (account.type === 'non visor') {
+		if (account.type === 'non-visor') {
 			getOrCreateUser(account.parent, true)
 		}
 
