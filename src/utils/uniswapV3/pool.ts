@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { log, Address } from "@graphprotocol/graph-ts";
+import { Address } from "@graphprotocol/graph-ts";
 import { UniswapV3Pool as PoolContract } from "../../../generated/UniswapV3HypervisorFactory/UniswapV3Pool";
 import { UniswapV3Pool } from "../../../generated/schema";
 import { getOrCreateToken } from "../tokens";
@@ -26,7 +26,7 @@ export function getOrCreatePool(poolAddress: Address): UniswapV3Pool {
     pool.fee = poolContract.fee();
     pool.sqrtPriceX96 = sqrtPriceX96;
     pool.lastSwapTime = ZERO_BI;
-    log.warning("pool created: {}", [poolAddress.toHex()])
+    pool.lastHypervisorRefreshTime = ZERO_BI;
   }
   return pool as UniswapV3Pool;
 }

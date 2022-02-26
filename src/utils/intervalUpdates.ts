@@ -12,7 +12,6 @@ import { getOrCreateRewardHypervisor } from './rewardHypervisor'
 let SECONDS_IN_HOUR = BigInt.fromI32(60 * 60)
 let SECONDS_IN_DAY = BigInt.fromI32(60 * 60 * 24)
 
-
 export function updateDistributionDayData(
     tokenId: string,
     distributed: BigInt,

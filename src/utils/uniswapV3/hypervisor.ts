@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { UniswapV3Hypervisor as HypervisorContract } from "../../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
+import { UniswapV3Pool as PoolContract } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool";
 import {
   Deposit as DepositEvent,
   Withdraw as WithdrawEvent,
@@ -18,11 +19,13 @@ import { UniswapV3Pool as PoolTemplate } from "../../../generated/templates";
 import { getOrCreatePool } from "../uniswapV3/pool";
 import { createConversion } from "../tokens";
 import { ADDRESS_ZERO, ZERO_BI, ONE_BI, ZERO_BD } from "../constants";
+import { getAmounts } from "../liquidityMaths";
+import { positionKey } from "./positions";
 
 
 export function getOrCreateHypervisor(
   hypervisorAddress: Address,
-  timestamp: BigInt
+  timestamp: BigInt=ZERO_BI
 ): UniswapV3Hypervisor {
   let hypervisorId = hypervisorAddress.toHex();
   let hypervisor = UniswapV3Hypervisor.load(hypervisorId);
@@ -68,7 +71,7 @@ export function getOrCreateHypervisor(
     hypervisor.tvl1 = ZERO_BI;
     hypervisor.tvlUSD = ZERO_BD;
     hypervisor.pricePerShare = ZERO_BD;
-    hypervisor.visorCount = ZERO_BI;
+    hypervisor.accountCount = ZERO_BI;
     hypervisor.conversion = hypervisorId;
     hypervisor.lastUpdated = timestamp;
     hypervisor.save();
@@ -119,10 +122,21 @@ export function createRebalance(event: RebalanceEvent): UniswapV3Rebalance {
 
   // Read rebalance limits from contract as not available in event
   let hypervisorContract = HypervisorContract.bind(event.address);
+
+  let basePosition = hypervisorContract.getBasePosition();
+  let limitPosition = hypervisorContract.getLimitPosition()
+  
   rebalance.baseLower = hypervisorContract.baseLower();
   rebalance.baseUpper = hypervisorContract.baseUpper();
+  rebalance.baseLiquidity = basePosition.value0
+  rebalance.baseAmount0 = basePosition.value1
+  rebalance.baseAmount1 = basePosition.value2
+
   rebalance.limitLower = hypervisorContract.limitLower();
   rebalance.limitUpper = hypervisorContract.limitUpper();
+  rebalance.limitLiquidity = limitPosition.value0
+  rebalance.limitAmount0 = limitPosition.value1
+  rebalance.limitAmount1 = limitPosition.value2
 
   return rebalance as UniswapV3Rebalance;
 }
@@ -165,9 +179,67 @@ export function getOrCreateHypervisorShare(
       account.save();
     }
     let hypervisor = UniswapV3Hypervisor.load(hypervisorAddress) as UniswapV3Hypervisor;
-    hypervisor.visorCount += ONE_BI;
+    hypervisor.accountCount += ONE_BI;
     hypervisor.save();
   }
 
   return hypervisorShare as UniswapV3HypervisorShare;
 }
+
+export function updatePositions(hypervisorAddress: Address): void {
+
+  let hypervisor = getOrCreateHypervisor(hypervisorAddress)
+  let hypervisorContract = HypervisorContract.bind(hypervisorAddress);
+  
+  let basePosition = hypervisorContract.getBasePosition()
+  let limitPosition = hypervisorContract.getLimitPosition()
+
+  hypervisor.baseLiquidity = basePosition.value0
+  hypervisor.baseAmount0 = basePosition.value1
+  hypervisor.baseAmount1 = basePosition.value2
+  hypervisor.limitLiquidity = limitPosition.value0
+  hypervisor.limitAmount0 = limitPosition.value1
+  hypervisor.limitAmount1 = limitPosition.value2
+
+  hypervisor.save()
+}
+
+
+export function updateFeeGrowth(hypervisorAddress: Address): void {
+
+  let hypervisor = getOrCreateHypervisor(hypervisorAddress)
+  let poolAddress = Address.fromString(hypervisor.pool)
+  let poolContract = PoolContract.bind(poolAddress);
+  
+  let baseKey = positionKey(poolAddress, hypervisor.baseLower, hypervisor.baseUpper)
+  let limitKey = positionKey(poolAddress, hypervisor.limitLower, hypervisor.limitUpper)
+
+  let basePosition = poolContract.positions(baseKey)
+  let limitPosition = poolContract.positions(limitKey)
+
+  hypervisor.baseLiquidity = basePosition.value0
+  hypervisor.baseFeeGrowthInside0LastX128 = basePosition.value1
+  hypervisor.baseFeeGrowthInside1LastX128 = basePosition.value2
+  hypervisor.limitLiquidity = limitPosition.value0
+  hypervisor.limitFeeGrowthInside0LastX128 = limitPosition.value1
+  hypervisor.limitFeeGrowthInside1LastX128 = limitPosition.value2
+
+  hypervisor.save()
+}
+
+// export function updateAmounts(hypervisorAddress: Address, sqrtPrice: BigInt): void {
+//   let hypervisor = getOrCreateHypervisor(hypervisorAddress)
+//   let baseAmounts = getAmounts(
+//     sqrtPrice,
+//     BigInt.fromI32(hypervisor.baseLower),  // need to convert ticks to sqrtPrice
+//     BigInt.fromI32(hypervisor.baseUpper),
+//     hypervisor.baseLiquidity
+//   )
+
+//   let limitAmounts = getAmounts(
+//     sqrtPrice,
+//     BigInt.fromI32(hypervisor.limitLower),
+//     BigInt.fromI32(hypervisor.limitUpper),
+//     hypervisor.limitLiquidity
+//   )
+// }

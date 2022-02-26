@@ -24,7 +24,7 @@ export class constantAddresses {
         lookup.set('USDC', '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48');
         lookup.set('VISR', '0xf938424f7210f31df2aee3011291b658f872e91e');
         lookup.set('GAMMA', '0x6bea7cfef803d1e3d5f7c0103f7ded065644e197');
-        lookup.set('WETH-USDC', '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8');
+        lookup.set('WETH-USDC', '0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640');
         lookup.set('WETH-VISR', '0x9a9cf34c3892acdb61fb7ff17941d8d81d279c75');
         lookup.set('GAMMA-WETH', '0x4006bed7bf103d70a1c6b7f1cef4ad059193dc25');
 

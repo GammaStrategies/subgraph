@@ -134,6 +134,7 @@ type UniswapV3Pool @entity {
   sqrtPriceX96: BigInt!
   hypervisors: [String!]!
   lastSwapTime: BigInt!
+  lastHypervisorRefreshTime: BigInt!
 }
 
 type UniswapV3HypervisorFactory @entity {
@@ -165,11 +166,21 @@ type UniswapV3Hypervisor @entity {
   baseLower: Int!
   # Upper tick of base position
   baseUpper: Int!
+  baseLiquidity: BigInt!
+  baseAmount0: BigInt!
+  baseAmount1: BigInt!
+  baseFeeGrowthInside0LastX128: BigInt!
+  baseFeeGrowthInside1LastX128: BigInt!
   # Lower tick of limit position
   limitLower: Int!
   # Upper tick of limit position
   limitUpper: Int!
   # All time Gross Fees claimed
+  limitLiquidity: BigInt!
+  limitAmount0: BigInt!
+  limitAmount1: BigInt!
+  limitFeeGrowthInside0LastX128: BigInt!
+  limitFeeGrowthInside1LastX128: BigInt!
   deposit0Max: BigInt!
   deposit1Max: BigInt!
   totalSupply: BigInt!
@@ -185,14 +196,13 @@ type UniswapV3Hypervisor @entity {
   feesReinvested0: BigInt!
   feesReinvested1: BigInt!
   feesReinvestedUSD: BigDecimal!
-  # TVL updated every deposit/rebalance/withdraw
   tvl0: BigInt!
   tvl1: BigInt!
   tvlUSD: BigDecimal!
   pricePerShare: BigDecimal!
   conversion: UniswapV3HypervisorConversion!
   # Number of visors deposited into hypervisor
-  visorCount: BigInt!
+  accountCount: BigInt!
   deposits: [UniswapV3Deposit!]! @derivedFrom(field: "hypervisor")
   rebalances: [UniswapV3Rebalance!]! @derivedFrom(field: "hypervisor")
   withdraws: [UniswapV3Withdraw!]! @derivedFrom(field: "hypervisor")
@@ -219,8 +229,14 @@ type UniswapV3Rebalance @entity {
   tick: Int!
   baseLower: Int!
   baseUpper: Int!
+  baseLiquidity: BigInt!
+  baseAmount0: BigInt!
+  baseAmount1: BigInt!
   limitLower: Int!
   limitUpper: Int!
+  limitLiquidity: BigInt!
+  limitAmount0: BigInt!
+  limitAmount1: BigInt!
   totalAmount0: BigInt!
   totalAmount1: BigInt!
   totalAmountUSD: BigDecimal!

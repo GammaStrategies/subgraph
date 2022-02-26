@@ -8,7 +8,7 @@ import {
 	decreaseRewardHypervisorShares
 } from '../utils/rewardHypervisor'
 import { updateRewardHypervisorDayData } from '../utils/intervalUpdates'
-import { getOrCreateRewardHypervisorTx } from '../utils/entities'
+import { getOrCreateAccount, getOrCreateRewardHypervisorTx } from '../utils/entities'
 
 
 export function handleTransfer(event: TransferEvent): void {
@@ -59,6 +59,7 @@ export function handleTransfer(event: TransferEvent): void {
 		toShare.shares += shares
 		xgammaTx.xgammaAmountAfter = toSharesBefore + shares
 		toShare.save()
+		
 	}
 	
 	xgamma.save()
@@ -67,5 +68,18 @@ export function handleTransfer(event: TransferEvent): void {
 		xgammaTx.save()  // no need to save if not mint or burn
 		updateRewardHypervisorDayData(event.block.timestamp, TZ_UTC)
 		updateRewardHypervisorDayData(event.block.timestamp, TZ_EST)
+	} else {
+		// If neither mint nor burn, then this is a purely transfer event
+		// xgamma transfers have no gamma transfer event, so we need to deal with gammaDeposited logic here.
+		let underlyingGamma = xgamma.totalGamma * xgammaTx.xgammaAmount / xgammaTx.xgammaSupplyBefore
+		// Decrease gammaDeposited by the appropriate amount
+		let fromAccount = getOrCreateAccount(fromAddress)
+		fromAccount.gammaDeposited -= underlyingGamma
+		// Also increase gammaDepoisted by the appropriate amount
+		let toAccount = getOrCreateAccount(toAddress)
+		toAccount.gammaDeposited += underlyingGamma
+
+		fromAccount.save()
+		toAccount.save()
 	}
 }
