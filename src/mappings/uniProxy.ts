@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { CustomDepositCall } from "../../generated/UniProxy/UniProxy"
+import { CustomDeposit, CustomDepositCall } from "../../generated/UniProxy/UniProxy"
 import { getOrCreateHypervisor } from "../utils/uniswapV3/hypervisor"
 
 

@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { UniswapV3Hypervisor as HypervisorContract } from "../../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
+import { UniswapV3Pool as PoolContract } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool";
 import {
   Deposit as DepositEvent,
   Withdraw as WithdrawEvent,
@@ -18,11 +19,13 @@ import { UniswapV3Pool as PoolTemplate } from "../../../generated/templates";
 import { getOrCreatePool } from "../uniswapV3/pool";
 import { createConversion } from "../tokens";
 import { ADDRESS_ZERO, ZERO_BI, ONE_BI, ZERO_BD } from "../constants";
+import { getAmounts } from "../liquidityMaths";
+import { positionKey } from "./positions";
 
 
 export function getOrCreateHypervisor(
   hypervisorAddress: Address,
-  timestamp: BigInt
+  timestamp: BigInt=ZERO_BI
 ): UniswapV3Hypervisor {
   let hypervisorId = hypervisorAddress.toHex();
   let hypervisor = UniswapV3Hypervisor.load(hypervisorId);
@@ -183,6 +186,60 @@ export function getOrCreateHypervisorShare(
   return hypervisorShare as UniswapV3HypervisorShare;
 }
 
-export function updateLiquidity(hypervisorId: string): void {
-  // Need current price, current
+export function updatePositions(hypervisorAddress: Address): void {
+
+  let hypervisor = getOrCreateHypervisor(hypervisorAddress)
+  let hypervisorContract = HypervisorContract.bind(hypervisorAddress);
+  
+  let basePosition = hypervisorContract.getBasePosition()
+  let limitPosition = hypervisorContract.getLimitPosition()
+
+  hypervisor.baseLiquidity = basePosition.value0
+  hypervisor.baseAmount0 = basePosition.value1
+  hypervisor.baseAmount1 = basePosition.value2
+  hypervisor.limitLiquidity = limitPosition.value0
+  hypervisor.limitAmount0 = limitPosition.value1
+  hypervisor.limitAmount1 = limitPosition.value2
+
+  hypervisor.save()
 }
+
+
+export function updateFeeGrowth(hypervisorAddress: Address): void {
+
+  let hypervisor = getOrCreateHypervisor(hypervisorAddress)
+  let poolAddress = Address.fromString(hypervisor.pool)
+  let poolContract = PoolContract.bind(poolAddress);
+  
+  let baseKey = positionKey(poolAddress, hypervisor.baseLower, hypervisor.baseUpper)
+  let limitKey = positionKey(poolAddress, hypervisor.limitLower, hypervisor.limitUpper)
+
+  let basePosition = poolContract.positions(baseKey)
+  let limitPosition = poolContract.positions(limitKey)
+
+  hypervisor.baseLiquidity = basePosition.value0
+  hypervisor.baseFeeGrowthInside0LastX128 = basePosition.value1
+  hypervisor.baseFeeGrowthInside1LastX128 = basePosition.value2
+  hypervisor.limitLiquidity = limitPosition.value0
+  hypervisor.limitFeeGrowthInside0LastX128 = limitPosition.value1
+  hypervisor.limitFeeGrowthInside1LastX128 = limitPosition.value2
+
+  hypervisor.save()
+}
+
+// export function updateAmounts(hypervisorAddress: Address, sqrtPrice: BigInt): void {
+//   let hypervisor = getOrCreateHypervisor(hypervisorAddress)
+//   let baseAmounts = getAmounts(
+//     sqrtPrice,
+//     BigInt.fromI32(hypervisor.baseLower),  // need to convert ticks to sqrtPrice
+//     BigInt.fromI32(hypervisor.baseUpper),
+//     hypervisor.baseLiquidity
+//   )
+
+//   let limitAmounts = getAmounts(
+//     sqrtPrice,
+//     BigInt.fromI32(hypervisor.limitLower),
+//     BigInt.fromI32(hypervisor.limitUpper),
+//     hypervisor.limitLiquidity
+//   )
+// }

@@ -18,7 +18,9 @@ import {
 	createRebalance,
 	createWithdraw,
 	getOrCreateHypervisor,
-	getOrCreateHypervisorShare
+	getOrCreateHypervisorShare,
+	updateFeeGrowth,
+	updatePositions
 } from "../../utils/uniswapV3/hypervisor"
 import { updateAndGetUniswapV3HypervisorDayData } from "../../utils/intervalUpdates"
 import { getExchangeRate, getBaseTokenRateInUSDC } from "../../utils/pricing"
@@ -64,6 +66,7 @@ export function handleDeposit(event: DepositEvent): void {
 	hypervisorShare.initialUSD += deposit.amountUSD
 	hypervisorShare.save()
 
+	updateFeeGrowth(event.address)
 	updateTvl(event.address)
 	updateAggregates(hypervisorId)
 	
@@ -126,13 +129,10 @@ export function handleRebalance(event: RebalanceEvent): void {
 	hypervisor.baseUpper = rebalance.baseUpper
 	hypervisor.limitLower = rebalance.limitLower
 	hypervisor.limitUpper = rebalance.limitUpper
-	hypervisor.baseLiquidity = rebalance.baseLiquidity
-	hypervisor.baseAmount0 = rebalance.baseAmount0
-	hypervisor.baseAmount1 = rebalance.baseAmount1
-	hypervisor.limitLiquidity = rebalance.limitLiquidity
-	hypervisor.limitAmount0 = rebalance.limitAmount0
-	hypervisor.limitAmount1 = rebalance.limitAmount1
 	hypervisor.save()
+	
+	updatePositions(event.address)
+	updateFeeGrowth(event.address)
 
 	updateTvl(event.address)
 	updateAggregates(hypervisorId)
@@ -206,6 +206,8 @@ export function handleWithdraw(event: WithdrawEvent): void {
 	hypervisor.totalSupply -= withdraw.shares
 	hypervisor.save()
 
+	updatePositions(event.address)
+	updateFeeGrowth(event.address)
 	updateTvl(event.address)
 	updateAggregates(hypervisorId)
 	

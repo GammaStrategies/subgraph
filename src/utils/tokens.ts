@@ -174,7 +174,7 @@ export function isNullEthValue(value: string): boolean {
 
 export function createConversion(address: string): void {
 
-  let hypervisor = getOrCreateHypervisor(Address.fromString(address), BigInt.fromI32(0))
+  let hypervisor = getOrCreateHypervisor(Address.fromString(address))
   let pool = getOrCreatePool(Address.fromString(hypervisor.pool))
   let conversion = UniswapV3HypervisorConversion.load(address)
   // match with USDC and lookup pool address

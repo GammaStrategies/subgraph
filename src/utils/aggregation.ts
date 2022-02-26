@@ -13,7 +13,7 @@ import { ZERO_BI, ZERO_BD } from './constants'
 
 export function resetAggregates(hypervisorAddress: string): void {
 	// Resets aggregates in factory
-	let hypervisor = getOrCreateHypervisor(Address.fromString(hypervisorAddress), BigInt.fromI32(0))
+	let hypervisor = getOrCreateHypervisor(Address.fromString(hypervisorAddress))
 	let factory = getOrCreateFactory(hypervisor.factory)
 	factory.grossFeesClaimedUSD -= hypervisor.grossFeesClaimedUSD
 	factory.protocolFeesCollectedUSD -= hypervisor.protocolFeesCollectedUSD
