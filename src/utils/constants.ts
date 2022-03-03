@@ -41,10 +41,20 @@ export class constantAddresses {
         return lookup as TypedMap<string, string>
     }
 
+    static polygon(): TypedMap<string, string> {
+        let lookup = new TypedMap<string, string>()
+        lookup.set('USDC', '0x2791bca1f2de4661ed88a30c99a7a9449aa84174');
+        lookup.set('WETH-USDC', '0x45dda9cb7c25131df268515131f647d726f50608');
+
+        return lookup as TypedMap<string, string>
+    }
+
     static network(network: string): TypedMap<string, string> {
         let mapping = new TypedMap<string, string>()
         if (network == "mainnet") {
             mapping = this.mainnet()
+        } else if (network == "matic") {
+            mapping = this.polygon()
         } else if (network == "arbitrum-one") {
             mapping = this.arbitrum_one()
         }

@@ -21,6 +21,7 @@ import { createConversion } from "../tokens";
 import { ADDRESS_ZERO, ZERO_BI, ONE_BI, ZERO_BD } from "../constants";
 import { getAmounts } from "../liquidityMaths";
 import { positionKey } from "./positions";
+import { getOrCreateAccount, getOrCreateUser } from "../entities";
 
 
 export function getOrCreateHypervisor(
@@ -173,11 +174,11 @@ export function getOrCreateHypervisorShare(
     hypervisorShare.initialToken1 = ZERO_BI;
     hypervisorShare.initialUSD = ZERO_BD;
     // increment counts
-    let account = Account.load(accountAddress);
-    if (account != null) {
-      account.hypervisorCount += ONE_BI;
-      account.save();
-    }
+    let account = getOrCreateAccount(accountAddress)
+    account.hypervisorCount += ONE_BI;
+    account.save();
+    getOrCreateUser(account.parent, true)
+
     let hypervisor = UniswapV3Hypervisor.load(hypervisorAddress) as UniswapV3Hypervisor;
     hypervisor.accountCount += ONE_BI;
     hypervisor.save();
