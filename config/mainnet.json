@@ -58,62 +58,74 @@
         {
             "name": "TCR-ETH",
             "address": "0x8cd73cb1e1fa35628e36b8c543c5f825cd4e77f1",
-            "startBlock": 13328071
+            "startBlock": 13328071,
+            "useCallHandlers": true
         },
         {
             "name": "HEX-ETH",
             "address": "0x0D3FBebfdD96940952618598a5F012De7240C552",
-            "startBlock": 12763072
+            "startBlock": 12763072,
+            "useCallHandlers": true
         },
         {
             "name": "AXS-ETH",
             "address": "0x0624Eb9691D99178d0d2Bd76c72f1dBB4DB05286",
-            "startBlock": 12764007
+            "startBlock": 12764007,
+            "useCallHandlers": true
         },
         {
             "name": "APW-ETH-3000",
             "address": "0x55eED13aB07F8b5538eFf301551492a1D776dA7b",
-            "startBlock": 13463550
+            "startBlock": 13463550,
+            "useCallHandlers": true
         },
         {
             "name": "FLOAT-ETH-3000",
             "address": "0x85CBeD523459b7f6F81C11e710DF969703a8A70C",
-            "startBlock": 13507015
+            "startBlock": 13507015,
+            "useCallHandlers": true
         },
         {
             "name": "CVX-ETH-10000",
             "address": "0x34b95494c3C2732Aa82E1e56be57074Fee7a2B28",
-            "startBlock": 13603680
+            "startBlock": 13603680,
+            "useCallHandlers": true
         },
         {
             "name": "FEI-USDC-500",
             "address": "0x704eCeCABe7855996CeDE5CeFa660Eccd3c01dBE",
-            "startBlock": 13642121
+            "startBlock": 13642121,
+            "useCallHandlers": true
         },
         {
             "name": "GRO-ETH-3000",
             "address": "0x85a5326F08c44eC673e4bFc666b737f7f3Dc6b37",
-            "startBlock": 13642283
+            "startBlock": 13642283,
+            "useCallHandlers": true
         },
         {
             "name": "BPRO-ETH-10000",
             "address": "0x46B7602e4DAD6F71dAe532588110e2711682ACA3",
-            "startBlock": 13642187
+            "startBlock": 13642187,
+            "useCallHandlers": true
         },
         {
             "name": "BABL-ETH 3000",
             "address": "0xF19F91d7889668A533F14d076aDc187be781a458",
-            "startBlock": 13691975
+            "startBlock": 13691975,
+            "useCallHandlers": true
         },
         {
             "name": "ETH-BABL2 3000",
             "address": "0x5e6c481de496554b66657dd1ca1f70c61cf11660",
-            "startBlock": 13934335
+            "startBlock": 13934335,
+            "useCallHandlers": true
         },
         {
             "name": "FLOAT-ETH2 3000",
             "address": "0xc86b1e7fa86834cac1468937cdd53ba3ccbc1153",
-            "startBlock": 13615043
+            "startBlock": 13615043,
+            "useCallHandlers": true
         }
     ],
     "uniswapV3PoolOrphan": [
@@ -156,7 +168,9 @@
         {
             "name": "UniProxy",
             "address": "0xD4bC3380161420442E7f6b1480FCdc18C7Bd814B",
-            "startBlock": 13816636
+            "startBlock": 13816636,
+            "useCallHandlers": true
         }
-    ]
+    ],
+    "hypervisorTemplateUseCallHandlers": true
 }

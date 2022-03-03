@@ -215,11 +215,13 @@ dataSources:
           handler: handleRebalance
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+      {{#useCallHandlers}}
       callHandlers:
         - function: setDepositMax(uint256,uint256)
           handler: handleSetDepositMax
         - function: setMaxTotalSupply(uint256)
           handler: handleSetMaxTotalSupply
+      {{/useCallHandlers}}
   {{/uniswapV3HypervisorOrphan}}
   {{#uniswapV3PoolOrphan}}
   - name: {{name}}
@@ -359,42 +361,17 @@ dataSources:
           file: ./abis/ERC20NameBytes.json
         - name: ERC20SymbolBytes
           file: ./abis/ERC20SymbolBytes.json
+      {{#useEventHandlers}}
+      eventHandlers:
+        - event: CustomDeposit(address,uint256,uint256,uint256)
+          handler: handleCustomDeposit
+      {{/useEventHandlers}}
+      {{#useCallHandlers}}
       callHandlers:
         - function: customDeposit(address,uint256,uint256,uint256)
           handler: handleCustomDepositCall
+      {{/useCallHandlers}}
   {{/uniProxy}}
-  {{#uniProxyEventHandler}}
-  - kind: ethereum/contract
-    name: {{name}}
-    network: {{network}}
-    source:
-      address: "{{address}}"
-      abi: UniProxy
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      file: ./src/mappings/uniProxy.ts
-      entities:
-        - UniswapV3Hypervisor
-      abis:
-        - name: UniProxy
-          file: ./abis/UniProxy.json
-        - name: UniswapV3Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
-        - name: UniswapV3Pool
-          file: ./abis/UniswapV3Pool.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-      eventHandlers:
-        - function: customDeposit(address,uint256,uint256,uint256)
-          handler: handleCustomDeposit
-  {{/uniProxyEventHandler}}
 templates:
   - name: UniswapV3Hypervisor
     kind: ethereum/contract
@@ -427,11 +404,13 @@ templates:
           handler: handleRebalance
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+      {{#hypervisorTemplateUseCallHandlers}}
       callHandlers:
         - function: setDepositMax(uint256,uint256)
           handler: handleSetDepositMax
         - function: setMaxTotalSupply(uint256)
           handler: handleSetMaxTotalSupply
+      {{/hypervisorTemplateUseCallHandlers}}
   - name: UniswapV3Pool
     kind: ethereum/contract
     network: {{network}}

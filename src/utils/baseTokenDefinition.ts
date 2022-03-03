@@ -33,6 +33,28 @@ export class BaseTokenDefinition {
         return lookup as TypedMap<string, BasePool>
     }
 
+    static polygon(): TypedMap<string, BasePool> {
+        const WBTC = "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
+        const WETH = "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"
+        const DAI = "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063"
+        const USDT = "0xc2132d05d31c914a87c6611c10748aeb04b58e8f"
+        const USDC = "0x2791bca1f2de4661ed88a30c99a7a9449aa84174"
+
+        const WBTC_USDC = "0x847b64f9d3a95e977d157866447a5c0a5dfa0ee5"
+        const USDC_WETH = "0x45dda9cb7c25131df268515131f647d726f50608"
+        const DAI_USDC = "0x5f69c2ec01c22843f8273838d570243fd1963014"
+        const USDC_USDT = "0x3f5228d0e7d75467366be7de2c31d0d098ba2c23"
+
+        let lookup = new TypedMap<string, BasePool>()
+        lookup.set(USDC, { pool: ADDRESS_ZERO, usdTokenIdx: -1, priority: 4 });
+        lookup.set(USDT, { pool: USDC_USDT, usdTokenIdx: 0, priority: 3 });
+        lookup.set(DAI, { pool: DAI_USDC, usdTokenIdx: 0, priority: 2 });
+        lookup.set(WETH, { pool: USDC_WETH, usdTokenIdx: 0, priority: 1 });
+        lookup.set(WBTC, { pool: WBTC_USDC, usdTokenIdx: 1, priority: 0 });
+
+        return lookup as TypedMap<string, BasePool>
+    }
+
     static arbitrumOne(): TypedMap<string, BasePool> {
         const WBTC = "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f"
         const WETH = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
@@ -67,6 +89,8 @@ export class BaseTokenDefinition {
         let mapping = new TypedMap<string, BasePool>()
         if (network == "mainnet") {
             mapping = this.mainnet()
+        } else if (network == "matic") {
+            mapping = this.polygon()
         } else if (network == "arbitrum-one") {
             mapping = this.arbitrumOne()
         }

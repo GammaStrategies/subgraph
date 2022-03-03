@@ -22,6 +22,9 @@ export function getOrCreateAccount(addressString: string, saveOnCreate: boolean=
 		account = new Account(addressString)
         account.type = "non-visor"
 		account.parent = addressString  // Default to self, update to visor owner if created from Visor Factory
+		account.gammaDeposited = ZERO_BI
+		account.gammaEarnedRealized = ZERO_BI
+		account.hypervisorCount = ZERO_BI
 		
 		if (saveOnCreate) {
 			account.save()

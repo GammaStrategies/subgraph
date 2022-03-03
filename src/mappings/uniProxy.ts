@@ -13,3 +13,14 @@ export function handleCustomDepositCall(call: CustomDepositCall): void {
 
     hypervisor.save()
 }
+
+export function handleCustomDeposit(event: CustomDeposit): void {
+    let hypervisorId = event.params.param0
+    let hypervisor = getOrCreateHypervisor(hypervisorId, event.block.timestamp)
+
+    hypervisor.deposit0Max = event.params.param1
+    hypervisor.deposit0Max = event.params.param2
+    hypervisor.maxTotalSupply = event.params.param3
+
+    hypervisor.save()
+}
