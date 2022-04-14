@@ -10,7 +10,7 @@
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/gamma",
     "deploy-polygon": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/polygon",
     "deploy-loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
-    "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-arbitrum",
+    "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/visor-arbitrum",
     "deploy-loc-polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-polygon",
     "deploy-lab": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/laboratory",
     "deploy-lab2": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/laboratory2",
