@@ -17,18 +17,21 @@ export class BaseTokenDefinition {
         const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f"
         const USDT = "0xdac17f958d2ee523a2206206994597c13d831ec7"
         const USDC = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+        const OHM = "0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5"
 
         const WBTC_USDC = "0x99ac8ca7087fa4a2a1fb6357269965a2014abc35"
         const USDC_WETH = "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640"
         const DAI_USDC = "0x6c6bc977e13df9b0de53b251522280bb72383700"
         const USDC_USDT = "0x7858e59e0c01ea06df3af3d20ac7b0003275d4bf"
+        const OHM_USDC = "0x893f503fac2ee1e5b78665db23f9c94017aae97d"
 
         let lookup = new TypedMap<string, BasePool>()
-        lookup.set(USDC, { pool: ADDRESS_ZERO, usdTokenIdx: -1, priority: 4 });
-        lookup.set(USDT, { pool: USDC_USDT, usdTokenIdx: 0, priority: 3 });
-        lookup.set(DAI, { pool: DAI_USDC, usdTokenIdx: 1, priority: 2 });
-        lookup.set(WETH, { pool: USDC_WETH, usdTokenIdx: 0, priority: 1 });
-        lookup.set(WBTC, { pool: WBTC_USDC, usdTokenIdx: 1, priority: 0 });
+        lookup.set(USDC, { pool: ADDRESS_ZERO, usdTokenIdx: -1, priority: 5 });
+        lookup.set(USDT, { pool: USDC_USDT, usdTokenIdx: 0, priority: 4 });
+        lookup.set(DAI, { pool: DAI_USDC, usdTokenIdx: 1, priority: 3 });
+        lookup.set(WETH, { pool: USDC_WETH, usdTokenIdx: 0, priority: 2 });
+        lookup.set(WBTC, { pool: WBTC_USDC, usdTokenIdx: 1, priority: 1 });
+        lookup.set(OHM, { pool: OHM_USDC, usdTokenIdx: 1, priority: 0 });
 
         return lookup as TypedMap<string, BasePool>
     }
