@@ -9,9 +9,12 @@
     "clean": "rimraf generated build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/gamma",
     "deploy-polygon": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/polygon",
+    "deploy-arbitrum": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/arbitrum",
+    "deploy-optimism": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/optimism",
     "deploy-loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
     "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/visor-arbitrum",
     "deploy-loc-polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-polygon",
+    "deploy-loc-optimism": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-optimism",
     "deploy-lab": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/laboratory",
     "deploy-lab2": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/laboratory2",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
@@ -20,6 +23,7 @@
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml",
     "prepare:arbitrum": "mustache config/arbitrum.json subgraph.template.yaml > subgraph.yaml",
     "prepare:polygon": "mustache config/polygon.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:optimism": "mustache config/optimism.json subgraph.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

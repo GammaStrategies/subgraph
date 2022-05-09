@@ -2,13 +2,169 @@ specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
-  - name: USDC-ETH-500
+  - name: xsUSD-DAI05
     kind: ethereum/contract
-    network: matic
+    network: optimism
     source:
-      address: "0x9c3b8D3d977bA1D58848565149Cb5Ac1689DFa5b"
+      address: "0x2d6B26f430F261B77D14C495585116aA579b7217"
       abi: UniswapV3Hypervisor
-      startBlock: 24465213
+      startBlock: 7088429
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Account
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+  - name: xUSDC-USDT05
+    kind: ethereum/contract
+    network: optimism
+    source:
+      address: "0x0F548d7AD1A0CB30D1872b8C18894484d76e1569"
+      abi: UniswapV3Hypervisor
+      startBlock: 7085119
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Account
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+  - name: xUSDC-sUSD05
+    kind: ethereum/contract
+    network: optimism
+    source:
+      address: "0x0b4645179C1b668464Df01362fC6219a7ab3234c"
+      abi: UniswapV3Hypervisor
+      startBlock: 7088369
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Account
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+  - name: xsUSD-USDT05
+    kind: ethereum/contract
+    network: optimism
+    source:
+      address: "0x3f848EeFD234dA0B1B98Ea876fe2ee86a10773ca"
+      abi: UniswapV3Hypervisor
+      startBlock: 7088231
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Account
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+  - name: xUSDC-DAI05
+    kind: ethereum/contract
+    network: optimism
+    source:
+      address: "0x66CD859053c458688044d816117D5Bdf42A56813"
+      abi: UniswapV3Hypervisor
+      startBlock: 7087995
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -43,11 +199,11 @@ dataSources:
           handler: handleTransfer
   - name: WETH-USDC
     kind: ethereum/contract
-    network: matic
+    network: optimism
     source:
-      address: "0x45dda9cb7c25131df268515131f647d726f50608"
+      address: "0x85149247691df622eaf1a8bd0cafd40bc45154a9"
       abi: UniswapV3Pool
-      startBlock: 24465212
+      startBlock: 6537644
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -68,11 +224,11 @@ dataSources:
           handler: handleSwap
   - name: HypeRegistry
     kind: ethereum/contract
-    network: matic
+    network: optimism
     source:
-      address: "0x0Ac4C7b794f3D7e7bF1093A4f179bA792CF15055"
+      address: "0xF5BFA20F4A77933fEE0C7bB7F39E7642A070d599"
       abi: HypeRegistry
-      startBlock: 25305922
+      startBlock: 6538026
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -95,11 +251,11 @@ dataSources:
           handler: handleHypeAdded
   - kind: ethereum/contract
     name: UniProxy
-    network: matic
+    network: optimism
     source:
-      address: "0xE96349bcd1756aFb65CE322cB99852e07aBaDBD9"
+      address: "0xf874D4957861E193AEC9937223062679C14f9Aca"
       abi: UniProxy
-      startBlock: 25269678
+      startBlock: 6537644
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -126,7 +282,7 @@ dataSources:
 templates:
   - name: UniswapV3Hypervisor
     kind: ethereum/contract
-    network: matic
+    network: optimism
     source:
       abi: UniswapV3Hypervisor
     mapping:
@@ -157,7 +313,7 @@ templates:
           handler: handleTransfer
   - name: UniswapV3Pool
     kind: ethereum/contract
-    network: matic
+    network: optimism
     source:
       abi: UniswapV3Pool
     mapping:

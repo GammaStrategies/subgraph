@@ -1,21 +1,23 @@
 /* eslint-disable prefer-const */
 import { Account } from "../../generated/schema";
-import { getOrCreateRewardHypervisorTx } from "./entities";
-import { getOrCreateRewardHypervisor } from "./rewardHypervisor";
-
+import {
+  getOrCreateRewardHypervisor,
+  getOrCreateRewardHypervisorTx,
+} from "./entities";
 
 export function unstakeGammaFromAccount(
   accountAddress: string,
   transactionId: string
 ): void {
-  
   let xgamma = getOrCreateRewardHypervisor();
   let xgammaTx = getOrCreateRewardHypervisorTx(transactionId);
-	
+
   let account = Account.load(accountAddress);
   if (account != null) {
-    let amount = xgammaTx.gammaAmount
-    let gammaStaked = (xgammaTx.xgammaAmountBefore * xgamma.totalGamma) / xgammaTx.xgammaSupplyBefore;
+    let amount = xgammaTx.gammaAmount;
+    let gammaStaked =
+      (xgammaTx.xgammaAmountBefore * xgamma.totalGamma) /
+      xgammaTx.xgammaSupplyBefore;
     let gammaEarned = gammaStaked - account.gammaDeposited;
 
     if (amount > gammaEarned) {
