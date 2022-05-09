@@ -27,8 +27,9 @@ export function getEthRateInUSDC(): BigDecimal{
 
     let addressLookup = constantAddresses.network(dataSource.network())
     let poolAddress = addressLookup.get("WETH-USDC") as string
+    let usdcIndex = BigInt.fromString(addressLookup.get("WETH-USDC-Index") as string).toI32()
 
-    let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddress), 0)
+    let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddress), usdcIndex)
     let rate = ethInUsdcRate / BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())
 
     return rate as BigDecimal
@@ -39,9 +40,10 @@ export function getGammaRateInUSDC(): BigDecimal{
     let addressLookup = constantAddresses.network(dataSource.network())
     let poolAddressGamma = addressLookup.get("GAMMA-WETH") as string
     let poolAddressUsdc = addressLookup.get("WETH-USDC") as string
+    let usdcIndex = BigInt.fromString(addressLookup.get("WETH-USDC-Index") as string).toI32()
 
     let gammaInEthRate = getExchangeRate(Address.fromString(poolAddressGamma), 1)
-    let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddressUsdc), 0)
+    let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddressUsdc), usdcIndex)
     let rate = gammaInEthRate * ethInUsdcRate / BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())
 
     return rate as BigDecimal    
@@ -52,9 +54,10 @@ export function getVisrRateInUSDC(): BigDecimal{
     let addressLookup = constantAddresses.network(dataSource.network())
     let poolAddressVisr = addressLookup.get("WETH-VISR") as string
     let poolAddressUsdc = addressLookup.get("WETH-USDC") as string
+    let usdcIndex = BigInt.fromString(addressLookup.get("WETH-USDC-Index") as string).toI32()
 
     let visrInEthRate = getExchangeRate(Address.fromString(poolAddressVisr), 0)
-    let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddressUsdc), 0)
+    let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddressUsdc), usdcIndex)
     let rate = visrInEthRate * ethInUsdcRate / BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())
 
     return rate as BigDecimal    
@@ -69,7 +72,20 @@ export function getBaseTokenRateInUSDC(hypervisorId: string): BigDecimal {
         } else if (isUSDC(Address.fromString(conversion.baseToken))) {
             rate = ONE_BD
         } else {
-            rate = getExchangeRate(Address.fromString(conversion.usdPool), conversion.usdTokenIndex)
+            if (conversion.usdTokenIndex > 1) {
+                // usdPool is actually ETH pool
+                let addressLookup = constantAddresses.network(dataSource.network())
+                let poolAddressUsdc = addressLookup.get("WETH-USDC") as string
+                let usdcIndex = BigInt.fromString(addressLookup.get("WETH-USDC-Index") as string).toI32()
+
+                let wethIndex = conversion.usdTokenIndex - 2
+                let baseInEthRate = getExchangeRate(Address.fromString(conversion.usdPool), wethIndex)
+                let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddressUsdc), usdcIndex)
+                rate = baseInEthRate * ethInUsdcRate
+            } else {
+                ///usdPool is USD pool
+                rate = getExchangeRate(Address.fromString(conversion.usdPool), conversion.usdTokenIndex)
+            }
         }
     }
     // After conversions the rate will always be in USDC, which has 6 decimals
