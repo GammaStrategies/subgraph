@@ -8,7 +8,7 @@ import {
 import {
   ADDRESS_ZERO,
   REWARD_HYPERVISOR_ADDRESS,
-  SWAPPER_ADDRESS,
+  GAMMA_SOURCE_ADDRESSES,
   constantAddresses,
   TZ_UTC,
   TZ_EST,
@@ -25,7 +25,6 @@ import { getOrCreateToken } from "../utils/tokens";
 import { getGammaRateInUSDC } from "../utils/pricing";
 
 let REWARD_HYPERVISOR = Address.fromString(REWARD_HYPERVISOR_ADDRESS);
-let SWAPPER = Address.fromString(SWAPPER_ADDRESS);
 
 export function handleTransfer(event: TransferEvent): void {
   let addressLookup = constantAddresses.network(dataSource.network());
@@ -47,7 +46,7 @@ export function handleTransfer(event: TransferEvent): void {
   if (event.params.to == REWARD_HYPERVISOR) {
     xgamma.totalGamma += gammaAmount;
     // Deposit into reward hypervisor
-    if (event.params.from == SWAPPER) {
+    if (GAMMA_SOURCE_ADDRESSES.includes(event.params.from)){
       // Distribution event if from swapper
       let protocolDist = getOrCreateProtocolDistribution(gammaAddress);
       let tokenRate = getGammaRateInUSDC();
