@@ -1,0 +1,18 @@
+{
+    "network": "celo",
+    "hypeRegistry": [
+        {
+            "name": "HypeRegistry",
+            "address": "0x0F548d7AD1A0CB30D1872b8C18894484d76e1569",
+            "startBlock": 14032548
+        }
+    ],
+    "uniProxy": [
+        {
+            "name": "UniProxy",
+            "address": "0xD08B593eb3460B7aa5Ce76fFB0A3c5c938fd89b8",
+            "startBlock": 14032475,
+            "useEventHandlers": true
+        }
+    ]
+}

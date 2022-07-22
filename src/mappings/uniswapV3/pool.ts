@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import { Address, BigInt, log } from '@graphprotocol/graph-ts'
-import { Burn, Mint, Swap } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool"
+import { Swap } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool"
 import { resetAggregates, updateAggregates, updateTvl } from "../../utils/aggregation"
 import { updateAndGetUniswapV3HypervisorDayData } from "../../utils/intervalUpdates"
 import { getOrCreatePool } from '../../utils/uniswapV3/pool'

@@ -4,6 +4,7 @@ import { HypervisorCreated } from "../../../generated/UniswapV3HypervisorFactory
 import { UniswapV3Hypervisor as HypervisorTemplate } from "../../../generated/templates"
 import { getOrCreateHypervisor } from "../../utils/uniswapV3/hypervisor"
 import { getOrCreateFactory } from "../../utils/uniswapV3/hypervisorFactory"
+import { ONE_BI } from '../../utils/constants'
 
 //Hypervisors that were created with invalid parameters and should not be indexed
 let INVALID_HYPERVISORS: Array<Address> = [
@@ -20,6 +21,7 @@ export function handleHypervisorCreated(event: HypervisorCreated): void {
     let factoryAddressString = event.address.toHexString()
 
     let factory = getOrCreateFactory(factoryAddressString)
+    factory.hypervisorCount += ONE_BI
     factory.save()
 
     let hypervisor = getOrCreateHypervisor(event.params.hypervisor, event.block.timestamp)

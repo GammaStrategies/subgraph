@@ -13,6 +13,7 @@
     "deploy-optimism": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/optimism",
     "deploy-loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
     "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/visor-arbitrum",
+    "deploy-loc-celo": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-celo",
     "deploy-loc-polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-polygon",
     "deploy-loc-optimism": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-optimism",
     "deploy-lab": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/laboratory",
@@ -24,6 +25,7 @@
     "prepare:arbitrum": "mustache config/arbitrum.json subgraph.template.yaml > subgraph.yaml",
     "prepare:polygon": "mustache config/polygon.json subgraph.template.yaml > subgraph.yaml",
     "prepare:optimism": "mustache config/optimism.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:celo": "mustache config/celo.json subgraph.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {
