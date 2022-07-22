@@ -6,7 +6,8 @@ export const REWARD_HYPERVISOR_ADDRESS = "0x26805021988f1a45dc708b5fb75fc75f2174
 export const GAMMA_SOURCE_ADDRESSES = [
     Address.fromString("0x0b7d3ae92b6f4a440bacc4b9826ad2b4c35a12c8"),  // Swapper
     Address.fromString("0xdee9e378e483ab862d93364069ae381377bb2899"),  // Swapper
-    Address.fromString("0x190a9a5e7db62df3ead2ceb2e47bd78e70b96834")   // Holdings
+    Address.fromString("0x190a9a5e7db62df3ead2ceb2e47bd78e70b96834"),  // Holdings
+    Address.fromString("0xFEB430ED4c21b748681f7a0B41cb071c603A40E9")   // Holdings
 ]
 
 export const GAMMA_START_BLOCK = BigInt.fromI32(13864627)

@@ -83,6 +83,7 @@ type Account @entity {
   rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "account")
   hypervisorCount: BigInt!
   hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "account")
+  masterChefPoolAccounts: [MasterChefPoolAccount!]! @derivedFrom(field: "account")
 }
 
 
@@ -323,4 +324,28 @@ type UniswapV3HypervisorConversion @entity {
   usdPathIndex: [Int!]!
   priceTokenInBase: BigDecimal!
   priceBaseInUSD: BigDecimal!
+}
+
+type MasterChef @entity {
+  id: ID!
+  rewardToken: Token!
+  rewardPerBlock: BigInt!
+  totalAllocPoint: BigInt!
+  pools: [MasterChefPool!]! @derivedFrom(field: "masterChef")
+}
+
+type MasterChefPool @entity {
+  id: ID!
+  hypervisor: UniswapV3Hypervisor!
+  masterChef: MasterChef!
+  poolId: BigInt!
+  allocPoint: BigInt!
+  accounts: [MasterChefPoolAccount!]! @derivedFrom(field: "masterChefPool")
+}
+
+type MasterChefPoolAccount @entity {
+  id: ID!
+  account: Account!
+  masterChefPool: MasterChefPool!
+  amount: BigInt!
 }

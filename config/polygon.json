@@ -1,5 +1,11 @@
 {
     "network": "matic",
+    "features": [
+        {
+            "base": "QmSoL3cvogKvWLsjfoNufwk9AzEX5m9cmRL9JM7p4hy7jo",
+            "block": 30865786
+        }
+    ],
     "uniswapV3HypervisorOrphan": [
         {
             "name": "USDC-ETH-500",
@@ -27,6 +33,14 @@
             "address": "0xE96349bcd1756aFb65CE322cB99852e07aBaDBD9",
             "startBlock": 25269678,
             "useEventHandlers": true
+        }
+    ],
+    "masterChef": [
+        {
+            "name": "MasterChef",
+            "address": "0x6Ea9C4F4ECa27CE7D5C0807eF06972507aAFdf34",
+            "startBlock": 30865787,
+            "useCallHandlers": true
         }
     ]
 }
