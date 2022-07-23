@@ -104,6 +104,7 @@ export function createDeposit(event: DepositEvent): UniswapV3Deposit {
   deposit.shares = event.params.shares;
   deposit.amount0 = event.params.amount0;
   deposit.amount1 = event.params.amount1;
+  deposit.amountUSD = ZERO_BD;
 
   return deposit as UniswapV3Deposit;
 }
@@ -160,6 +161,7 @@ export function createWithdraw(event: WithdrawEvent): UniswapV3Withdraw {
   withdraw.shares = event.params.shares;
   withdraw.amount0 = event.params.amount0;
   withdraw.amount1 = event.params.amount1;
+  withdraw.amountUSD = ZERO_BD;
 
   return withdraw as UniswapV3Withdraw;
 }

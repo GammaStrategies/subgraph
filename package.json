@@ -11,6 +11,7 @@
     "deploy-polygon": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/polygon",
     "deploy-arbitrum": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/arbitrum",
     "deploy-optimism": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/optimism",
+    "deploy-celo": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/celo",
     "deploy-loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
     "deploy-loc-arb": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/visor-arbitrum",
     "deploy-loc-celo": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-celo",
