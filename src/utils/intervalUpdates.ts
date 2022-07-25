@@ -33,6 +33,8 @@ export function updateDistributionDayData(
     distDayData.date = dayStartTimestamp;
     distDayData.timezone = timezone;
     distDayData.token = tokenId;
+    distDayData.distributed = ZERO_BI
+    distDayData.distributedUSD = ZERO_BD
   }
 
   distDayData.distributed += distributed;

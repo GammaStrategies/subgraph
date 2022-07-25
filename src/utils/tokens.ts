@@ -120,6 +120,7 @@ export function getOrCreateEthToken(): Token {
     token.symbol = "ETH";
     token.name = "ETH";
     token.decimals = 18;
+    token.totalSupply = ZERO_BI;
   }
 
   return token as Token;
