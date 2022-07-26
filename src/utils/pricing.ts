@@ -72,19 +72,13 @@ export function getBaseTokenRateInUSDC(hypervisorId: string): BigDecimal {
         } else if (isUSDC(Address.fromString(conversion.baseToken))) {
             rate = ONE_BD
         } else {
-            if (conversion.usdTokenIndex > 1) {
-                // usdPool is actually ETH pool
-                let addressLookup = constantAddresses.network(dataSource.network())
-                let poolAddressUsdc = addressLookup.get("WETH-USDC") as string
-                let usdcIndex = BigInt.fromString(addressLookup.get("WETH-USDC-Index") as string).toI32()
-
-                let wethIndex = conversion.usdTokenIndex - 2
-                let baseInEthRate = getExchangeRate(Address.fromString(conversion.usdPool), wethIndex)
-                let ethInUsdcRate = getExchangeRate(Address.fromString(poolAddressUsdc), usdcIndex)
-                rate = baseInEthRate * ethInUsdcRate
-            } else {
-                ///usdPool is USD pool
-                rate = getExchangeRate(Address.fromString(conversion.usdPool), conversion.usdTokenIndex)
+            rate = ONE_BD
+            for (let i = 0; i < conversion.usdPath.length; i++) {
+                let intermediateRate = getExchangeRate(
+                    Address.fromString(conversion.usdPath[i]),
+                    conversion.usdPathIndex[i]
+                )
+                rate = rate.times(intermediateRate)
             }
         }
     }

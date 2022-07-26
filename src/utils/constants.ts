@@ -65,6 +65,15 @@ export class constantAddresses {
         return lookup as TypedMap<string, string>
     }
 
+    static celo(): TypedMap<string, string> {
+        let lookup = new TypedMap<string, string>()
+        lookup.set('USDC', '0x37f750b7cc259a2f741af45294f6a16572cf5cad');
+        lookup.set('WETH-USDC', '0xd88d5f9e6c10e6febc9296a454f6c2589b1e8fae');
+        lookup.set('WETH-USDC-Index', '0');
+
+        return lookup as TypedMap<string, string>
+    }
+
     static network(network: string): TypedMap<string, string> {
         let mapping = new TypedMap<string, string>()
         if (network == "mainnet") {
@@ -75,6 +84,8 @@ export class constantAddresses {
             mapping = this.arbitrum_one()
         } else if (network == "optimism") {
             mapping = this.optimism()
+        } else if (network == "celo") {
+            mapping = this.celo()
         }
 
         return mapping as TypedMap<string, string>

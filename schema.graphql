@@ -317,10 +317,10 @@ type UniswapV3HypervisorConversion @entity {
   baseTokenIndex: Int!
   # The base token
   baseToken: Token!
-  # The BASE/USD pool in uniswap V3
-  usdPool: String!
+  # The path of uniswap V3 pools for calculating USD value
+  usdPath: [String!]!
   # Whether the USD token in usdPool is token0 or token1
-  usdTokenIndex: Int!
+  usdPathIndex: [Int!]!
   priceTokenInBase: BigDecimal!
   priceBaseInUSD: BigDecimal!
 }

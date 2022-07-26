@@ -50,8 +50,18 @@ export function getOrCreateHypervisor(
     hypervisor.tick = hypervisorContract.currentTick();
     hypervisor.baseLower = hypervisorContract.baseLower();
     hypervisor.baseUpper = hypervisorContract.baseUpper();
+    hypervisor.baseLiquidity = ZERO_BI;
+    hypervisor.baseAmount0 = ZERO_BI;
+    hypervisor.baseAmount1 = ZERO_BI;
+    hypervisor.baseFeeGrowthInside0LastX128 = ZERO_BI;
+    hypervisor.baseFeeGrowthInside1LastX128 = ZERO_BI;
     hypervisor.limitLower = hypervisorContract.limitLower();
     hypervisor.limitUpper = hypervisorContract.limitUpper();
+    hypervisor.limitLiquidity = ZERO_BI;
+    hypervisor.limitAmount0 = ZERO_BI;
+    hypervisor.limitAmount1 = ZERO_BI;
+    hypervisor.limitFeeGrowthInside0LastX128 = ZERO_BI;
+    hypervisor.limitFeeGrowthInside1LastX128 = ZERO_BI;
     hypervisor.deposit0Max = hypervisorContract.deposit0Max();
     hypervisor.deposit1Max = hypervisorContract.deposit1Max();
     hypervisor.totalSupply = hypervisorContract.totalSupply();
@@ -94,6 +104,7 @@ export function createDeposit(event: DepositEvent): UniswapV3Deposit {
   deposit.shares = event.params.shares;
   deposit.amount0 = event.params.amount0;
   deposit.amount1 = event.params.amount1;
+  deposit.amountUSD = ZERO_BD;
 
   return deposit as UniswapV3Deposit;
 }
@@ -150,6 +161,7 @@ export function createWithdraw(event: WithdrawEvent): UniswapV3Withdraw {
   withdraw.shares = event.params.shares;
   withdraw.amount0 = event.params.amount0;
   withdraw.amount1 = event.params.amount1;
+  withdraw.amountUSD = ZERO_BD;
 
   return withdraw as UniswapV3Withdraw;
 }
