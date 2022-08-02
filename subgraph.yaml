@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 0.0.5
 schema:
   file: ./schema.graphql
 dataSources:
@@ -11,7 +11,7 @@ dataSources:
       startBlock: 13864627
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - ProtocolDistribution
@@ -38,7 +38,7 @@ dataSources:
       startBlock: 13882716
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - RewardHypervisor
@@ -60,7 +60,7 @@ dataSources:
       startBlock: 12013637
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Factory
@@ -96,7 +96,7 @@ dataSources:
       startBlock: 12108493
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Hypervisor
@@ -136,7 +136,7 @@ dataSources:
       startBlock: 12108420
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Hypervisor
@@ -176,7 +176,7 @@ dataSources:
       startBlock: 12108439
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Hypervisor
@@ -216,7 +216,7 @@ dataSources:
       startBlock: 12108528
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Hypervisor
@@ -256,7 +256,7 @@ dataSources:
       startBlock: 12767944
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisorFactory.ts
       entities:
@@ -287,7 +287,7 @@ dataSources:
       startBlock: 12615883
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisorFactory.ts
       entities:
@@ -318,7 +318,7 @@ dataSources:
       startBlock: 12590273
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisorFactory.ts
       entities:
@@ -349,7 +349,7 @@ dataSources:
       startBlock: 13328071
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -393,7 +393,7 @@ dataSources:
       startBlock: 12763072
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -437,7 +437,7 @@ dataSources:
       startBlock: 12764007
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -481,7 +481,7 @@ dataSources:
       startBlock: 13463550
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -525,7 +525,7 @@ dataSources:
       startBlock: 13507015
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -569,7 +569,7 @@ dataSources:
       startBlock: 13603680
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -613,7 +613,7 @@ dataSources:
       startBlock: 13642121
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -657,7 +657,7 @@ dataSources:
       startBlock: 13642283
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -701,7 +701,7 @@ dataSources:
       startBlock: 13642187
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -745,7 +745,7 @@ dataSources:
       startBlock: 13691975
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -789,7 +789,7 @@ dataSources:
       startBlock: 13934335
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -833,7 +833,7 @@ dataSources:
       startBlock: 13615043
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -877,7 +877,7 @@ dataSources:
       startBlock: 12370624
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/pool.ts
       entities:
@@ -902,7 +902,7 @@ dataSources:
       startBlock: 12376475
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/pool.ts
       entities:
@@ -927,7 +927,7 @@ dataSources:
       startBlock: 13869998
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/pool.ts
       entities:
@@ -952,7 +952,7 @@ dataSources:
       startBlock: 13659998
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/hypeRegistry.ts
       entities:
@@ -979,7 +979,7 @@ dataSources:
       startBlock: 13129847
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/feeDistributor.ts
       entities:
@@ -1006,7 +1006,7 @@ dataSources:
       startBlock: 13129208
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/feeDistributor.ts
       entities:
@@ -1033,7 +1033,7 @@ dataSources:
       startBlock: 13816636
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniProxy.ts
       entities:
@@ -1062,7 +1062,7 @@ templates:
       abi: UniswapV3Hypervisor
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/hypervisor.ts
       entities:
@@ -1098,7 +1098,7 @@ templates:
       abi: UniswapV3Pool
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/uniswapV3/pool.ts
       entities:
