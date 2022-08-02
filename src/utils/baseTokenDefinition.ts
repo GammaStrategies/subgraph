@@ -139,8 +139,8 @@ export class BaseTokenDefinition {
     lookup.set(cUSD, { pathIdx: [0], path: [USDC_cUSD], priority: 5 });
     // lookup.set(USDT, { pool: USDC_USDT, pathIdx: [0], path: [], priority: 4 });
     // lookup.set(DAI, { pool: DAI_USDC, pathIdx: [0], path: [], priority: 3 });
-    lookup.set(CELO, { pathIdx: [1], path: [CELO_cUSD], priority: 2 });
-    lookup.set(WETH, { pathIdx: [0, 1], path: [CELO_WETH, CELO_cUSD], priority: 1 });
+    lookup.set(CELO, { pathIdx: [1, 0], path: [CELO_cUSD, USDC_cUSD], priority: 2 });
+    lookup.set(WETH, { pathIdx: [0, 1, 0], path: [CELO_WETH, CELO_cUSD, USDC_cUSD], priority: 1 });
     // lookup.set(WBTC, { pool: WBTC_USDC, pathIdx: [1], path: [], priority: 0 });
 
     return lookup as TypedMap<string, BasePool>;
