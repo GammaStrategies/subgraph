@@ -340,6 +340,7 @@ type MasterChefPool @entity {
   masterChef: MasterChef!
   poolId: BigInt!
   allocPoint: BigInt!
+  lastRewardBlock: BigInt!
   accounts: [MasterChefPoolAccount!]! @derivedFrom(field: "masterChefPool")
 }
 

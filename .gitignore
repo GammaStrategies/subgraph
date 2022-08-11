@@ -124,3 +124,6 @@ generated/
 
 # script to check for deployment errors
 check_error.py
+
+# Ignore subgraph.yaml as it should be generated depending on network
+subgraph.yaml

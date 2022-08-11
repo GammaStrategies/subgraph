@@ -382,7 +382,7 @@ dataSources:
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       file: ./src/mappings/masterChef.ts
       entities:
@@ -403,10 +403,12 @@ dataSources:
           handler: handleDeposit
         - event: Withdraw(indexed address,indexed uint256,uint256)
           handler: handleWithdraw
-        - event: AddLp(address,uint256)
+        - event: AddLp(uint256,(address,uint256,uint256,uint256))
           handler: handleAddLp
-        - event: SetAllocPoint(address,uint256)
+        - event: SetAllocPoint(uint256,(address,uint256,uint256,uint256))
           handler: handleSetAllocPoint
+        - event: PoolUpdated(uint256,(address,uint256,uint256,uint256))
+          handler: handlePoolUpdated
   {{/masterChef}}
 templates:
   - name: UniswapV3Hypervisor

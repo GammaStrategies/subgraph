@@ -23,15 +23,37 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "lpToken",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "poolId",
+        "type": "uint256"
       },
       {
+        "components": [
+          {
+            "internalType": "contract IERC20",
+            "name": "lpToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocPoint",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastRewardBlock",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accSushiPerShare",
+            "type": "uint256"
+          }
+        ],
         "indexed": false,
-        "internalType": "uint256",
-        "name": "allocPoint",
-        "type": "uint256"
+        "internalType": "struct MasterChef.PoolInfo",
+        "name": "poolInfo",
+        "type": "tuple"
       }
     ],
     "name": "AddLp",
@@ -111,15 +133,78 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "lpToken",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "poolId",
+        "type": "uint256"
       },
+      {
+        "components": [
+          {
+            "internalType": "contract IERC20",
+            "name": "lpToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocPoint",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastRewardBlock",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accSushiPerShare",
+            "type": "uint256"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct MasterChef.PoolInfo",
+        "name": "poolInfo",
+        "type": "tuple"
+      }
+    ],
+    "name": "PoolUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "allocPoint",
+        "name": "poolId",
         "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "contract IERC20",
+            "name": "lpToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocPoint",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastRewardBlock",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accSushiPerShare",
+            "type": "uint256"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct MasterChef.PoolInfo",
+        "name": "poolInfo",
+        "type": "tuple"
       }
     ],
     "name": "SetAllocPoint",
