@@ -1,8 +1,8 @@
 {
     "network": "matic",
     "features": {
-        "base": "QmbWTtUje1qaHrsoE9HPQEjhuUaeibXKANg5iiDn9571kx",
-        "block": 31699716
+        "base": "QmdTkbRvp8D6C9EyXTc8jVn7zoaqwyWtN1rn3E3TzXx6hx",
+        "block": 31283047
     },
     "uniswapV3HypervisorOrphan": [
         {
@@ -33,12 +33,19 @@
             "useEventHandlers": true
         }
     ],
-    "masterChef": [
+    "masterChefRegistry": [
         {
-            "name": "MasterChef",
-            "address": "0x03C3BA58f2C2b6DFa6411910a8129393eDd48722",
-            "startBlock": 31283049,
-            "useCallHandlers": true
+            "name": "MasterChefRegistry",
+            "address": "0x135B02F8b110Fe2Dd8B6a5e2892Ee781264c2fbe",
+            "startBlock": 31807882
         }
-    ]
+    ],
+    "masterChefOrphan": [
+        {
+            "name": "MasterChef-1",
+            "address": "0x03C3BA58f2C2b6DFa6411910a8129393eDd48722",
+            "startBlock": 31283049
+        }
+    ],
+    "masterChefTemplate": true
 }
