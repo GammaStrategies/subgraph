@@ -1,52 +1,67 @@
 {
-    "network": "optimism",
-    "uniswapV3HypervisorOrphan": [
-        {
-            "name": "xsUSD-DAI05",
-            "address": "0x2d6B26f430F261B77D14C495585116aA579b7217",
-            "startBlock": 7088429
-        },
-        {
-            "name": "xUSDC-USDT05",
-            "address": "0x0F548d7AD1A0CB30D1872b8C18894484d76e1569",
-            "startBlock": 7085119
-        },
-        {
-            "name": "xUSDC-sUSD05",
-            "address": "0x0b4645179C1b668464Df01362fC6219a7ab3234c",
-            "startBlock": 7088369
-        },
-        {
-            "name": "xsUSD-USDT05",
-            "address": "0x3f848EeFD234dA0B1B98Ea876fe2ee86a10773ca",
-            "startBlock": 7088231
-        },
-        {
-            "name": "xUSDC-DAI05",
-            "address": "0x66CD859053c458688044d816117D5Bdf42A56813",
-            "startBlock": 7087995
-        }
-    ],
-    "uniswapV3PoolOrphan": [
-        {
-            "name": "WETH-USDC",
-            "address": "0x85149247691df622eaf1a8bd0cafd40bc45154a9",
-            "startBlock": 6537644
-        }
-    ],
-    "hypeRegistry": [
-        {
-            "name": "HypeRegistry",
-            "address": "0xF5BFA20F4A77933fEE0C7bB7F39E7642A070d599",
-            "startBlock": 6538026
-        }
-    ],
-    "uniProxy": [
-        {
-            "name": "UniProxy",
-            "address": "0xf874D4957861E193AEC9937223062679C14f9Aca",
-            "startBlock": 6537644,
-            "useEventHandlers": true
-        }
-    ]
+  "network": "optimism",
+  "uniswapV3HypervisorOrphan": [
+    {
+      "name": "xsUSD-DAI05",
+      "address": "0x2d6B26f430F261B77D14C495585116aA579b7217",
+      "startBlock": 7088429
+    },
+    {
+      "name": "xUSDC-USDT05",
+      "address": "0x0F548d7AD1A0CB30D1872b8C18894484d76e1569",
+      "startBlock": 7085119
+    },
+    {
+      "name": "xUSDC-sUSD05",
+      "address": "0x0b4645179C1b668464Df01362fC6219a7ab3234c",
+      "startBlock": 7088369
+    },
+    {
+      "name": "xsUSD-USDT05",
+      "address": "0x3f848EeFD234dA0B1B98Ea876fe2ee86a10773ca",
+      "startBlock": 7088231
+    },
+    {
+      "name": "xUSDC-DAI05",
+      "address": "0x66CD859053c458688044d816117D5Bdf42A56813",
+      "startBlock": 7087995
+    }
+  ],
+  "uniswapV3PoolOrphan": [
+    {
+      "name": "WETH-USDC",
+      "address": "0x85149247691df622eaf1a8bd0cafd40bc45154a9",
+      "startBlock": 6537644
+    }
+  ],
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xF5BFA20F4A77933fEE0C7bB7F39E7642A070d599",
+      "startBlock": 6538026
+    }
+  ],
+  "uniProxy": [
+    {
+      "name": "UniProxy",
+      "address": "0xf874D4957861E193AEC9937223062679C14f9Aca",
+      "startBlock": 6537644,
+      "useEventHandlers": true
+    }
+  ],
+  "rewardsRegistry": [
+    {
+      "name": "RewardsRegistry",
+      "address": "0x8961247cd37cEa51095697a4C3145e059568CFA1",
+      "startBlock": 22219341
+    }
+  ],
+  "masterChefOrphan": [
+    {
+      "name": "MasterChef-1",
+      "address": "0xaDEEAD87209130020C90B09Bb8a4cCf1ba64216C",
+      "startBlock": 22164560
+    }
+  ],
+  "masterChefTemplate": true
 }

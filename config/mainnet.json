@@ -1,9 +1,5 @@
 {
     "network": "mainnet",
-    "features": [{
-        "base": "QmVmvvQS94UT9r8FzmwNsu7vgcqKaem6QpriBYgqrqKRHG",
-        "block": 14969489
-    }],
     "gammaToken": [{
         "name": "GammaToken",
         "address": "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197",

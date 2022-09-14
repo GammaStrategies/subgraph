@@ -1,9 +1,5 @@
 {
     "network": "matic",
-    "features": {
-        "base": "QmdTkbRvp8D6C9EyXTc8jVn7zoaqwyWtN1rn3E3TzXx6hx",
-        "block": 31283047
-    },
     "uniswapV3HypervisorOrphan": [
         {
             "name": "USDC-ETH-500",

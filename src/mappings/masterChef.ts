@@ -26,6 +26,13 @@ export function handleDeposit(event: DepositEvent): void {
   );
   masterChefPoolAccount.amount += event.params.amount;
   masterChefPoolAccount.save();
+
+  let masterChefPool = getOrCreateMasterChefPool(
+    event.address,
+    hypervisorAddress
+  );
+  masterChefPool.totalStaked += event.params.amount;
+  masterChefPool.save();
 }
 
 export function handleWithdraw(event: WithdrawEvent): void {
@@ -41,6 +48,13 @@ export function handleWithdraw(event: WithdrawEvent): void {
   );
   masterChefPoolAccount.amount -= event.params.amount;
   masterChefPoolAccount.save();
+
+  let masterChefPool = getOrCreateMasterChefPool(
+    event.address,
+    hypervisorAddress
+  );
+  masterChefPool.totalStaked -= event.params.amount;
+  masterChefPool.save();
 }
 
 export function handleAddLp(event: AddLp): void {

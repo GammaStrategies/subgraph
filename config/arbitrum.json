@@ -7,11 +7,38 @@
             "startBlock": 7531555
         }
     ],
+    "uniswapV3HypervisorOrphan": [
+        {
+            "name": "xETH-USDC3",
+            "address": "0x20b520aDc4d068974105104eD955a4DbAdfA4Ea6",
+            "startBlock": 19580117
+        },
+        {
+            "name": "xUSDT-USDC05",
+            "address": "0x6431422ED38347b9114609282F8061af66dBCd2B",
+            "startBlock": 19580187
+        },
+        {
+            "name": "xDAI-USDC05",
+            "address": "0x3f848EeFD234dA0B1B98Ea876fe2ee86a10773ca",
+            "startBlock": 19580234
+        },
+        {
+            "name": "xDAI-USDT05",
+            "address": "0x93ACb12ae1Effb3426220C20c6d408eEAaE59D72",
+            "startBlock": 19580261
+        },
+        {
+            "name": "xWBTC-ETH3",
+            "address": "0xFb3A24C0F289E695Ceb87B32fC18a2b8Bd896167",
+            "startBlock": 19579927
+        }
+    ],
     "hypeRegistry": [
         {
             "name": "HypeRegistry",
-            "address": "0xAad4760477750E251E1cc9bC35D33571CdF5e0e6",
-            "startBlock": 7531555
+            "address": "0x66CD859053c458688044d816117D5Bdf42A56813",
+            "startBlock": 10617223
         }
     ],
     "uniProxy": [

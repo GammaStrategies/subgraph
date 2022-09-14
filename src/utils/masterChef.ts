@@ -39,12 +39,15 @@ export function getOrCreateMasterChefPool(
   if (!masterChefPool) {
     let masterChef = getOrCreateMasterChef(masterChefAddress);
     let hypervisor = getOrCreateHypervisor(hypervisorAddress);
+    let stakeToken = getOrCreateToken(hypervisorAddress);
 
     masterChefPool = new MasterChefPool(id);
     masterChefPool.masterChef = masterChef.id;
     masterChefPool.hypervisor = hypervisor.id;
     masterChefPool.allocPoint = ZERO_BI;
     masterChefPool.lastRewardBlock = ZERO_BI;
+    masterChefPool.stakeToken = stakeToken.id;
+    masterChefPool.totalStaked = ZERO_BI;
     masterChefPool.poolId = ZERO_BI;
     masterChefPool.save();
   }

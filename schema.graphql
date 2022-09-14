@@ -170,8 +170,12 @@ type UniswapV3Hypervisor @entity {
   baseLiquidity: BigInt!
   baseAmount0: BigInt!
   baseAmount1: BigInt!
+  baseTokensOwed0: BigInt!
+  baseTokensOwed1: BigInt!
   baseFeeGrowthInside0LastX128: BigInt!
   baseFeeGrowthInside1LastX128: BigInt!
+  baseFeeGrowthInside0LastRebalanceX128: BigInt!
+  baseFeeGrowthInside1LastRebalanceX128: BigInt!
   # Lower tick of limit position
   limitLower: Int!
   # Upper tick of limit position
@@ -180,8 +184,12 @@ type UniswapV3Hypervisor @entity {
   limitLiquidity: BigInt!
   limitAmount0: BigInt!
   limitAmount1: BigInt!
+  limitTokensOwed0: BigInt!
+  limitTokensOwed1: BigInt!
   limitFeeGrowthInside0LastX128: BigInt!
   limitFeeGrowthInside1LastX128: BigInt!
+  limitFeeGrowthInside0LastRebalanceX128: BigInt!
+  limitFeeGrowthInside1LastRebalanceX128: BigInt!
   deposit0Max: BigInt!
   deposit1Max: BigInt!
   totalSupply: BigInt!
@@ -341,6 +349,8 @@ type MasterChefPool @entity {
   poolId: BigInt!
   allocPoint: BigInt!
   lastRewardBlock: BigInt!
+  stakeToken: Token!
+  totalStaked: BigInt!
   accounts: [MasterChefPoolAccount!]! @derivedFrom(field: "masterChefPool")
 }
 
