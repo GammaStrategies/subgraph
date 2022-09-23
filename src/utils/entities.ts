@@ -1,12 +1,14 @@
+import { Address, BigInt } from "@graphprotocol/graph-ts";
 import {
   User,
   Account,
   ProtocolDistribution,
   RewardHypervisorTx,
   RewardHypervisor,
-  RewardHypervisorShare,
+  RewardHypervisorShare
 } from "../../generated/schema";
 import { REWARD_HYPERVISOR_ADDRESS, ZERO_BD, ZERO_BI } from "./constants";
+
 
 export function getOrCreateUser(
   addressString: string,

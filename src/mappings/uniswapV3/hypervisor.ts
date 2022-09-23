@@ -132,7 +132,7 @@ export function handleRebalance(event: RebalanceEvent): void {
 	hypervisor.save()
 	
 	updatePositions(event.address)
-	updateFeeGrowth(event.address)
+	updateFeeGrowth(event.address, true)
 
 	updateTvl(event.address)
 	updateAggregates(hypervisorId)

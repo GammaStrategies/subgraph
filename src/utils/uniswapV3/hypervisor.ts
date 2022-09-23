@@ -53,15 +53,23 @@ export function getOrCreateHypervisor(
     hypervisor.baseLiquidity = ZERO_BI;
     hypervisor.baseAmount0 = ZERO_BI;
     hypervisor.baseAmount1 = ZERO_BI;
+    hypervisor.baseTokensOwed0 = ZERO_BI;
+    hypervisor.baseTokensOwed1 = ZERO_BI;
     hypervisor.baseFeeGrowthInside0LastX128 = ZERO_BI;
     hypervisor.baseFeeGrowthInside1LastX128 = ZERO_BI;
+    hypervisor.baseFeeGrowthInside0LastRebalanceX128 = ZERO_BI;
+    hypervisor.baseFeeGrowthInside1LastRebalanceX128 = ZERO_BI;
     hypervisor.limitLower = hypervisorContract.limitLower();
     hypervisor.limitUpper = hypervisorContract.limitUpper();
     hypervisor.limitLiquidity = ZERO_BI;
     hypervisor.limitAmount0 = ZERO_BI;
     hypervisor.limitAmount1 = ZERO_BI;
+    hypervisor.limitTokensOwed0 = ZERO_BI;
+    hypervisor.limitTokensOwed1 = ZERO_BI;
     hypervisor.limitFeeGrowthInside0LastX128 = ZERO_BI;
     hypervisor.limitFeeGrowthInside1LastX128 = ZERO_BI;
+    hypervisor.limitFeeGrowthInside0LastRebalanceX128 = ZERO_BI;
+    hypervisor.limitFeeGrowthInside1LastRebalanceX128 = ZERO_BI;
     hypervisor.deposit0Max = hypervisorContract.deposit0Max();
     hypervisor.deposit1Max = hypervisorContract.deposit1Max();
     hypervisor.totalSupply = hypervisorContract.totalSupply();
@@ -214,7 +222,10 @@ export function updatePositions(hypervisorAddress: Address): void {
   hypervisor.save();
 }
 
-export function updateFeeGrowth(hypervisorAddress: Address): void {
+export function updateFeeGrowth(
+  hypervisorAddress: Address,
+  isRebalance: boolean = false
+): void {
   let hypervisor = getOrCreateHypervisor(hypervisorAddress);
   let poolAddress = Address.fromString(hypervisor.pool);
   let poolContract = PoolContract.bind(poolAddress);
@@ -233,12 +244,31 @@ export function updateFeeGrowth(hypervisorAddress: Address): void {
   let basePosition = poolContract.positions(baseKey);
   let limitPosition = poolContract.positions(limitKey);
 
-  hypervisor.baseLiquidity = basePosition.value0;
-  hypervisor.baseFeeGrowthInside0LastX128 = basePosition.value1;
-  hypervisor.baseFeeGrowthInside1LastX128 = basePosition.value2;
-  hypervisor.limitLiquidity = limitPosition.value0;
-  hypervisor.limitFeeGrowthInside0LastX128 = limitPosition.value1;
-  hypervisor.limitFeeGrowthInside1LastX128 = limitPosition.value2;
+  hypervisor.baseLiquidity = basePosition.getLiquidity();
+  hypervisor.baseTokensOwed0 = basePosition.getTokensOwed0();
+  hypervisor.baseTokensOwed1 = basePosition.getTokensOwed1();
+  hypervisor.baseFeeGrowthInside0LastX128 =
+    basePosition.getFeeGrowthInside0LastX128();
+  hypervisor.baseFeeGrowthInside1LastX128 =
+    basePosition.getFeeGrowthInside1LastX128();
+  hypervisor.limitLiquidity = limitPosition.getLiquidity();
+  hypervisor.limitTokensOwed0 = limitPosition.getTokensOwed0();
+  hypervisor.limitTokensOwed1 = limitPosition.getTokensOwed1();
+  hypervisor.limitFeeGrowthInside0LastX128 =
+    limitPosition.getFeeGrowthInside0LastX128();
+  hypervisor.limitFeeGrowthInside1LastX128 =
+    limitPosition.getFeeGrowthInside1LastX128();
+
+  if (isRebalance) {
+    hypervisor.baseFeeGrowthInside0LastRebalanceX128 =
+      basePosition.getFeeGrowthInside0LastX128();
+    hypervisor.baseFeeGrowthInside1LastRebalanceX128 =
+      basePosition.getFeeGrowthInside1LastX128();
+    hypervisor.limitFeeGrowthInside0LastRebalanceX128 =
+      limitPosition.getFeeGrowthInside0LastX128();
+    hypervisor.limitFeeGrowthInside1LastRebalanceX128 =
+      limitPosition.getFeeGrowthInside1LastX128();
+  }
 
   hypervisor.save();
 }

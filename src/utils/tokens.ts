@@ -107,6 +107,7 @@ export function getOrCreateToken(tokenAddress: Address): Token {
     token.name = fetchTokenName(tokenAddress);
     token.decimals = fetchTokenDecimals(tokenAddress);
     token.totalSupply = ZERO_BI;
+    token.save();
   }
 
   return token as Token;
@@ -121,6 +122,7 @@ export function getOrCreateEthToken(): Token {
     token.name = "ETH";
     token.decimals = 18;
     token.totalSupply = ZERO_BI;
+    token.save();
   }
 
   return token as Token;

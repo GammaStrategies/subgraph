@@ -108,7 +108,7 @@ export class BaseTokenDefinition {
     lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 4 });
     lookup.set(USDT, { pathIdx: [0], path: [USDC_USDT], priority: 3 });
     lookup.set(DAI, { pathIdx: [0], path: [USDC_DAI], priority: 2 });
-    lookup.set(WETH, { pathIdx: [0], path: [WETH_USDC], priority: 1 });
+    lookup.set(WETH, { pathIdx: [1], path: [WETH_USDC], priority: 1 });
     lookup.set(WBTC, {
       pathIdx: [0, 1],
       path: [WETH_WBTC, WETH_USDC],

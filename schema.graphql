@@ -83,6 +83,7 @@ type Account @entity {
   rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "account")
   hypervisorCount: BigInt!
   hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "account")
+  masterChefPoolAccounts: [MasterChefPoolAccount!]! @derivedFrom(field: "account")
 }
 
 
@@ -169,8 +170,12 @@ type UniswapV3Hypervisor @entity {
   baseLiquidity: BigInt!
   baseAmount0: BigInt!
   baseAmount1: BigInt!
+  baseTokensOwed0: BigInt!
+  baseTokensOwed1: BigInt!
   baseFeeGrowthInside0LastX128: BigInt!
   baseFeeGrowthInside1LastX128: BigInt!
+  baseFeeGrowthInside0LastRebalanceX128: BigInt!
+  baseFeeGrowthInside1LastRebalanceX128: BigInt!
   # Lower tick of limit position
   limitLower: Int!
   # Upper tick of limit position
@@ -179,8 +184,12 @@ type UniswapV3Hypervisor @entity {
   limitLiquidity: BigInt!
   limitAmount0: BigInt!
   limitAmount1: BigInt!
+  limitTokensOwed0: BigInt!
+  limitTokensOwed1: BigInt!
   limitFeeGrowthInside0LastX128: BigInt!
   limitFeeGrowthInside1LastX128: BigInt!
+  limitFeeGrowthInside0LastRebalanceX128: BigInt!
+  limitFeeGrowthInside1LastRebalanceX128: BigInt!
   deposit0Max: BigInt!
   deposit1Max: BigInt!
   totalSupply: BigInt!
@@ -323,4 +332,31 @@ type UniswapV3HypervisorConversion @entity {
   usdPathIndex: [Int!]!
   priceTokenInBase: BigDecimal!
   priceBaseInUSD: BigDecimal!
+}
+
+type MasterChef @entity {
+  id: ID!
+  rewardToken: Token!
+  rewardPerBlock: BigInt!
+  totalAllocPoint: BigInt!
+  pools: [MasterChefPool!]! @derivedFrom(field: "masterChef")
+}
+
+type MasterChefPool @entity {
+  id: ID!
+  hypervisor: UniswapV3Hypervisor!
+  masterChef: MasterChef!
+  poolId: BigInt!
+  allocPoint: BigInt!
+  lastRewardBlock: BigInt!
+  stakeToken: Token!
+  totalStaked: BigInt!
+  accounts: [MasterChefPoolAccount!]! @derivedFrom(field: "masterChefPool")
+}
+
+type MasterChefPoolAccount @entity {
+  id: ID!
+  account: Account!
+  masterChefPool: MasterChefPool!
+  amount: BigInt!
 }
