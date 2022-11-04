@@ -126,6 +126,24 @@
             "address": "0xc86b1e7fa86834cac1468937cdd53ba3ccbc1153",
             "startBlock": 13615043,
             "useCallHandlers": true
+        },
+        {
+            "name": "agEUR-ETH05",
+            "address": "0x2825b12c5e873318b318302408718b961ae74d4e",
+            "startBlock": 15770442,
+            "useCallHandlers": true
+        },
+        {
+            "name": "rETH-ETH05",
+            "address": "0x46e4ddb5b87152dda90afe75daedfddab1c16513",
+            "startBlock": 15770250,
+            "useCallHandlers": true
+        },
+        {
+            "name": "xagEUR-USDC01",
+            "address": "0xf56abca39c27d5c74f94c901b8c137fdf53b3e80",
+            "startBlock": 15783008,
+            "useCallHandlers": true
         }
     ],
     "uniswapV3PoolOrphan": [
@@ -172,5 +190,13 @@
             "useCallHandlers": true
         }
     ],
+    "rewardsRegistry": [
+        {
+          "name": "RewardsRegistry",
+          "address": "0x4f852c720bDFb3AffE650Af0D432DE092FE48D00",
+          "startBlock": 15890619
+        }
+      ],
+    "masterChefTemplate": true,
     "hypervisorTemplateUseCallHandlers": true
 }

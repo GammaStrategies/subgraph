@@ -29,6 +29,7 @@ export function handleTransfer(event: TransferEvent): void {
   let fromShare = getOrCreateRewardHypervisorShare(fromAddress);
   let fromSharesBefore = fromShare.shares;
 
+  xgammaTx.block = event.block.number
   xgammaTx.timestamp = event.block.timestamp;
   xgammaTx.xgammaAmount = shares;
   xgammaTx.xgammaSupplyBefore = xgamma.totalSupply;

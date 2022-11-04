@@ -11,7 +11,8 @@ import {
 import {
 	Account,
 	UniswapV3HypervisorShare,
-	UniswapV3HypervisorConversion
+	UniswapV3HypervisorConversion,
+	MasterChef
 } from "../../../generated/schema"
 import { 
 	createDeposit,
@@ -25,7 +26,7 @@ import {
 import { updateAndGetUniswapV3HypervisorDayData } from "../../utils/intervalUpdates"
 import { getExchangeRate, getBaseTokenRateInUSDC } from "../../utils/pricing"
 import { resetAggregates, updateAggregates, updateTvl } from "../../utils/aggregation"
-import { ADDRESS_ZERO, ONE_BI, ZERO_BD } from "../../utils/constants"
+import { ADDRESS_ZERO, ONE_BI, ZERO_BD, ZERO_BI } from "../../utils/constants"
 
 
 export function handleDeposit(event: DepositEvent): void {
@@ -225,28 +226,53 @@ export function handleTransfer(event: TransferEvent): void {
 	let toAddress = event.params.to.toHexString()
 	let shares = event.params.value
 
+	// // Check from and to address are not masterchef
+	// let fromCheck = MasterChef.load(fromAddress)
+	// let toCheck = MasterChef.load(toAddress)
+
+	// if (fromCheck || toCheck) {
+	// 	// This means it is a masterchef transfer
+	// 	return
+	// }
+
+	let initialToken0 = ZERO_BI
+	let initialToken1 = ZERO_BI
+	let initialUSD = ZERO_BD
 	if (fromAddress != ADDRESS_ZERO && toAddress != ADDRESS_ZERO) {
 		let fromShare = getOrCreateHypervisorShare(hypervisorId, fromAddress)
 		let toShare = getOrCreateHypervisorShare(hypervisorId, toAddress)
 
 		if (shares >= fromShare.shares) {
+			initialToken0 = fromShare.initialToken0
+			initialToken1 = fromShare.initialToken1
+			initialUSD = fromShare.initialUSD
 			// If all shares are withdrawn, remove entity
 			let hypervisorShareId = hypervisorId + "-" + fromAddress
 			store.remove('UniswapV3HypervisorShare', hypervisorShareId)
 			let accountFrom = Account.load(fromAddress)
 			if (accountFrom != null) {
-				accountFrom.hypervisorCount -= ONE_BI
+				accountFrom.hypervisorCount = accountFrom.hypervisorCount.minus(ONE_BI)
 				accountFrom.save()
 			}
 			let hypervisor = getOrCreateHypervisor(event.address, event.block.timestamp)
-			hypervisor.accountCount -= ONE_BI
+			hypervisor.accountCount = hypervisor.accountCount.minus(ONE_BI)
 			hypervisor.save()
 		} else {
-			fromShare.shares -= shares
+			initialToken0 = fromShare.initialToken0.times(shares).div(fromShare.shares)
+			initialToken1 = fromShare.initialToken1.times(shares).div(fromShare.shares)
+			initialUSD = fromShare.initialUSD.times(shares.toBigDecimal()).div(fromShare.shares.toBigDecimal())
+
+			fromShare.initialToken0 = fromShare.initialToken0.minus(initialToken0)
+			fromShare.initialToken1 = fromShare.initialToken1.minus(initialToken1)
+			fromShare.initialUSD = fromShare.initialUSD.minus(initialUSD)
+			fromShare.shares = fromShare.shares.minus(shares)
 			fromShare.save()
 		}
 
-		toShare.shares += shares
+		toShare.initialToken0 = toShare.initialToken0.plus(initialToken0)
+		toShare.initialToken1 = toShare.initialToken1.plus(initialToken1)
+		toShare.initialUSD = toShare.initialUSD.plus(initialUSD)
+		toShare.shares = toShare.shares.plus(shares)
 		toShare.save()
 	}	
 }

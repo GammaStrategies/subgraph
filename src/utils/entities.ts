@@ -1,4 +1,3 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
 import {
   User,
   Account,
@@ -38,6 +37,8 @@ export function getOrCreateAccount(
     account.gammaDeposited = ZERO_BI;
     account.gammaEarnedRealized = ZERO_BI;
     account.hypervisorCount = ZERO_BI;
+    
+    getOrCreateUser(addressString, true)
 
     if (saveOnCreate) {
       account.save();
@@ -101,6 +102,7 @@ export function getOrCreateRewardHypervisorTx(
 
   if (!tx) {
     tx = new RewardHypervisorTx(txId);
+    tx.block = ZERO_BI;
     tx.timestamp = ZERO_BI;
     tx.action = "";
     tx.account = "";

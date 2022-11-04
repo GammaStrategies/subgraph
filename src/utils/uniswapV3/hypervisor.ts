@@ -106,6 +106,7 @@ export function createDeposit(event: DepositEvent): UniswapV3Deposit {
 
   let deposit = new UniswapV3Deposit(id);
   deposit.hypervisor = event.address.toHex();
+  deposit.block = event.block.number;
   deposit.timestamp = event.block.timestamp;
   deposit.sender = event.params.sender;
   deposit.to = event.params.to;
@@ -125,6 +126,7 @@ export function createRebalance(event: RebalanceEvent): UniswapV3Rebalance {
 
   let rebalance = new UniswapV3Rebalance(id);
   rebalance.hypervisor = event.address.toHex();
+  rebalance.block = event.block.number;
   rebalance.timestamp = event.block.timestamp;
   rebalance.tick = event.params.tick;
   rebalance.totalAmount0 = event.params.totalAmount0;
@@ -163,6 +165,7 @@ export function createWithdraw(event: WithdrawEvent): UniswapV3Withdraw {
 
   let withdraw = new UniswapV3Withdraw(id);
   withdraw.hypervisor = event.address.toHex();
+  withdraw.block = event.block.number;
   withdraw.timestamp = event.block.timestamp;
   withdraw.sender = event.params.sender;
   withdraw.to = event.params.to;

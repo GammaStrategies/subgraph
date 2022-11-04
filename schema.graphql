@@ -26,6 +26,7 @@ type RewardHypervisorShare @entity {
 
 type RewardHypervisorTx @entity {
   id: ID!
+  block: BigInt!
   timestamp: BigInt!
   "stake or unstake"
   action: String!
@@ -222,6 +223,7 @@ type UniswapV3Hypervisor @entity {
 type UniswapV3Deposit @entity {
   id: ID!
   hypervisor: UniswapV3Hypervisor!
+  block: BigInt!
   timestamp: BigInt!
   sender: Bytes!
   to: Bytes!
@@ -234,6 +236,7 @@ type UniswapV3Deposit @entity {
 type UniswapV3Rebalance @entity {
   id: ID!
   hypervisor: UniswapV3Hypervisor!
+  block: BigInt!
   timestamp: BigInt!
   tick: Int!
   baseLower: Int!
@@ -264,6 +267,7 @@ type UniswapV3Rebalance @entity {
 type UniswapV3Withdraw @entity {
   id: ID!
   hypervisor: UniswapV3Hypervisor!
+  block: BigInt!
   timestamp: BigInt!
   sender: Bytes!
   to: Bytes!

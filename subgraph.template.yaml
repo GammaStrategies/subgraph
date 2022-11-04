@@ -473,6 +473,8 @@ dataSources:
           handler: handleSetAllocPoint
         - event: PoolUpdated(uint256,(address,uint256,uint256,uint256))
           handler: handlePoolUpdated
+        - event: UpdateEmissionRate(indexed address,uint256)
+          handler: handleUpdateEmissionRate
   {{/masterChefOrphan}}
 templates:
   - name: UniswapV3Hypervisor
@@ -573,4 +575,6 @@ templates:
           handler: handleSetAllocPoint
         - event: PoolUpdated(uint256,(address,uint256,uint256,uint256))
           handler: handlePoolUpdated
+        - event: UpdateEmissionRate(indexed address,uint256)
+          handler: handleUpdateEmissionRate
   {{/masterChefTemplate}}

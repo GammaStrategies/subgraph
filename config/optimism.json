@@ -25,6 +25,31 @@
       "name": "xUSDC-DAI05",
       "address": "0x66CD859053c458688044d816117D5Bdf42A56813",
       "startBlock": 7087995
+    },
+    {
+      "name": "xETH-OP3",
+      "address": "0xec573f93dd55e2aefd67b1e59ddfa758676b1184",
+      "startBlock": 22148321
+    },
+    {
+      "name": " xETH-USDT05",
+      "address": "0x387854f1885c08cea896eb75f08917e45c6b3c5f",
+      "startBlock": 7306840
+    },
+    {
+      "name": "xWETH-USDC05",
+      "address": "0xed17209ab7f9224e29cc9894fa14a011f37b6115",
+      "startBlock": 32036193
+    },
+    {
+      "name": "xWETH-DAI3",
+      "address": "0x14e42871d90282ec0439f01347178d6331fc1873",
+      "startBlock": 32036354
+    },
+    {
+      "name": "xUSDC-DAI01",
+      "address": "0xaed05fdd471a4eecee48b34d38c59cc76681a6c8",
+      "startBlock": 32036450
     }
   ],
   "uniswapV3PoolOrphan": [

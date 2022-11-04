@@ -5,7 +5,8 @@ import {
   SetAllocPoint,
   Withdraw as WithdrawEvent,
   PoolUpdated,
-} from "../../generated/MasterChef/MasterChef";
+  UpdateEmissionRate,
+} from "../../generated/templates/MasterChef/MasterChef";
 import {
   getOrCreateMasterChef,
   getOrCreateMasterChefPool,
@@ -19,7 +20,7 @@ export function handleDeposit(event: DepositEvent): void {
     event.params.pid
   );
 
-  let masterChefPoolAccount = getOrCreateMasterChefPoolAccount(
+  const masterChefPoolAccount = getOrCreateMasterChefPoolAccount(
     event.address,
     hypervisorAddress,
     event.params.user
@@ -27,7 +28,7 @@ export function handleDeposit(event: DepositEvent): void {
   masterChefPoolAccount.amount += event.params.amount;
   masterChefPoolAccount.save();
 
-  let masterChefPool = getOrCreateMasterChefPool(
+  const masterChefPool = getOrCreateMasterChefPool(
     event.address,
     hypervisorAddress
   );
@@ -41,7 +42,7 @@ export function handleWithdraw(event: WithdrawEvent): void {
     event.params.pid
   );
 
-  let masterChefPoolAccount = getOrCreateMasterChefPoolAccount(
+  const masterChefPoolAccount = getOrCreateMasterChefPoolAccount(
     event.address,
     hypervisorAddress,
     event.params.user
@@ -49,7 +50,7 @@ export function handleWithdraw(event: WithdrawEvent): void {
   masterChefPoolAccount.amount -= event.params.amount;
   masterChefPoolAccount.save();
 
-  let masterChefPool = getOrCreateMasterChefPool(
+  const masterChefPool = getOrCreateMasterChefPool(
     event.address,
     hypervisorAddress
   );
@@ -58,7 +59,7 @@ export function handleWithdraw(event: WithdrawEvent): void {
 }
 
 export function handleAddLp(event: AddLp): void {
-  let masterChefPool = getOrCreateMasterChefPool(
+  const masterChefPool = getOrCreateMasterChefPool(
     event.address,
     event.params.poolInfo.lpToken
   );
@@ -67,7 +68,7 @@ export function handleAddLp(event: AddLp): void {
   masterChefPool.poolId = event.params.poolId;
   masterChefPool.save();
 
-  let masterChef = getOrCreateMasterChef(
+  const masterChef = getOrCreateMasterChef(
     Address.fromString(masterChefPool.masterChef)
   );
   masterChef.totalAllocPoint += event.params.poolInfo.allocPoint;
@@ -75,7 +76,7 @@ export function handleAddLp(event: AddLp): void {
 }
 
 export function handleSetAllocPoint(event: SetAllocPoint): void {
-  let masterChefPool = getOrCreateMasterChefPool(
+  const masterChefPool = getOrCreateMasterChefPool(
     event.address,
     event.params.poolInfo.lpToken
   );
@@ -83,7 +84,7 @@ export function handleSetAllocPoint(event: SetAllocPoint): void {
   masterChefPool.allocPoint = event.params.poolInfo.allocPoint;
   masterChefPool.save();
 
-  let masterChef = getOrCreateMasterChef(
+  const masterChef = getOrCreateMasterChef(
     Address.fromString(masterChefPool.masterChef)
   );
   masterChef.totalAllocPoint +=
@@ -92,10 +93,16 @@ export function handleSetAllocPoint(event: SetAllocPoint): void {
 }
 
 export function handlePoolUpdated(event: PoolUpdated): void {
-  let masterChefPool = getOrCreateMasterChefPool(
+  const masterChefPool = getOrCreateMasterChefPool(
     event.address,
     event.params.poolInfo.lpToken
   );
   masterChefPool.lastRewardBlock = event.params.poolInfo.lastRewardBlock;
   masterChefPool.save();
+}
+
+export function handleUpdateEmissionRate(event: UpdateEmissionRate): void {
+  const masterChef = getOrCreateMasterChef(event.address);
+  masterChef.rewardPerBlock = event.params.sushiPerBlock;
+  masterChef.save();
 }
