@@ -6,13 +6,13 @@ import {
   Withdraw as WithdrawEvent,
   PoolUpdated,
   UpdateEmissionRate,
-} from "../../generated/templates/MasterChef/MasterChef";
+} from "../../../generated/templates/MasterChef/MasterChef";
 import {
   getOrCreateMasterChef,
   getOrCreateMasterChefPool,
   getOrCreateMasterChefPoolAccount,
   getHypervisorFromPoolId,
-} from "../utils/masterChef";
+} from "../../utils/masterChef";
 
 export function handleDeposit(event: DepositEvent): void {
   const hypervisorAddress = getHypervisorFromPoolId(

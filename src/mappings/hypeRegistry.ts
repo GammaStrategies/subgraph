@@ -1,10 +1,12 @@
 /* eslint-disable prefer-const */
 import { log } from "@graphprotocol/graph-ts";
 import { HypeAdded } from "../../generated/HypeRegistry/HypeRegistry";
-import { UniswapV3Hypervisor as HypervisorContract } from "../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
-import { UniswapV3Hypervisor as HypervisorTemplate } from "../../generated/templates";
+import { Hypervisor as HypervisorContract } from "../../generated/templates/Hypervisor/Hypervisor";
+import { Hypervisor as HypervisorTemplate } from "../../generated/templates";
 import { getOrCreateHypervisor } from "../utils/uniswapV3/hypervisor";
 import { UniswapV3Hypervisor } from "../../generated/schema";
+import { getOrCreateProtocol } from "../utils/entities";
+
 
 export function handleHypeAdded(event: HypeAdded): void {
   let hypervisor = UniswapV3Hypervisor.load(event.params.hype.toHex());
@@ -21,6 +23,8 @@ export function handleHypeAdded(event: HypeAdded): void {
     return;
   }
 
+  getOrCreateProtocol()
+  
   hypervisor = getOrCreateHypervisor(event.params.hype, event.block.timestamp);
   hypervisor.save();
 

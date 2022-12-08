@@ -92,3 +92,7 @@ export class constantAddresses {
         return mapping as TypedMap<string, string>
     }
 }
+
+export const protocolLookup = new TypedMap<string, string>()
+protocolLookup.set('matic:0x5ca313118358e3f5efe0c49f239b66c964f9aef0', 'algebra');
+protocolLookup.set('matic:0xaec731f69fa39ad84c7749e913e3bc227427adfd', 'algebra');

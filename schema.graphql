@@ -1,3 +1,8 @@
+type Protocol @entity {
+  id: ID!
+  name: String!
+}
+
 type ProtocolDistribution @entity {
   "Address of distributed token"
   id: ID!
@@ -85,6 +90,7 @@ type Account @entity {
   hypervisorCount: BigInt!
   hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "account")
   masterChefPoolAccounts: [MasterChefPoolAccount!]! @derivedFrom(field: "account")
+  masterChefV2RewarderAccounts: [MasterChefV2RewarderAccount!]! @derivedFrom(field: "account")
 }
 
 
@@ -159,10 +165,12 @@ type UniswapV3Hypervisor @entity {
   # Hypervisor address
   id: ID!
   factory: UniswapV3HypervisorFactory!
+  version: String!
   owner: Bytes!
   created: Int!
   symbol: String!
   pool: UniswapV3Pool!
+  fee: Int!
   tick: Int!
   # Lower tick of base position
   baseLower: Int!
@@ -362,5 +370,44 @@ type MasterChefPoolAccount @entity {
   id: ID!
   account: Account!
   masterChefPool: MasterChefPool!
+  amount: BigInt!
+}
+
+type MasterChefV2 @entity {
+  id: ID!
+  rewardToken: Token!
+  rewardPerSecond: BigInt!
+  totalAllocPoint: BigInt!
+  pools: [MasterChefV2Pool!]! @derivedFrom(field: "masterChef")
+}
+
+type MasterChefV2Pool @entity {
+  id: ID!
+  hypervisor: UniswapV3Hypervisor
+  masterChef: MasterChefV2
+  poolId: BigInt!
+  allocPoint: BigInt!
+  stakeToken: Token!
+  totalStaked: BigInt!
+  accSushiPerShare: BigInt!
+  lastRewardTimestamp: BigInt!
+  rewarderList: [String!]!
+  rewarders: [MasterChefV2Rewarder!]! @derivedFrom(field: "masterChefPool")
+}
+
+type MasterChefV2Rewarder @entity {
+  # Rewarder contract ID
+  id: ID!
+  masterChefPool: MasterChefV2Pool!
+  rewardToken: Token!
+  rewardPerSecond: BigInt!
+  lastRewardTimestamp: BigInt!
+  accounts: [MasterChefV2RewarderAccount!]! @derivedFrom(field: "rewarder")
+}
+
+type MasterChefV2RewarderAccount @entity {
+  id: ID!
+  account: Account!
+  rewarder: MasterChefV2Rewarder!
   amount: BigInt!
 }

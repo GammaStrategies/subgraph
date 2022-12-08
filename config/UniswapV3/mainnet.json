@@ -144,6 +144,60 @@
             "address": "0xf56abca39c27d5c74f94c901b8c137fdf53b3e80",
             "startBlock": 15783008,
             "useCallHandlers": true
+        },
+        {
+            "name": "rETH-THETA-ETH",
+            "address": "0x24fe0b138d9b10a7f0502e213212ee6648926ecb",
+            "startBlock": 14476870,
+            "useCallHandlers": true
+        },
+        {
+            "name": "xWBTC-ETH05",
+            "address": "0x35abccd8e577607275647edab08c537fa32cc65e",
+            "startBlock": 14482797,
+            "useCallHandlers": true
+        },
+        {
+            "name": "OHM-FDT",
+            "address": "0x388a3938fb6c9c6cb0415946dd5d026f7d98e22c",
+            "startBlock": 14178874,
+            "useCallHandlers": true
+        },
+        {
+            "name": "xWBTC-renBTC05",
+            "address": "0x3cca05926af387f1ab4cd45ce8975d31f0469927",
+            "startBlock": 14648879,
+            "useCallHandlers": true
+        },
+        {
+            "name": "INDEX-ETH",
+            "address": "0x467414f0312ecedba1e505c12bd97daa3609da87",
+            "startBlock": 13990582,
+            "useCallHandlers": true
+        },
+        {
+            "name": "xETH-BABL03",
+            "address": "0x52ce16b1f37ea7be4352b29fcde3331e225380ff",
+            "startBlock": 14387440,
+            "useCallHandlers": true
+        },
+        {
+            "name": "xFRAX-USDC05",
+            "address": "0x6941b1b6b29948a2f74cad0ef2866e93436a5e2d",
+            "startBlock": 14648889,
+            "useCallHandlers": true
+        },
+        {
+            "name": "xOCEAN-PSDN1",
+            "address": "0x9196617815d95853945cd8f5e4e0bb88fdfe0281",
+            "startBlock": 14663226,
+            "useCallHandlers": true
+        },
+        {
+            "name": "xFWB-ETH03",
+            "address": "0xe14dbb7d054ff1ff5c0cd6adac9f8f26bc7b8945",
+            "startBlock": 14795244,
+            "useCallHandlers": true
         }
     ],
     "uniswapV3PoolOrphan": [

@@ -1,12 +1,6 @@
-/* eslint-disable prefer-const */
-import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { UniswapV3Hypervisor as HypervisorContract } from "../../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
-import { UniswapV3Pool as PoolContract } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool";
-import {
-  Deposit as DepositEvent,
-  Withdraw as WithdrawEvent,
-  Rebalance as RebalanceEvent,
-} from "../../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { Hypervisor as HypervisorContract } from "../../../generated/templates/Hypervisor/Hypervisor";
+import { UniswapV3Pool as PoolContract } from "../../../generated/templates/Pool/UniswapV3Pool";
 import {
   UniswapV3Hypervisor,
   UniswapV3Deposit,
@@ -14,29 +8,31 @@ import {
   UniswapV3Withdraw,
   UniswapV3HypervisorShare,
 } from "../../../generated/schema";
-import { UniswapV3Pool as PoolTemplate } from "../../../generated/templates";
-import { getOrCreatePool } from "../uniswapV3/pool";
+import { Pool as PoolTemplate } from "../../../generated/templates";
+import { getOrCreatePool } from "../pool";
 import { createConversion } from "../tokens";
 import { ADDRESS_ZERO, ZERO_BI, ONE_BI, ZERO_BD } from "../constants";
-import { positionKey } from "./positions";
+import { positionKey } from "../common/positions";
 import { getOrCreateAccount, getOrCreateUser } from "../entities";
+import { splitFees } from "../fees";
+import { updateHypervisorFeeGrowth } from "../common/hypervisor";
 
 export function getOrCreateHypervisor(
   hypervisorAddress: Address,
   timestamp: BigInt = ZERO_BI
 ): UniswapV3Hypervisor {
-  let hypervisorId = hypervisorAddress.toHex();
+  const hypervisorId = hypervisorAddress.toHex();
   let hypervisor = UniswapV3Hypervisor.load(hypervisorId);
 
   if (hypervisor == null) {
-    let hypervisorContract = HypervisorContract.bind(hypervisorAddress);
+    const hypervisorContract = HypervisorContract.bind(hypervisorAddress);
 
     // Creating pool also creates tokens
-    let poolAddress = hypervisorContract.pool();
-    let pool = getOrCreatePool(poolAddress);
+    const poolAddress = hypervisorContract.pool();
+    const pool = getOrCreatePool(poolAddress);
 
     // Update hypervisors linked to pool
-    let hypervisors = pool.hypervisors;
+    const hypervisors = pool.hypervisors;
     hypervisors.push(hypervisorId);
     pool.hypervisors = hypervisors;
     pool.save();
@@ -44,8 +40,10 @@ export function getOrCreateHypervisor(
     hypervisor = new UniswapV3Hypervisor(hypervisorId);
     hypervisor.pool = poolAddress.toHex();
     hypervisor.factory = ADDRESS_ZERO;
+    hypervisor.version = "";
     hypervisor.owner = hypervisorContract.owner();
     hypervisor.symbol = hypervisorContract.symbol();
+    hypervisor.fee = 10;
     hypervisor.created = timestamp.toI32();
     hypervisor.tick = hypervisorContract.currentTick();
     hypervisor.baseLower = hypervisorContract.baseLower();
@@ -101,49 +99,65 @@ export function getOrCreateHypervisor(
   return hypervisor as UniswapV3Hypervisor;
 }
 
-export function createDeposit(event: DepositEvent): UniswapV3Deposit {
-  let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+export function createDeposit(
+  sender: Address,
+  to: Address,
+  shares: BigInt,
+  amount0: BigInt,
+  amount1: BigInt,
+  event: ethereum.Event
+): UniswapV3Deposit {
+  const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
-  let deposit = new UniswapV3Deposit(id);
+  const deposit = new UniswapV3Deposit(id);
   deposit.hypervisor = event.address.toHex();
   deposit.block = event.block.number;
   deposit.timestamp = event.block.timestamp;
-  deposit.sender = event.params.sender;
-  deposit.to = event.params.to;
-  deposit.shares = event.params.shares;
-  deposit.amount0 = event.params.amount0;
-  deposit.amount1 = event.params.amount1;
+  deposit.sender = sender;
+  deposit.to = to;
+  deposit.shares = shares;
+  deposit.amount0 = amount0;
+  deposit.amount1 = amount1;
   deposit.amountUSD = ZERO_BD;
 
   return deposit as UniswapV3Deposit;
 }
 
-export function createRebalance(event: RebalanceEvent): UniswapV3Rebalance {
-  let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+export function createRebalance(
+  tick: i32,
+  totalAmount0: BigInt,
+  totalAmount1: BigInt,
+  feeAmount0: BigInt,
+  feeAmount1: BigInt,
+  totalSupply: BigInt,
+  feeRate: i32,
+  event: ethereum.Event
+): UniswapV3Rebalance {
+  const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
-  // 10% fee is hardcoded in the contracts
-  let protocolFeeRate = BigInt.fromI32(10);
+  const collectedFees0 = splitFees(feeAmount0, feeRate)
+  const collectedFees1 = splitFees(feeAmount1, feeRate)
 
-  let rebalance = new UniswapV3Rebalance(id);
+  const rebalance = new UniswapV3Rebalance(id);
   rebalance.hypervisor = event.address.toHex();
   rebalance.block = event.block.number;
   rebalance.timestamp = event.block.timestamp;
-  rebalance.tick = event.params.tick;
-  rebalance.totalAmount0 = event.params.totalAmount0;
-  rebalance.totalAmount1 = event.params.totalAmount1;
-  rebalance.grossFees0 = event.params.feeAmount0;
-  rebalance.grossFees1 = event.params.feeAmount1;
-  rebalance.protocolFees0 = rebalance.grossFees0 / protocolFeeRate;
-  rebalance.protocolFees1 = rebalance.grossFees1 / protocolFeeRate;
-  rebalance.netFees0 = rebalance.grossFees0 - rebalance.protocolFees0;
-  rebalance.netFees1 = rebalance.grossFees1 - rebalance.protocolFees1;
-  rebalance.totalSupply = event.params.totalSupply;
+  rebalance.tick = tick;
+  rebalance.totalAmount0 = totalAmount0;
+  rebalance.totalAmount1 = totalAmount1;
+  rebalance.grossFees0 = collectedFees0.grossFees;
+  rebalance.grossFees1 = collectedFees1.grossFees;
+  rebalance.protocolFees0 = collectedFees0.protocolFees
+  rebalance.protocolFees1 = collectedFees1.protocolFees
+  rebalance.netFees0 = collectedFees0.netFees
+  rebalance.netFees1 = collectedFees1.netFees
+  rebalance.totalSupply = totalSupply;
 
   // Read rebalance limits from contract as not available in event
-  let hypervisorContract = HypervisorContract.bind(event.address);
+  const hypervisorContract = HypervisorContract.bind(event.address);
 
-  let basePosition = hypervisorContract.getBasePosition();
-  let limitPosition = hypervisorContract.getLimitPosition();
+  const basePosition = hypervisorContract.getBasePosition();
+  const limitPosition = hypervisorContract.getLimitPosition();
 
   rebalance.baseLower = hypervisorContract.baseLower();
   rebalance.baseUpper = hypervisorContract.baseUpper();
@@ -160,18 +174,25 @@ export function createRebalance(event: RebalanceEvent): UniswapV3Rebalance {
   return rebalance as UniswapV3Rebalance;
 }
 
-export function createWithdraw(event: WithdrawEvent): UniswapV3Withdraw {
-  let id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+export function createWithdraw(
+  sender: Address,
+  to: Address,
+  shares: BigInt,
+  amount0: BigInt,
+  amount1: BigInt,
+  event: ethereum.Event
+): UniswapV3Withdraw {
+  const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
-  let withdraw = new UniswapV3Withdraw(id);
+  const withdraw = new UniswapV3Withdraw(id);
   withdraw.hypervisor = event.address.toHex();
   withdraw.block = event.block.number;
   withdraw.timestamp = event.block.timestamp;
-  withdraw.sender = event.params.sender;
-  withdraw.to = event.params.to;
-  withdraw.shares = event.params.shares;
-  withdraw.amount0 = event.params.amount0;
-  withdraw.amount1 = event.params.amount1;
+  withdraw.sender = sender;
+  withdraw.to = to;
+  withdraw.shares = shares;
+  withdraw.amount0 = amount0;
+  withdraw.amount1 = amount1;
   withdraw.amountUSD = ZERO_BD;
 
   return withdraw as UniswapV3Withdraw;
@@ -181,7 +202,7 @@ export function getOrCreateHypervisorShare(
   hypervisorAddress: string,
   accountAddress: string
 ): UniswapV3HypervisorShare {
-  let id = hypervisorAddress + "-" + accountAddress;
+  const id = hypervisorAddress + "-" + accountAddress;
 
   let hypervisorShare = UniswapV3HypervisorShare.load(id);
   if (hypervisorShare == null) {
@@ -193,12 +214,12 @@ export function getOrCreateHypervisorShare(
     hypervisorShare.initialToken1 = ZERO_BI;
     hypervisorShare.initialUSD = ZERO_BD;
     // increment counts
-    let account = getOrCreateAccount(accountAddress);
+    const account = getOrCreateAccount(accountAddress);
     account.hypervisorCount += ONE_BI;
     account.save();
     getOrCreateUser(account.parent, true);
 
-    let hypervisor = UniswapV3Hypervisor.load(
+    const hypervisor = UniswapV3Hypervisor.load(
       hypervisorAddress
     ) as UniswapV3Hypervisor;
     hypervisor.accountCount += ONE_BI;
@@ -209,11 +230,11 @@ export function getOrCreateHypervisorShare(
 }
 
 export function updatePositions(hypervisorAddress: Address): void {
-  let hypervisor = getOrCreateHypervisor(hypervisorAddress);
-  let hypervisorContract = HypervisorContract.bind(hypervisorAddress);
+  const hypervisor = getOrCreateHypervisor(hypervisorAddress);
+  const hypervisorContract = HypervisorContract.bind(hypervisorAddress);
 
-  let basePosition = hypervisorContract.getBasePosition();
-  let limitPosition = hypervisorContract.getLimitPosition();
+  const basePosition = hypervisorContract.getBasePosition();
+  const limitPosition = hypervisorContract.getLimitPosition();
 
   hypervisor.baseLiquidity = basePosition.value0;
   hypervisor.baseAmount0 = basePosition.value1;
@@ -225,55 +246,43 @@ export function updatePositions(hypervisorAddress: Address): void {
   hypervisor.save();
 }
 
-export function updateFeeGrowth(
+
+export function updateUniV3FeeGrowth(
   hypervisorAddress: Address,
   isRebalance: boolean = false
 ): void {
-  let hypervisor = getOrCreateHypervisor(hypervisorAddress);
-  let poolAddress = Address.fromString(hypervisor.pool);
-  let poolContract = PoolContract.bind(poolAddress);
+  const hypervisor = getOrCreateHypervisor(hypervisorAddress);
+  const poolAddress = Address.fromString(hypervisor.pool);
+  const poolContract = PoolContract.bind(poolAddress);
 
-  let baseKey = positionKey(
+  const baseKey = positionKey(
     hypervisorAddress,
     hypervisor.baseLower,
     hypervisor.baseUpper
   );
-  let limitKey = positionKey(
+  const limitKey = positionKey(
     hypervisorAddress,
     hypervisor.limitLower,
     hypervisor.limitUpper
   );
 
-  let basePosition = poolContract.positions(baseKey);
-  let limitPosition = poolContract.positions(limitKey);
+  const basePosition = poolContract.positions(baseKey);
+  const limitPosition = poolContract.positions(limitKey);
 
-  hypervisor.baseLiquidity = basePosition.getLiquidity();
-  hypervisor.baseTokensOwed0 = basePosition.getTokensOwed0();
-  hypervisor.baseTokensOwed1 = basePosition.getTokensOwed1();
-  hypervisor.baseFeeGrowthInside0LastX128 =
-    basePosition.getFeeGrowthInside0LastX128();
-  hypervisor.baseFeeGrowthInside1LastX128 =
-    basePosition.getFeeGrowthInside1LastX128();
-  hypervisor.limitLiquidity = limitPosition.getLiquidity();
-  hypervisor.limitTokensOwed0 = limitPosition.getTokensOwed0();
-  hypervisor.limitTokensOwed1 = limitPosition.getTokensOwed1();
-  hypervisor.limitFeeGrowthInside0LastX128 =
-    limitPosition.getFeeGrowthInside0LastX128();
-  hypervisor.limitFeeGrowthInside1LastX128 =
-    limitPosition.getFeeGrowthInside1LastX128();
-
-  if (isRebalance) {
-    hypervisor.baseFeeGrowthInside0LastRebalanceX128 =
-      basePosition.getFeeGrowthInside0LastX128();
-    hypervisor.baseFeeGrowthInside1LastRebalanceX128 =
-      basePosition.getFeeGrowthInside1LastX128();
-    hypervisor.limitFeeGrowthInside0LastRebalanceX128 =
-      limitPosition.getFeeGrowthInside0LastX128();
-    hypervisor.limitFeeGrowthInside1LastRebalanceX128 =
-      limitPosition.getFeeGrowthInside1LastX128();
-  }
-
-  hypervisor.save();
+  updateHypervisorFeeGrowth(
+      hypervisorAddress,
+      basePosition.getLiquidity(),
+      basePosition.getTokensOwed0(),
+      basePosition.getTokensOwed1(),
+      basePosition.getFeeGrowthInside0LastX128(),
+      basePosition.getFeeGrowthInside1LastX128(),
+      limitPosition.getLiquidity(),
+      limitPosition.getTokensOwed0(),
+      limitPosition.getTokensOwed1(),
+      limitPosition.getFeeGrowthInside0LastX128(),
+      limitPosition.getFeeGrowthInside1LastX128(),
+      isRebalance
+  )
 }
 
 // export function updateAmounts(hypervisorAddress: Address, sqrtPrice: BigInt): void {

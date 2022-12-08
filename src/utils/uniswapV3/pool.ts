@@ -1,32 +1,44 @@
-/* eslint-disable prefer-const */
-import { Address } from "@graphprotocol/graph-ts";
-import { UniswapV3Pool as PoolContract } from "../../../generated/UniswapV3HypervisorFactory/UniswapV3Pool";
+import { Address, ByteArray, Bytes, crypto } from "@graphprotocol/graph-ts";
+import { UniswapV3Pool as PoolContract } from "../../../generated/templates/Pool/UniswapV3Pool";
 import { UniswapV3Pool } from "../../../generated/schema";
-import { getOrCreateToken } from "../tokens";
-import { ZERO_BI } from "../constants";
+import { createPool } from "../entities";
+import { encodeKey } from "../common/positions";
 
 
-export function getOrCreatePool(poolAddress: Address): UniswapV3Pool {
-  let pool = UniswapV3Pool.load(poolAddress.toHex());
-  if (pool == null) {
-    let poolContract = PoolContract.bind(poolAddress);
+export function createUniV3Pool(poolAddress: Address): UniswapV3Pool | null {
+  const poolContract = PoolContract.bind(poolAddress);
+  const slot0 = poolContract.try_slot0();
 
-    let token0 = getOrCreateToken(poolContract.token0());
-    let token1 = getOrCreateToken(poolContract.token1());
-    token0.save();
-    token1.save();
-
-    let slot0 = poolContract.slot0()
-    let sqrtPriceX96 = slot0.value0
-    
-    pool = new UniswapV3Pool(poolAddress.toHex());
-    pool.hypervisors = [];
-    pool.token0 = token0.id;
-    pool.token1 = token1.id;
-    pool.fee = poolContract.fee();
-    pool.sqrtPriceX96 = sqrtPriceX96;
-    pool.lastSwapTime = ZERO_BI;
-    pool.lastHypervisorRefreshTime = ZERO_BI;
+  if (slot0.reverted) {
+    return null
   }
+
+  const pool = createPool(
+    poolAddress,
+    poolContract.token0(),
+    poolContract.token1(),
+    poolContract.fee(),
+    slot0.value.getSqrtPriceX96()
+  );
+
   return pool as UniswapV3Pool;
+}
+
+export function uniswapPositionKey(
+  ownerAddress: Address,
+  tickLower: i32,
+  tickUpper: i32
+): Bytes {
+  const encodedHex = encodeKey(ownerAddress, tickLower, tickUpper).toHex();
+
+  const encodedPacked =
+    "0x" +
+    encodedHex.substr(26, 40) +
+    encodedHex.substr(124, 6) +
+    encodedHex.substr(188, 6);
+
+  const keyArray = crypto.keccak256(ByteArray.fromHexString(encodedPacked));
+  const key = Bytes.fromByteArray(keyArray);
+
+  return key as Bytes;
 }

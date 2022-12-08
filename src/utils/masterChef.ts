@@ -88,5 +88,5 @@ export function getHypervisorFromPoolId(
 ): Address {
   let masterChefContract = MasterChefContract.bind(masterChefAddress);
   const poolInfo = masterChefContract.poolInfo(poolId);
-  return poolInfo.value0;
+  return poolInfo.getLpToken();
 }

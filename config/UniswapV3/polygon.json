@@ -43,5 +43,6 @@
             "startBlock": 31283049
         }
     ],
-    "masterChefTemplate": true
+    "masterChefTemplate": true,
+    "masterChefV2Template": true
 }

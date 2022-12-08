@@ -12,8 +12,8 @@ import {
   RewardedToken,
   UniswapV3HypervisorConversion,
 } from "../../generated/schema";
-import { UniswapV3Pool as PoolTemplate } from "../../generated/templates";
-import { getOrCreatePool } from "./uniswapV3/pool";
+import { Pool as PoolTemplate } from "../../generated/templates";
+import { getOrCreatePool } from "./pool";
 import {
   ZERO_BI,
   ZERO_BD,

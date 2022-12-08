@@ -1,13 +1,38 @@
+import { Address, BigInt, dataSource } from "@graphprotocol/graph-ts";
 import {
   User,
   Account,
+  Protocol,
   ProtocolDistribution,
   RewardHypervisorTx,
   RewardHypervisor,
-  RewardHypervisorShare
+  RewardHypervisorShare,
+  UniswapV3Pool,
 } from "../../generated/schema";
-import { REWARD_HYPERVISOR_ADDRESS, ZERO_BD, ZERO_BI } from "./constants";
+import {
+  protocolLookup,
+  REWARD_HYPERVISOR_ADDRESS,
+  ZERO_BD,
+  ZERO_BI,
+} from "./constants";
+import { getOrCreateToken } from "./tokens";
 
+export function getOrCreateProtocol(): Protocol {
+  let protocol = Protocol.load("0");
+  if (!protocol) {
+    protocol = new Protocol("0");
+    let name = protocolLookup.get(
+      dataSource.network().concat(":").concat(dataSource.address().toHex())
+    );
+    if (!name) {
+      name = "uniswap-v3";
+    }
+
+    protocol.name = name as string;
+    protocol.save();
+  }
+  return protocol;
+}
 
 export function getOrCreateUser(
   addressString: string,
@@ -37,8 +62,8 @@ export function getOrCreateAccount(
     account.gammaDeposited = ZERO_BI;
     account.gammaEarnedRealized = ZERO_BI;
     account.hypervisorCount = ZERO_BI;
-    
-    getOrCreateUser(addressString, true)
+
+    getOrCreateUser(addressString, true);
 
     if (saveOnCreate) {
       account.save();
@@ -115,4 +140,29 @@ export function getOrCreateRewardHypervisorTx(
   }
 
   return tx as RewardHypervisorTx;
+}
+
+export function createPool(
+  poolAddress: Address,
+  token0Address: Address,
+  token1Address: Address,
+  fee: i32,
+  sqrtPriceX96: BigInt
+): UniswapV3Pool {
+  const token0 = getOrCreateToken(token0Address);
+  const token1 = getOrCreateToken(token1Address);
+
+  token0.save();
+  token1.save();
+
+  const pool = new UniswapV3Pool(poolAddress.toHex());
+  pool.hypervisors = [];
+  pool.token0 = token0.id;
+  pool.token1 = token1.id;
+  pool.fee = fee;
+  pool.sqrtPriceX96 = sqrtPriceX96;
+  pool.lastSwapTime = ZERO_BI;
+  pool.lastHypervisorRefreshTime = ZERO_BI;
+
+  return pool;
 }
