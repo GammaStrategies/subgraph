@@ -89,8 +89,8 @@ type Account @entity {
   rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "account")
   hypervisorCount: BigInt!
   hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "account")
-  masterChefPoolAccounts: [MasterChefPoolAccount!]! @derivedFrom(field: "account")
-  masterChefV2RewarderAccounts: [MasterChefV2RewarderAccount!]! @derivedFrom(field: "account")
+  mcPoolAccounts: [MasterChefPoolAccount!]! @derivedFrom(field: "account")
+  mcv2RewarderPoolAccounts: [MasterChefV2RewarderPoolAccount!]! @derivedFrom(field: "account")
 }
 
 
@@ -285,6 +285,13 @@ type UniswapV3Withdraw @entity {
   amountUSD: BigDecimal!
 }
 
+type UniswapV3FeeUpdate @entity {
+  id: ID!
+  hypervisor: UniswapV3Hypervisor!
+  block: BigInt!
+  timestamp: BigInt!
+}
+
 type UniswapV3HypervisorDayData @entity {
   id: ID!
   date: BigInt!
@@ -381,10 +388,12 @@ type MasterChefV2 @entity {
   pools: [MasterChefV2Pool!]! @derivedFrom(field: "masterChef")
 }
 
+# Pools related to MasterChef V2
 type MasterChefV2Pool @entity {
+  #Hypervisor ID
   id: ID!
-  hypervisor: UniswapV3Hypervisor
-  masterChef: MasterChefV2
+  hypervisor: UniswapV3Hypervisor!
+  masterChef: MasterChefV2!
   poolId: BigInt!
   allocPoint: BigInt!
   stakeToken: Token!
@@ -392,22 +401,33 @@ type MasterChefV2Pool @entity {
   accSushiPerShare: BigInt!
   lastRewardTimestamp: BigInt!
   rewarderList: [String!]!
-  rewarders: [MasterChefV2Rewarder!]! @derivedFrom(field: "masterChefPool")
+  rewarders: [MasterChefV2RewarderPool!]! @derivedFrom(field: "pool")
 }
 
+# Rewarders related to MasterChef V2
 type MasterChefV2Rewarder @entity {
   # Rewarder contract ID
   id: ID!
-  masterChefPool: MasterChefV2Pool!
+  masterChef: MasterChefV2!
   rewardToken: Token!
   rewardPerSecond: BigInt!
+  totalAllocPoint: BigInt!
   lastRewardTimestamp: BigInt!
-  accounts: [MasterChefV2RewarderAccount!]! @derivedFrom(field: "rewarder")
+  pools: [MasterChefV2RewarderPool!]! @derivedFrom(field: "rewarder")
 }
 
-type MasterChefV2RewarderAccount @entity {
+type MasterChefV2RewarderPool @entity {
+  # Rewarder ID - Pool ID
+  id: ID!
+  rewarder: MasterChefV2Rewarder!
+  pool: MasterChefV2Pool!
+  allocPoint: BigInt!
+  accounts: [MasterChefV2RewarderPoolAccount!]! @derivedFrom(field: "rewarderPool")
+}
+
+type MasterChefV2RewarderPoolAccount @entity {
   id: ID!
   account: Account!
-  rewarder: MasterChefV2Rewarder!
+  rewarderPool: MasterChefV2RewarderPool!
   amount: BigInt!
 }

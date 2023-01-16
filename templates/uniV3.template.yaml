@@ -797,10 +797,8 @@ templates:
         - name: ERC20SymbolBytes
           file: ./abis/ERC20SymbolBytes.json
       eventHandlers:
-        - event: LogInit(indexed address,address,uint256,indexed address)
-          handler: handleLogInit
         - event: LogRewardPerSecond(uint256)
-          handler: handleLogSushiPerSecond
+          handler: handleLogRewardPerSecond
         - event: LogUpdatePool(indexed uint256,uint64,uint256,uint256)
           handler: handleLogUpdatePool
   {{/masterChefV2Template}}

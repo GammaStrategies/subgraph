@@ -18,7 +18,7 @@
         {
             "name": "MasterChefV2Registry",
             "address": "0x62cD3612233B2F918BBf0d17B9Eda3005b84e16f",
-            "startBlock": 36058948
+            "startBlock": 36854861
         }
     ],
     "masterChefTemplate": true,

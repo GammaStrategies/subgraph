@@ -1,4 +1,3 @@
-import { Address } from "@graphprotocol/graph-ts";
 import {
   Deposit,
   EmergencyWithdraw,
@@ -9,98 +8,49 @@ import {
   LogUpdatePool,
   Withdraw,
 } from "../../../generated/templates/MasterChefV2/MasterChefV2";
-import { Rewarder as RewarderTemplate } from "../../../generated/templates"
+import { Rewarder as RewarderTemplate } from "../../../generated/templates";
 import {
   getHypervisorFromPoolId,
   getOrCreateMasterChefV2,
-  getOrCreateMasterChefV2Pool,
-  getOrCreateMasterChefV2Rewarder,
-  getOrCreateMasterChefV2RewarderAccount,
+  getOrCreateMCV2Pool,
+  getOrCreateMCV2Rewarder,
+  getOrCreateMCV2RewarderPool,
+  incrementAccountAmount,
+  isValidRewarder,
+  syncRewarderPoolInfo,
 } from "../../utils/masterChefV2";
+import { ZERO_BI } from "../../utils/constants";
+import { Address } from "@graphprotocol/graph-ts";
 
 export function handleDeposit(event: Deposit): void {
-  const hypervisorAddress = getHypervisorFromPoolId(
+  incrementAccountAmount(
     event.address,
-    event.params.pid
-  );
-  const masterChefPool = getOrCreateMasterChefV2Pool(
-    event.address,
-    hypervisorAddress
-  );
-  masterChefPool.totalStaked = masterChefPool.totalStaked.plus(
+    event.params.user,
+    event.params.pid,
     event.params.amount
   );
-  masterChefPool.save();
-
-  for (let i = 0; i < masterChefPool.rewarderList.length; i++) {
-    const rewarderAccount = getOrCreateMasterChefV2RewarderAccount(
-      event.address,
-      hypervisorAddress,
-      Address.fromString(masterChefPool.rewarderList[i]),
-      event.params.user
-    );
-
-    rewarderAccount.amount = rewarderAccount.amount.plus(event.params.amount);
-    rewarderAccount.save();
-  }
 }
 
 export function handleWithdraw(event: Withdraw): void {
-  const hypervisorAddress = getHypervisorFromPoolId(
+  incrementAccountAmount(
     event.address,
-    event.params.pid
+    event.params.user,
+    event.params.pid,
+    ZERO_BI.minus(event.params.amount)
   );
-  const masterChefPool = getOrCreateMasterChefV2Pool(
-    event.address,
-    hypervisorAddress
-  );
-  masterChefPool.totalStaked = masterChefPool.totalStaked.minus(
-    event.params.amount
-  );
-  masterChefPool.save();
-
-  for (let i = 0; i < masterChefPool.rewarderList.length; i++) {
-    const rewarderAccount = getOrCreateMasterChefV2RewarderAccount(
-      event.address,
-      hypervisorAddress,
-      Address.fromString(masterChefPool.rewarderList[i]),
-      event.params.user
-    );
-
-    rewarderAccount.amount = rewarderAccount.amount.minus(event.params.amount);
-    rewarderAccount.save();
-  }
 }
 
 export function handleEmergencyWithdraw(event: EmergencyWithdraw): void {
-  const hypervisorAddress = getHypervisorFromPoolId(
+  incrementAccountAmount(
     event.address,
-    event.params.pid
+    event.params.user,
+    event.params.pid,
+    ZERO_BI.minus(event.params.amount)
   );
-  const masterChefPool = getOrCreateMasterChefV2Pool(
-    event.address,
-    hypervisorAddress
-  );
-  masterChefPool.totalStaked = masterChefPool.totalStaked.minus(
-    event.params.amount
-  );
-  masterChefPool.save();
-
-  for (let i = 0; i < masterChefPool.rewarderList.length; i++) {
-    const rewarderAccount = getOrCreateMasterChefV2RewarderAccount(
-      event.address,
-      hypervisorAddress,
-      Address.fromString(masterChefPool.rewarderList[i]),
-      event.params.user
-    );
-
-    rewarderAccount.amount = rewarderAccount.amount.minus(event.params.amount);
-    rewarderAccount.save();
-  }
 }
 
 export function handleLogPoolAddition(event: LogPoolAddition): void {
-  const masterChefPool = getOrCreateMasterChefV2Pool(
+  const masterChefPool = getOrCreateMCV2Pool(
     event.address,
     event.params.lpToken
   );
@@ -115,10 +65,7 @@ export function handleLogSetPool(event: LogSetPool): void {
     event.address,
     event.params.pid
   );
-  const masterChefPool = getOrCreateMasterChefV2Pool(
-    event.address,
-    hypervisorAddress
-  );
+  const masterChefPool = getOrCreateMCV2Pool(event.address, hypervisorAddress);
 
   masterChefPool.allocPoint = event.params.allocPoint;
   masterChefPool.save();
@@ -129,10 +76,7 @@ export function handleLogUpdatePool(event: LogUpdatePool): void {
     event.address,
     event.params.pid
   );
-  const masterChefPool = getOrCreateMasterChefV2Pool(
-    event.address,
-    hypervisorAddress
-  );
+  const masterChefPool = getOrCreateMCV2Pool(event.address, hypervisorAddress);
 
   masterChefPool.totalStaked = event.params.lpSupply;
   masterChefPool.accSushiPerShare = event.params.accSushiPerShare;
@@ -147,26 +91,31 @@ export function handleLogSushiPerSecond(event: LogSushiPerSecond): void {
 }
 
 export function handleLogRewarderAdded(event: LogRewarderAdded): void {
+  // This event triggers rewarders to be tracked
+  // Check if rewarder is valid
+  if (!isValidRewarder(event.params.rewarder)) {
+    return;
+  }
+
   const hypervisorAddress = getHypervisorFromPoolId(
     event.address,
     event.params.pid
   );
 
-  const masterChefPool = getOrCreateMasterChefV2Pool(
-    event.address,
-    hypervisorAddress
-  );
+  const masterChefPool = getOrCreateMCV2Pool(event.address, hypervisorAddress);
   const rewarderList = masterChefPool.rewarderList;
   rewarderList.push(event.params.rewarder.toHex());
   masterChefPool.rewarderList = rewarderList;
-
   masterChefPool.save();
 
-  const rewarder = getOrCreateMasterChefV2Rewarder(
-    event.params.rewarder
+  // Create the rewarder entity, and sync pool info in case state was changed prior
+  const rewarder = getOrCreateMCV2Rewarder(event.params.rewarder);
+  getOrCreateMCV2RewarderPool(
+    event.params.rewarder,
+    Address.fromString(rewarder.masterChef),
+    hypervisorAddress
   );
-  rewarder.masterChefPool = masterChefPool.id
-  rewarder.save()
+  syncRewarderPoolInfo(event.params.rewarder);
 
-  RewarderTemplate.create(event.params.rewarder)
+  RewarderTemplate.create(event.params.rewarder);
 }

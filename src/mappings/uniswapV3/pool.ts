@@ -1,4 +1,4 @@
-import { Swap } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool"
+import { Collect, Swap } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool"
 import { processSwap } from '../../utils/common/pool'
 
 export function handleSwap(event: Swap): void {
@@ -8,3 +8,6 @@ export function handleSwap(event: Swap): void {
         event.block
     )
 }
+
+// export function handleCollect(event: Collect): void {
+// }

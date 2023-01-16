@@ -7,6 +7,7 @@ import {
   UniswapV3Rebalance,
   UniswapV3Withdraw,
   UniswapV3HypervisorShare,
+  UniswapV3FeeUpdate,
 } from "../../../generated/schema";
 import { Pool as PoolTemplate } from "../../../generated/templates";
 import { getOrCreatePool } from "../pool";
@@ -197,6 +198,10 @@ export function createWithdraw(
 
   return withdraw as UniswapV3Withdraw;
 }
+
+// export function createFeeUpdate(event: ethereum.Event): UniswapV3FeeUpdate {
+//   const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+// }
 
 export function getOrCreateHypervisorShare(
   hypervisorAddress: string,

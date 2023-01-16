@@ -198,6 +198,12 @@
             "address": "0xe14dbb7d054ff1ff5c0cd6adac9f8f26bc7b8945",
             "startBlock": 14795244,
             "useCallHandlers": true
+        },
+        {
+            "name": "wstETH-ETH05",
+            "address": "0xa3ECB6E941e773C6568052A509a04cf455a752ae",
+            "startBlock": 16221388,
+            "useCallHandlers": true
         }
     ],
     "uniswapV3PoolOrphan": [

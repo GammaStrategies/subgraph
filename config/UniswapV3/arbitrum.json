@@ -1,5 +1,9 @@
 {
     "network": "arbitrum-one",
+    "features": [{
+        "base": "QmNqQGZJmfJUNHn2ZeTmr5RzirUmhYDiNi8HEW92jvVeYw",
+        "block": 48166438
+    }],
     "uniswapV3PoolOrphan": [
         {
             "name": "WETH-USDC",
