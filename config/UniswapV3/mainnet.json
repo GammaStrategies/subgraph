@@ -59,151 +59,151 @@
             "name": "TCR-ETH",
             "address": "0x8cd73cb1e1fa35628e36b8c543c5f825cd4e77f1",
             "startBlock": 13328071,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "HEX-ETH",
             "address": "0x0D3FBebfdD96940952618598a5F012De7240C552",
             "startBlock": 12763072,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "AXS-ETH",
             "address": "0x0624Eb9691D99178d0d2Bd76c72f1dBB4DB05286",
             "startBlock": 12764007,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "APW-ETH-3000",
             "address": "0x55eED13aB07F8b5538eFf301551492a1D776dA7b",
             "startBlock": 13463550,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "FLOAT-ETH-3000",
             "address": "0x85CBeD523459b7f6F81C11e710DF969703a8A70C",
             "startBlock": 13507015,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "CVX-ETH-10000",
             "address": "0x34b95494c3C2732Aa82E1e56be57074Fee7a2B28",
             "startBlock": 13603680,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "FEI-USDC-500",
             "address": "0x704eCeCABe7855996CeDE5CeFa660Eccd3c01dBE",
             "startBlock": 13642121,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "GRO-ETH-3000",
             "address": "0x85a5326F08c44eC673e4bFc666b737f7f3Dc6b37",
             "startBlock": 13642283,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "BPRO-ETH-10000",
             "address": "0x46B7602e4DAD6F71dAe532588110e2711682ACA3",
             "startBlock": 13642187,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "BABL-ETH 3000",
             "address": "0xF19F91d7889668A533F14d076aDc187be781a458",
             "startBlock": 13691975,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "ETH-BABL2 3000",
             "address": "0x5e6c481de496554b66657dd1ca1f70c61cf11660",
             "startBlock": 13934335,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "FLOAT-ETH2 3000",
             "address": "0xc86b1e7fa86834cac1468937cdd53ba3ccbc1153",
             "startBlock": 13615043,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "agEUR-ETH05",
             "address": "0x2825b12c5e873318b318302408718b961ae74d4e",
             "startBlock": 15770442,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "rETH-ETH05",
             "address": "0x46e4ddb5b87152dda90afe75daedfddab1c16513",
             "startBlock": 15770250,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "xagEUR-USDC01",
             "address": "0xf56abca39c27d5c74f94c901b8c137fdf53b3e80",
             "startBlock": 15783008,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "rETH-THETA-ETH",
             "address": "0x24fe0b138d9b10a7f0502e213212ee6648926ecb",
             "startBlock": 14476870,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "xWBTC-ETH05",
             "address": "0x35abccd8e577607275647edab08c537fa32cc65e",
             "startBlock": 14482797,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "OHM-FDT",
             "address": "0x388a3938fb6c9c6cb0415946dd5d026f7d98e22c",
             "startBlock": 14178874,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "xWBTC-renBTC05",
             "address": "0x3cca05926af387f1ab4cd45ce8975d31f0469927",
             "startBlock": 14648879,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "INDEX-ETH",
             "address": "0x467414f0312ecedba1e505c12bd97daa3609da87",
             "startBlock": 13990582,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "xETH-BABL03",
             "address": "0x52ce16b1f37ea7be4352b29fcde3331e225380ff",
             "startBlock": 14387440,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "xFRAX-USDC05",
             "address": "0x6941b1b6b29948a2f74cad0ef2866e93436a5e2d",
             "startBlock": 14648889,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "xOCEAN-PSDN1",
             "address": "0x9196617815d95853945cd8f5e4e0bb88fdfe0281",
             "startBlock": 14663226,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "xFWB-ETH03",
             "address": "0xe14dbb7d054ff1ff5c0cd6adac9f8f26bc7b8945",
             "startBlock": 14795244,
-            "useCallHandlers": true
+            "useCallHandlers": false
         },
         {
             "name": "wstETH-ETH05",
             "address": "0xa3ECB6E941e773C6568052A509a04cf455a752ae",
             "startBlock": 16221388,
-            "useCallHandlers": true
+            "useCallHandlers": false
         }
     ],
     "uniswapV3PoolOrphan": [
@@ -258,5 +258,5 @@
         }
       ],
     "masterChefTemplate": true,
-    "hypervisorTemplateUseCallHandlers": true
+    "hypervisorTemplateUseCallHandlers": false
 }

@@ -422,3 +422,14 @@ export function updateFeeGrowth(
     updateUniV3FeeGrowth(hypervisorAddress, isRebalance);
   }
 }
+
+export function setHypervisorVersion(
+  hypervisorAddress: Address,
+  version: string
+): void {
+  const hypervisor = getOrCreateHypervisor(hypervisorAddress);
+  if (hypervisor.version !== version) {
+    hypervisor.version = version;
+    hypervisor.save();
+  }
+}

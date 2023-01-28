@@ -109,7 +109,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/hypeRegistry.ts
+      file: ./src/mappings/algebraFinance/hypeRegistry.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData

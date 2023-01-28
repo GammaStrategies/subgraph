@@ -13,8 +13,10 @@ import {
   processRebalance,
   processTransfer,
   processWithdraw,
+  setHypervisorVersion,
   updateFeeGrowth,
 } from "../../utils/common/hypervisor";
+import { SetFee, ZeroBurn } from "../../../generated/templates/Hypervisor/Hypervisor";
 
 export function handleDeposit(event: DepositEvent): void {
   processDeposit(
@@ -39,8 +41,11 @@ export function handleRebalance(event: RebalanceEvent): void {
     event.params.totalSupply,
     event
   );
-
-  processFees(event.address, event.params.feeAmount0, event.params.feeAmount1);
+  
+  const hypervisor = getOrCreateHypervisor(event.address)
+  if (hypervisor.version !== "ZeroBurn") {
+    processFees(event.address, event.params.feeAmount0, event.params.feeAmount1);
+  }
 
   updatePositions(event.address);
   updateFeeGrowth(event.address, true);
@@ -66,6 +71,19 @@ export function handleTransfer(event: TransferEvent): void {
     event.params.value,
     event
   );
+}
+
+export function handleZeroBurn(event: ZeroBurn): void {
+  setHypervisorVersion(event.address, "ZeroBurn")
+  processFees(event.address, event.params.fees0, event.params.fees1);
+  updatePositions(event.address);
+  updateFeeGrowth(event.address);
+}
+
+export function handleSetFee(event: SetFee): void {
+  const hypervisor = getOrCreateHypervisor(event.address);
+  hypervisor.fee = event.params.newFee;
+  hypervisor.save();
 }
 
 export function handleSetDepositMax(call: SetDepositMaxCall): void {

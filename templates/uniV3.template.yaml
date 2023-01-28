@@ -1,11 +1,12 @@
 specVersion: 0.0.5
-{{#features}}
 features:
+  - nonFatalErrors
+{{#graft}}
   - grafting
 graft:
   base: {{base}}
   block: {{block}}
-{{/features}}
+{{/graft}}
 schema:
   file: ./schema.graphql
 dataSources:
@@ -235,6 +236,10 @@ dataSources:
           handler: handleRebalance
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+        - event: ZeroBurn(uint8,uint256,uint256)
+          handler: handleZeroBurn
+        - event: SetFee(uint8)
+          handler: handleSetFee
       {{#useCallHandlers}}
       callHandlers:
         - function: setDepositMax(uint256,uint256)
@@ -290,7 +295,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/hypeRegistry.ts
+      file: ./src/mappings/uniswapV3/hypeRegistry.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -610,6 +615,10 @@ templates:
           handler: handleRebalance
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+        - event: ZeroBurn(uint8,uint256,uint256)
+          handler: handleZeroBurn
+        - event: SetFee(uint8)
+          handler: handleSetFee
       {{#hypervisorTemplateUseCallHandlers}}
       callHandlers:
         - function: setDepositMax(uint256,uint256)
@@ -797,6 +806,10 @@ templates:
         - name: ERC20SymbolBytes
           file: ./abis/ERC20SymbolBytes.json
       eventHandlers:
+        - event: LogPoolAddition(indexed uint256,uint256)
+          handler: handleLogPoolAddition
+        - event: LogSetPool(indexed uint256,uint256)
+          handler: handleLogSetPool
         - event: LogRewardPerSecond(uint256)
           handler: handleLogRewardPerSecond
         - event: LogUpdatePool(indexed uint256,uint64,uint256,uint256)

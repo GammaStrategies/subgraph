@@ -16,6 +16,7 @@ import {
   processRebalance,
   processTransfer,
   processWithdraw,
+  setHypervisorVersion,
   updateFeeGrowth,
 } from "../../utils/common/hypervisor";
 
@@ -69,6 +70,7 @@ export function handleTransfer(event: Transfer): void {
 }
 
 export function handleZeroBurn(event: ZeroBurn): void {
+  setHypervisorVersion(event.address, "ZeroBurn")
   processFees(event.address, event.params.fees0, event.params.fees1);
   updatePositions(event.address);
   updateFeeGrowth(event.address);
