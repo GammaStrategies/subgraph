@@ -74,18 +74,19 @@ export class BaseTokenDefinition {
   static arbitrumOne(): TypedMap<string, BasePool> {
     const WBTC = "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f";
     const WETH = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
-    // const DAI = ""
+    const DAI = "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1"
     const USDT = "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9";
     const USDC = "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8";
 
     const WBTC_USDC = "0xa62ad78825e3a55a77823f00fe0050f567c1e4ee";
     const USDC_WETH = "0x17c14d2c404d167802b16c450d3c99f88f2c4f4d";
-    // const DAI_USDC = ""
+    const DAI_USDC = "0xd37af656abf91c7f548fffc0133175b5e4d3d5e6"
     const USDC_USDT = "0x13398e27a21be1218b6900cbedf677571df42a48";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 4 });
     lookup.set(USDT, { pathIdx: [1], path: [USDC_USDT], priority: 3 });
+    lookup.set(DAI, { pathIdx: [1], path: [DAI_USDC], priority: 2 });
     lookup.set(WETH, { pathIdx: [1], path: [USDC_WETH], priority: 1 });
     lookup.set(WBTC, { pathIdx: [1], path: [WBTC_USDC], priority: 0 });
 

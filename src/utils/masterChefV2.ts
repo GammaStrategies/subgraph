@@ -77,9 +77,10 @@ export function getOrCreateMCV2Rewarder(
     rewarder.totalAllocPoint = ZERO_BI;
     rewarder.lastRewardTimestamp = ZERO_BI;
 
-    const rewardToken = rewarderContract.try_rewardToken();
-    if (rewardToken) {
-      rewarder.rewardToken = rewardToken.value.toHex();
+    const rewardTokenCall = rewarderContract.try_rewardToken();
+    if (rewardTokenCall) {
+      const rewardToken = getOrCreateToken(rewardTokenCall.value)
+      rewarder.rewardToken = rewardToken.id;
     } else {
       rewarder.rewardToken = "";
     }
