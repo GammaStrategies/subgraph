@@ -23,28 +23,56 @@ import { ZERO_BI } from "../../utils/constants";
 import { Address } from "@graphprotocol/graph-ts";
 
 export function handleDeposit(event: Deposit): void {
+  const hypervisorAddress = getHypervisorFromPoolId(
+    event.address,
+    event.params.pid
+  );
+  
+  if (!hypervisorAddress) {
+    return;
+  }
+
   incrementAccountAmount(
     event.address,
     event.params.user,
-    event.params.pid,
+    hypervisorAddress,
     event.params.amount
   );
+
 }
 
 export function handleWithdraw(event: Withdraw): void {
+  const hypervisorAddress = getHypervisorFromPoolId(
+    event.address,
+    event.params.pid
+  );
+  
+  if (!hypervisorAddress) {
+    return;
+  }
+
   incrementAccountAmount(
     event.address,
     event.params.user,
-    event.params.pid,
+    hypervisorAddress,
     ZERO_BI.minus(event.params.amount)
   );
 }
 
 export function handleEmergencyWithdraw(event: EmergencyWithdraw): void {
+  const hypervisorAddress = getHypervisorFromPoolId(
+    event.address,
+    event.params.pid
+  );
+  
+  if (!hypervisorAddress) {
+    return;
+  }
+  
   incrementAccountAmount(
     event.address,
     event.params.user,
-    event.params.pid,
+    hypervisorAddress,
     ZERO_BI.minus(event.params.amount)
   );
 }
@@ -65,6 +93,11 @@ export function handleLogSetPool(event: LogSetPool): void {
     event.address,
     event.params.pid
   );
+
+  if (!hypervisorAddress) {
+    return;
+  }
+
   const masterChefPool = getOrCreateMCV2Pool(event.address, hypervisorAddress);
 
   masterChefPool.allocPoint = event.params.allocPoint;
@@ -76,6 +109,11 @@ export function handleLogUpdatePool(event: LogUpdatePool): void {
     event.address,
     event.params.pid
   );
+
+  if (!hypervisorAddress) {
+    return;
+  }
+
   const masterChefPool = getOrCreateMCV2Pool(event.address, hypervisorAddress);
 
   masterChefPool.totalStaked = event.params.lpSupply;
@@ -101,6 +139,10 @@ export function handleLogRewarderAdded(event: LogRewarderAdded): void {
     event.address,
     event.params.pid
   );
+
+  if (!hypervisorAddress) {
+    return;
+  }
 
   const masterChefPool = getOrCreateMCV2Pool(event.address, hypervisorAddress);
   const rewarderList = masterChefPool.rewarderList;

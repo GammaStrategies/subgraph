@@ -79,7 +79,7 @@ export function getOrCreateMCV2Rewarder(
 
     const rewardTokenCall = rewarderContract.try_rewardToken();
     if (rewardTokenCall) {
-      const rewardToken = getOrCreateToken(rewardTokenCall.value)
+      const rewardToken = getOrCreateToken(rewardTokenCall.value);
       rewarder.rewardToken = rewardToken.id;
     } else {
       rewarder.rewardToken = "";
@@ -147,10 +147,13 @@ export function getOrCreateMCV2RewarderPoolAccount(
 export function getHypervisorFromPoolId(
   masterChefAddress: Address,
   poolId: BigInt
-): Address {
+): Address | null {
   const masterChefContract = MasterChefContract.bind(masterChefAddress);
-  const lpToken = masterChefContract.lpToken(poolId);
-  return lpToken;
+  const lpToken = masterChefContract.try_lpToken(poolId);
+  if (lpToken.reverted) {
+    return null;
+  }
+  return lpToken.value;
 }
 
 export function isValidRewarder(rewarderAddress: Address): bool {
@@ -162,15 +165,12 @@ export function isValidRewarder(rewarderAddress: Address): bool {
 
 export function updateRewarderAllocPoint(
   rewarderAddress: Address,
-  poolId: BigInt,
+  hypervisorAddress: Address,
   allocPoint: BigInt
 ): void {
   // This is the point where a rewarder is attached to a pool, so this is where RewarderPool should be created
   const rewarder = getOrCreateMCV2Rewarder(rewarderAddress);
-  const hypervisorAddress = getHypervisorFromPoolId(
-    Address.fromString(rewarder.masterChef),
-    poolId
-  );
+
   const rewarderPool = getOrCreateMCV2RewarderPool(
     rewarderAddress,
     Address.fromString(rewarder.masterChef),
@@ -202,7 +202,7 @@ export function syncRewarderPoolInfo(rewarderAddress: Address): void {
     const rewarderPool = getOrCreateMCV2RewarderPool(
       rewarderAddress,
       masterChefAddress,
-      getHypervisorFromPoolId(masterChefAddress, iBI)
+      getHypervisorFromPoolId(masterChefAddress, iBI)!
     );
     rewarderPool.allocPoint = allocPoint;
     rewarderPool.save();
@@ -214,10 +214,9 @@ export function syncRewarderPoolInfo(rewarderAddress: Address): void {
 export function incrementAccountAmount(
   masterChefAddress: Address,
   accountAddress: Address,
-  poolId: BigInt,
+  hypervisorAddress: Address,
   amount: BigInt
 ): void {
-  const hypervisorAddress = getHypervisorFromPoolId(masterChefAddress, poolId);
   const masterChefPool = getOrCreateMCV2Pool(
     masterChefAddress,
     hypervisorAddress
