@@ -1,87 +1,87 @@
 {
-    "network": "arbitrum-one",
-    "uniswapV3PoolOrphan": [
-        {
-            "name": "WETH-USDC",
-            "address": "0xC31E54c7a869B9FcBEcc14363CF510d1c41fa443",
-            "startBlock": 7531555
-        }
-    ],
-    "uniswapV3HypervisorOrphan": [
-        {
-            "name": "xETH-USDC3",
-            "address": "0x20b520aDc4d068974105104eD955a4DbAdfA4Ea6",
-            "startBlock": 19580117
-        },
-        {
-            "name": "xUSDT-USDC05_0",
-            "address": "0x6431422ED38347b9114609282F8061af66dBCd2B",
-            "startBlock": 19580187
-        },
-        {
-            "name": "xDAI-USDC05_0",
-            "address": "0x3f848EeFD234dA0B1B98Ea876fe2ee86a10773ca",
-            "startBlock": 19580234
-        },
-        {
-            "name": "xDAI-USDT05",
-            "address": "0x93ACb12ae1Effb3426220C20c6d408eEAaE59D72",
-            "startBlock": 19580261
-        },
-        {
-            "name": "xWBTC-ETH3_0",
-            "address": "0xFb3A24C0F289E695Ceb87B32fC18a2b8Bd896167",
-            "startBlock": 19579927
-        },
-        {
-            "name": "xETH-USDC05_1",
-            "address": "0xfBE8269F3358bA95a06474fA8324ac594fD7dC9c",
-            "startBlock": 41400377
-        },
-        {
-            "name": "xETH-GMX3",
-            "address": "0x86B81Ba336e97a4fbDBcc81F22A2363D5EE03cAB",
-            "startBlock": 41400726
-        },
-        {
-            "name": "xETH-rETH05",
-            "address": "0xf21Df991cAaFeBc242C7e5BE17892d3B0453bc0F",
-            "startBlock": 41401084
-        },
-        {
-            "name": "xWBTC-ETH3_1",
-            "address": "0x99fAd58EEADb00BAab5F1fb7ef421C7E5a9710B7",
-            "startBlock": 41401207
-        },
-        {
-            "name": "xDAI-USDC05_1",
-            "address": "0x10348bcd7350df00851Fe5A9F3c24318c531EB06",
-            "startBlock": 41407357
-        },
-        {
-            "name": "xagEUR-USDC05",
-            "address": "0xCE24383f117b75B0e4b2b167aAc44A85Db3b7d85",
-            "startBlock": 41401616
-        },
-        {
-            "name": "xUSDT-USDC05_1",
-            "address": "0x53FfCF4b6D15EB4Fb063fDb530fedb7808615f1E",
-            "startBlock": 41401777
-        }
-    ],
-    "hypeRegistry": [
-        {
-            "name": "HypeRegistry",
-            "address": "0x66CD859053c458688044d816117D5Bdf42A56813",
-            "startBlock": 10617223
-        }
-    ],
-    "uniProxy": [
-        {
-            "name": "UniProxy",
-            "address": "0xf874D4957861E193AEC9937223062679C14f9Aca",
-            "startBlock": 7530812,
-            "useEventHandlers": true
-        }
-    ]
+  "network": "arbitrum-one",
+  "uniswapV3PoolOrphan": [
+    {
+      "name": "WETH-USDC",
+      "address": "0xC31E54c7a869B9FcBEcc14363CF510d1c41fa443",
+      "startBlock": 7531555
+    }
+  ],
+  "uniswapV3HypervisorOrphan": [
+    {
+      "name": "xETH-USDC3",
+      "address": "0x20b520aDc4d068974105104eD955a4DbAdfA4Ea6",
+      "startBlock": 19580117
+    },
+    {
+      "name": "xUSDT-USDC05_0",
+      "address": "0x6431422ED38347b9114609282F8061af66dBCd2B",
+      "startBlock": 19580187
+    },
+    {
+      "name": "xDAI-USDC05_0",
+      "address": "0x3f848EeFD234dA0B1B98Ea876fe2ee86a10773ca",
+      "startBlock": 19580234
+    },
+    {
+      "name": "xDAI-USDT05",
+      "address": "0x93ACb12ae1Effb3426220C20c6d408eEAaE59D72",
+      "startBlock": 19580261
+    },
+    {
+      "name": "xWBTC-ETH3_0",
+      "address": "0xFb3A24C0F289E695Ceb87B32fC18a2b8Bd896167",
+      "startBlock": 19579927
+    },
+    {
+      "name": "xETH-USDC05_1",
+      "address": "0xfBE8269F3358bA95a06474fA8324ac594fD7dC9c",
+      "startBlock": 41400377
+    },
+    {
+      "name": "xETH-GMX3",
+      "address": "0x86B81Ba336e97a4fbDBcc81F22A2363D5EE03cAB",
+      "startBlock": 41400726
+    },
+    {
+      "name": "xETH-rETH05",
+      "address": "0xf21Df991cAaFeBc242C7e5BE17892d3B0453bc0F",
+      "startBlock": 41401084
+    },
+    {
+      "name": "xWBTC-ETH3_1",
+      "address": "0x99fAd58EEADb00BAab5F1fb7ef421C7E5a9710B7",
+      "startBlock": 41401207
+    },
+    {
+      "name": "xDAI-USDC05_1",
+      "address": "0x10348bcd7350df00851Fe5A9F3c24318c531EB06",
+      "startBlock": 41407357
+    },
+    {
+      "name": "xagEUR-USDC05",
+      "address": "0xCE24383f117b75B0e4b2b167aAc44A85Db3b7d85",
+      "startBlock": 41401616
+    },
+    {
+      "name": "xUSDT-USDC05_1",
+      "address": "0x53FfCF4b6D15EB4Fb063fDb530fedb7808615f1E",
+      "startBlock": 41401777
+    }
+  ],
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0x66CD859053c458688044d816117D5Bdf42A56813",
+      "startBlock": 10617223
+    }
+  ],
+  "uniProxy": [
+    {
+      "name": "UniProxy",
+      "address": "0xf874D4957861E193AEC9937223062679C14f9Aca",
+      "startBlock": 7530812,
+      "useEventHandlers": true
+    }
+  ]
 }
