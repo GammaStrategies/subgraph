@@ -17,6 +17,7 @@ import {
   updateFeeGrowth,
 } from "../../utils/common/hypervisor";
 import { SetFee, ZeroBurn } from "../../../generated/templates/Hypervisor/Hypervisor";
+import { getOrCreateFeeUpdate } from "../../utils/entities";
 
 export function handleDeposit(event: DepositEvent): void {
   processDeposit(
@@ -27,6 +28,9 @@ export function handleDeposit(event: DepositEvent): void {
     event.params.amount1,
     event
   );
+
+  getOrCreateFeeUpdate(event.address, event.block);  // Track zeroBurn in deposit for legacy hypes
+
   updatePositions(event.address);
   updateFeeGrowth(event.address);
 }
@@ -46,6 +50,7 @@ export function handleRebalance(event: RebalanceEvent): void {
   if (hypervisor.version !== "ZeroBurn") {
     processFees(event.address, event.params.feeAmount0, event.params.feeAmount1);
   }
+  getOrCreateFeeUpdate(event.address, event.block);  // Track zeroBurn in deposit for legacy hypes
 
   updatePositions(event.address);
   updateFeeGrowth(event.address, true);
@@ -60,6 +65,9 @@ export function handleWithdraw(event: WithdrawEvent): void {
     event.params.amount1,
     event
   );
+  
+  getOrCreateFeeUpdate(event.address, event.block)  // Track zeroBurn in deposit for legacy hypes
+
   updatePositions(event.address);
   updateFeeGrowth(event.address);
 }

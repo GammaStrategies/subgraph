@@ -7,7 +7,6 @@ import {
   UniswapV3Rebalance,
   UniswapV3Withdraw,
   UniswapV3HypervisorShare,
-  UniswapV3FeeUpdate,
 } from "../../../generated/schema";
 import { Pool as PoolTemplate } from "../../../generated/templates";
 import { getOrCreatePool } from "../pool";
@@ -136,8 +135,8 @@ export function createRebalance(
 ): UniswapV3Rebalance {
   const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
-  const collectedFees0 = splitFees(feeAmount0, feeRate)
-  const collectedFees1 = splitFees(feeAmount1, feeRate)
+  const collectedFees0 = splitFees(feeAmount0, feeRate);
+  const collectedFees1 = splitFees(feeAmount1, feeRate);
 
   const rebalance = new UniswapV3Rebalance(id);
   rebalance.hypervisor = event.address.toHex();
@@ -148,10 +147,10 @@ export function createRebalance(
   rebalance.totalAmount1 = totalAmount1;
   rebalance.grossFees0 = collectedFees0.grossFees;
   rebalance.grossFees1 = collectedFees1.grossFees;
-  rebalance.protocolFees0 = collectedFees0.protocolFees
-  rebalance.protocolFees1 = collectedFees1.protocolFees
-  rebalance.netFees0 = collectedFees0.netFees
-  rebalance.netFees1 = collectedFees1.netFees
+  rebalance.protocolFees0 = collectedFees0.protocolFees;
+  rebalance.protocolFees1 = collectedFees1.protocolFees;
+  rebalance.netFees0 = collectedFees0.netFees;
+  rebalance.netFees1 = collectedFees1.netFees;
   rebalance.totalSupply = totalSupply;
 
   // Read rebalance limits from contract as not available in event
@@ -251,7 +250,6 @@ export function updatePositions(hypervisorAddress: Address): void {
   hypervisor.save();
 }
 
-
 export function updateUniV3FeeGrowth(
   hypervisorAddress: Address,
   isRebalance: boolean = false
@@ -275,19 +273,19 @@ export function updateUniV3FeeGrowth(
   const limitPosition = poolContract.positions(limitKey);
 
   updateHypervisorFeeGrowth(
-      hypervisorAddress,
-      basePosition.getLiquidity(),
-      basePosition.getTokensOwed0(),
-      basePosition.getTokensOwed1(),
-      basePosition.getFeeGrowthInside0LastX128(),
-      basePosition.getFeeGrowthInside1LastX128(),
-      limitPosition.getLiquidity(),
-      limitPosition.getTokensOwed0(),
-      limitPosition.getTokensOwed1(),
-      limitPosition.getFeeGrowthInside0LastX128(),
-      limitPosition.getFeeGrowthInside1LastX128(),
-      isRebalance
-  )
+    hypervisorAddress,
+    basePosition.getLiquidity(),
+    basePosition.getTokensOwed0(),
+    basePosition.getTokensOwed1(),
+    basePosition.getFeeGrowthInside0LastX128(),
+    basePosition.getFeeGrowthInside1LastX128(),
+    limitPosition.getLiquidity(),
+    limitPosition.getTokensOwed0(),
+    limitPosition.getTokensOwed1(),
+    limitPosition.getFeeGrowthInside0LastX128(),
+    limitPosition.getFeeGrowthInside1LastX128(),
+    isRebalance
+  );
 }
 
 // export function updateAmounts(hypervisorAddress: Address, sqrtPrice: BigInt): void {

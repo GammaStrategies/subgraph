@@ -1,4 +1,4 @@
-import { Address, BigInt, dataSource } from "@graphprotocol/graph-ts";
+import { Address, BigInt, dataSource, ethereum } from "@graphprotocol/graph-ts";
 import {
   User,
   Account,
@@ -8,6 +8,7 @@ import {
   RewardHypervisor,
   RewardHypervisorShare,
   UniswapV3Pool,
+  UniswapV3FeeUpdate,
 } from "../../generated/schema";
 import {
   protocolLookup,
@@ -165,4 +166,23 @@ export function createPool(
   pool.lastHypervisorRefreshTime = ZERO_BI;
 
   return pool;
+}
+
+export function getOrCreateFeeUpdate(
+  hypervisorAddress: Address,
+  block: ethereum.Block
+): UniswapV3FeeUpdate {
+  const id = hypervisorAddress
+    .toHex()
+    .concat("-")
+    .concat(block.number.toString());
+  let feeUpdate = UniswapV3FeeUpdate.load(id);
+  if (!feeUpdate) {
+    feeUpdate = new UniswapV3FeeUpdate(id);
+    feeUpdate.hypervisor = hypervisorAddress.toHex();
+    feeUpdate.block = block.number;
+    feeUpdate.timestamp = block.timestamp;
+    feeUpdate.save();
+  }
+  return feeUpdate;
 }
