@@ -2,6 +2,7 @@ import { Address, BigInt } from "@graphprotocol/graph-ts";
 import {
   MasterChefV2,
   MasterChefV2Pool,
+  MasterChefV2PoolAccount,
   MasterChefV2Rewarder,
   MasterChefV2RewarderPool,
   MasterChefV2RewarderPoolAccount,
@@ -79,7 +80,7 @@ export function getOrCreateMCV2Rewarder(
 
     const rewardTokenCall = rewarderContract.try_rewardToken();
     if (rewardTokenCall) {
-      const rewardToken = getOrCreateToken(rewardTokenCall.value)
+      const rewardToken = getOrCreateToken(rewardTokenCall.value);
       rewarder.rewardToken = rewardToken.id;
     } else {
       rewarder.rewardToken = "";
@@ -107,6 +108,33 @@ export function getOrCreateMCV2RewarderPool(
     rewarderPool.save();
   }
   return rewarderPool;
+}
+
+export function getOrCreateMCV2PoolAccount(
+  masterChefAddress: Address,
+  hypervisorAddress: Address,
+  accountAddress: Address
+): MasterChefV2PoolAccount {
+  const mcV2PoolAccountId = masterChefAddress
+    .toHex()
+    .concat("-")
+    .concat(hypervisorAddress.toHex())
+    .concat("-")
+    .concat(accountAddress.toHex());
+
+  let poolAccount = MasterChefV2PoolAccount.load(mcV2PoolAccountId);
+
+  if (!poolAccount) {
+    poolAccount = new MasterChefV2PoolAccount(mcV2PoolAccountId);
+    const pool = getOrCreateMCV2Pool(masterChefAddress, hypervisorAddress);
+    const account = getOrCreateAccount(accountAddress.toHex(), true);
+    poolAccount.pool = pool.id;
+    poolAccount.account = account.id;
+    poolAccount.amount = ZERO_BI;
+
+    poolAccount.save();
+  }
+  return poolAccount;
 }
 
 export function getOrCreateMCV2RewarderPoolAccount(
@@ -147,10 +175,13 @@ export function getOrCreateMCV2RewarderPoolAccount(
 export function getHypervisorFromPoolId(
   masterChefAddress: Address,
   poolId: BigInt
-): Address {
+): Address | null {
   const masterChefContract = MasterChefContract.bind(masterChefAddress);
-  const lpToken = masterChefContract.lpToken(poolId);
-  return lpToken;
+  const lpToken = masterChefContract.try_lpToken(poolId);
+  if (lpToken.reverted) {
+    return null;
+  }
+  return lpToken.value;
 }
 
 export function isValidRewarder(rewarderAddress: Address): bool {
@@ -162,28 +193,24 @@ export function isValidRewarder(rewarderAddress: Address): bool {
 
 export function updateRewarderAllocPoint(
   rewarderAddress: Address,
-  poolId: BigInt,
+  hypervisorAddress: Address,
   allocPoint: BigInt
 ): void {
   // This is the point where a rewarder is attached to a pool, so this is where RewarderPool should be created
   const rewarder = getOrCreateMCV2Rewarder(rewarderAddress);
-  const hypervisorAddress = getHypervisorFromPoolId(
-    Address.fromString(rewarder.masterChef),
-    poolId
-  );
+  const rewarderContract = RewarderContract.bind(rewarderAddress);
+
   const rewarderPool = getOrCreateMCV2RewarderPool(
     rewarderAddress,
     Address.fromString(rewarder.masterChef),
     hypervisorAddress
   );
 
-  rewarder.totalAllocPoint = rewarder.totalAllocPoint
-    .minus(rewarderPool.allocPoint)
-    .plus(allocPoint);
-  rewarder.save();
-
   rewarderPool.allocPoint = allocPoint;
   rewarderPool.save();
+
+  rewarder.totalAllocPoint = rewarderContract.totalAllocPoint();
+  rewarder.save()
 }
 
 export function syncRewarderPoolInfo(rewarderAddress: Address): void {
@@ -192,38 +219,43 @@ export function syncRewarderPoolInfo(rewarderAddress: Address): void {
 
   const masterChefAddress = Address.fromString(rewarder.masterChef);
 
-  let totalAllocPoint = ZERO_BI;
   for (let i = 0; i < rewarderContract.poolLength().toI32(); i++) {
     const iBI = BigInt.fromI32(i);
     const poolInfo = rewarderContract.poolInfo(iBI);
     const allocPoint = poolInfo.getAllocPoint();
-    totalAllocPoint = totalAllocPoint.plus(allocPoint);
 
     const rewarderPool = getOrCreateMCV2RewarderPool(
       rewarderAddress,
       masterChefAddress,
-      getHypervisorFromPoolId(masterChefAddress, iBI)
+      getHypervisorFromPoolId(masterChefAddress, iBI)!
     );
     rewarderPool.allocPoint = allocPoint;
     rewarderPool.save();
   }
-  rewarder.totalAllocPoint = totalAllocPoint;
+  rewarder.totalAllocPoint = rewarderContract.totalAllocPoint()
   rewarder.save();
 }
 
 export function incrementAccountAmount(
   masterChefAddress: Address,
   accountAddress: Address,
-  poolId: BigInt,
+  hypervisorAddress: Address,
   amount: BigInt
 ): void {
-  const hypervisorAddress = getHypervisorFromPoolId(masterChefAddress, poolId);
   const masterChefPool = getOrCreateMCV2Pool(
     masterChefAddress,
     hypervisorAddress
   );
   masterChefPool.totalStaked = masterChefPool.totalStaked.plus(amount);
   masterChefPool.save();
+
+  let poolAccount = getOrCreateMCV2PoolAccount(
+    masterChefAddress,
+    hypervisorAddress,
+    accountAddress
+  );
+  poolAccount.amount = poolAccount.amount.plus(amount);
+  poolAccount.save();
 
   for (let i = 0; i < masterChefPool.rewarderList.length; i++) {
     const rewarderAccount = getOrCreateMCV2RewarderPoolAccount(

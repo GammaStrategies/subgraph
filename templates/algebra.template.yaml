@@ -1,11 +1,12 @@
 specVersion: 0.0.5
-{{#features}}
 features:
+  - nonFatalErrors
+{{#graft}}
   - grafting
 graft:
   base: {{base}}
   block: {{block}}
-{{/features}}
+{{/graft}}
 schema:
   file: ./schema.graphql
 dataSources:

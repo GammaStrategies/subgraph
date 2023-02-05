@@ -19,6 +19,10 @@ export function handleDeposit(event: DepositEvent): void {
     event.address,
     event.params.pid
   );
+  
+  if (!hypervisorAddress) {
+    return;
+  }
 
   const masterChefPoolAccount = getOrCreateMasterChefPoolAccount(
     event.address,
@@ -41,6 +45,10 @@ export function handleWithdraw(event: WithdrawEvent): void {
     event.address,
     event.params.pid
   );
+
+  if (!hypervisorAddress) {
+    return;
+  }
 
   const masterChefPoolAccount = getOrCreateMasterChefPoolAccount(
     event.address,

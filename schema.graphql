@@ -90,6 +90,7 @@ type Account @entity {
   hypervisorCount: BigInt!
   hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "account")
   mcPoolAccounts: [MasterChefPoolAccount!]! @derivedFrom(field: "account")
+  mcv2PoolAccounts: [MasterChefV2PoolAccount!]! @derivedFrom(field: "account")
   mcv2RewarderPoolAccounts: [MasterChefV2RewarderPoolAccount!]! @derivedFrom(field: "account")
 }
 
@@ -225,6 +226,7 @@ type UniswapV3Hypervisor @entity {
   rebalances: [UniswapV3Rebalance!]! @derivedFrom(field: "hypervisor")
   withdraws: [UniswapV3Withdraw!]! @derivedFrom(field: "hypervisor")
   dayData: [UniswapV3HypervisorDayData!]! @derivedFrom(field: "hypervisor")
+  feeUpdates: [UniswapV3FeeUpdate!]! @derivedFrom(field: "hypervisor")
   lastUpdated: BigInt!
 }
 
@@ -285,7 +287,9 @@ type UniswapV3Withdraw @entity {
   amountUSD: BigDecimal!
 }
 
+# This entity is used to label blocks where Fee is collected
 type UniswapV3FeeUpdate @entity {
+  # hypervisorAddress-block
   id: ID!
   hypervisor: UniswapV3Hypervisor!
   block: BigInt!
@@ -402,6 +406,7 @@ type MasterChefV2Pool @entity {
   lastRewardTimestamp: BigInt!
   rewarderList: [String!]!
   rewarders: [MasterChefV2RewarderPool!]! @derivedFrom(field: "pool")
+  accounts: [MasterChefV2PoolAccount!]! @derivedFrom(field: "pool")
 }
 
 # Rewarders related to MasterChef V2
@@ -423,6 +428,14 @@ type MasterChefV2RewarderPool @entity {
   pool: MasterChefV2Pool!
   allocPoint: BigInt!
   accounts: [MasterChefV2RewarderPoolAccount!]! @derivedFrom(field: "rewarderPool")
+}
+
+type MasterChefV2PoolAccount @entity {
+  # Pool ID - Account ID
+  id: ID!
+  account: Account!
+  pool: MasterChefV2Pool!
+  amount: BigInt!
 }
 
 type MasterChefV2RewarderPoolAccount @entity {

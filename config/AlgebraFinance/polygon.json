@@ -1,26 +1,26 @@
 {
-    "network": "matic",
-    "hypervisorOrphan": [
-        {
-            "name": "aUSDC-ETH",
-            "address": "0x5cA313118358E3F5EFe0c49F239B66C964F9AEf0",
-            "startBlock": 35682354
-        }
-    ],
-    "hypeRegistry": [
-        {
-            "name": "HypeRegistry",
-            "address": "0xAeC731F69Fa39aD84c7749E913e3bC227427Adfd",
-            "startBlock": 35447517
-        }
-    ],
-    "masterChefV2Registry": [
-        {
-            "name": "MasterChefV2Registry",
-            "address": "0x62cD3612233B2F918BBf0d17B9Eda3005b84e16f",
-            "startBlock": 36854861
-        }
-    ],
-    "masterChefTemplate": true,
-    "masterChefV2Template": true
+  "network": "matic",
+  "hypervisorOrphan": [
+    {
+      "name": "aUSDC-ETH",
+      "address": "0x5cA313118358E3F5EFe0c49F239B66C964F9AEf0",
+      "startBlock": 35682354
+    }
+  ],
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xAeC731F69Fa39aD84c7749E913e3bC227427Adfd",
+      "startBlock": 35447517
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x62cD3612233B2F918BBf0d17B9Eda3005b84e16f",
+      "startBlock": 36854861
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
 }

@@ -1,48 +1,48 @@
 {
-    "network": "matic",
-    "uniswapV3HypervisorOrphan": [
-        {
-            "name": "USDC-ETH-500",
-            "address": "0x9c3b8D3d977bA1D58848565149Cb5Ac1689DFa5b",
-            "startBlock": 24465213
-        }
-    ],
-    "uniswapV3PoolOrphan": [
-        {
-            "name": "WETH-USDC",
-            "address": "0x45dda9cb7c25131df268515131f647d726f50608",
-            "startBlock": 24465212
-        }
-    ],
-    "hypeRegistry": [
-        {
-            "name": "HypeRegistry",
-            "address": "0x0Ac4C7b794f3D7e7bF1093A4f179bA792CF15055",
-            "startBlock": 25305922
-        }
-    ],
-    "uniProxy": [
-        {
-            "name": "UniProxy",
-            "address": "0xE96349bcd1756aFb65CE322cB99852e07aBaDBD9",
-            "startBlock": 25269678,
-            "useEventHandlers": true
-        }
-    ],
-    "masterChefRegistry": [
-        {
-            "name": "MasterChefRegistry",
-            "address": "0x135B02F8b110Fe2Dd8B6a5e2892Ee781264c2fbe",
-            "startBlock": 31807882
-        }
-    ],
-    "masterChefOrphan": [
-        {
-            "name": "MasterChef-1",
-            "address": "0x03C3BA58f2C2b6DFa6411910a8129393eDd48722",
-            "startBlock": 31283049
-        }
-    ],
-    "masterChefTemplate": true,
-    "masterChefV2Template": true
+  "network": "matic",
+  "uniswapV3HypervisorOrphan": [
+    {
+      "name": "USDC-ETH-500",
+      "address": "0x9c3b8D3d977bA1D58848565149Cb5Ac1689DFa5b",
+      "startBlock": 24465213
+    }
+  ],
+  "uniswapV3PoolOrphan": [
+    {
+      "name": "WETH-USDC",
+      "address": "0x45dda9cb7c25131df268515131f647d726f50608",
+      "startBlock": 24465212
+    }
+  ],
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0x0Ac4C7b794f3D7e7bF1093A4f179bA792CF15055",
+      "startBlock": 25305922
+    }
+  ],
+  "uniProxy": [
+    {
+      "name": "UniProxy",
+      "address": "0xE96349bcd1756aFb65CE322cB99852e07aBaDBD9",
+      "startBlock": 25269678,
+      "useEventHandlers": true
+    }
+  ],
+  "masterChefRegistry": [
+    {
+      "name": "MasterChefRegistry",
+      "address": "0x135B02F8b110Fe2Dd8B6a5e2892Ee781264c2fbe",
+      "startBlock": 31807882
+    }
+  ],
+  "masterChefOrphan": [
+    {
+      "name": "MasterChef-1",
+      "address": "0x03C3BA58f2C2b6DFa6411910a8129393eDd48722",
+      "startBlock": 31283049
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
 }
