@@ -29,14 +29,14 @@ export function handleDeposit(event: DepositEvent): void {
     hypervisorAddress,
     event.params.user
   );
-  masterChefPoolAccount.amount += event.params.amount;
+  masterChefPoolAccount.amount = masterChefPoolAccount.amount.plus(event.params.amount);
   masterChefPoolAccount.save();
 
   const masterChefPool = getOrCreateMasterChefPool(
     event.address,
     hypervisorAddress
   );
-  masterChefPool.totalStaked += event.params.amount;
+  masterChefPool.totalStaked = masterChefPool.totalStaked.plus(event.params.amount);
   masterChefPool.save();
 }
 
@@ -55,14 +55,14 @@ export function handleWithdraw(event: WithdrawEvent): void {
     hypervisorAddress,
     event.params.user
   );
-  masterChefPoolAccount.amount -= event.params.amount;
+  masterChefPoolAccount.amount = masterChefPoolAccount.amount.minus(event.params.amount);
   masterChefPoolAccount.save();
 
   const masterChefPool = getOrCreateMasterChefPool(
     event.address,
     hypervisorAddress
   );
-  masterChefPool.totalStaked -= event.params.amount;
+  masterChefPool.totalStaked = masterChefPool.totalStaked.minus(event.params.amount);
   masterChefPool.save();
 }
 
@@ -79,7 +79,7 @@ export function handleAddLp(event: AddLp): void {
   const masterChef = getOrCreateMasterChef(
     Address.fromString(masterChefPool.masterChef)
   );
-  masterChef.totalAllocPoint += event.params.poolInfo.allocPoint;
+  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(event.params.poolInfo.allocPoint);
   masterChef.save();
 }
 
@@ -95,8 +95,8 @@ export function handleSetAllocPoint(event: SetAllocPoint): void {
   const masterChef = getOrCreateMasterChef(
     Address.fromString(masterChefPool.masterChef)
   );
-  masterChef.totalAllocPoint +=
-    event.params.poolInfo.allocPoint - oldAllocPoints;
+  masterChef.totalAllocPoint =
+  masterChef.totalAllocPoint.plus(event.params.poolInfo.allocPoint).minus(oldAllocPoints);
   masterChef.save();
 }
 

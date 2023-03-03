@@ -1,5 +1,9 @@
 {
   "network": "matic",
+  "graft": [{
+    "base": "QmNXvPGuXP9nKtd7YuG24M4wmDZJtdpmfyayRC4mUaD5YT",
+    "block": 39885512
+  }],
   "uniswapV3HypervisorOrphan": [
     {
       "name": "USDC-ETH-500",
@@ -41,6 +45,13 @@
       "name": "MasterChef-1",
       "address": "0x03C3BA58f2C2b6DFa6411910a8129393eDd48722",
       "startBlock": 31283049
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x02C8D3FCE5f072688e156F503Bd5C7396328613A",
+      "startBlock": 39885513
     }
   ],
   "masterChefTemplate": true,

@@ -1,4 +1,4 @@
-import { Address, log } from "@graphprotocol/graph-ts";
+import { Address } from "@graphprotocol/graph-ts";
 import { AlgebraPool as PoolContract } from "../../../generated/templates/Pool/AlgebraPool"
 import { getOrCreateHypervisor } from "../uniswapV3/hypervisor";
 import { positionKey } from "../common/positions";

@@ -1,0 +1,288 @@
+{
+    "network": "matic",
+    "uniswapV3HypervisorOrphan": [
+        {
+            "name": "USDC-ETH-05-1",
+            "address": "0x9c3b8d3d977ba1d58848565149cb5ac1689dfa5b",
+            "startBlock": 38414827
+          },
+          {
+            "name": "USDC-ETH-05-2",
+            "address": "0x9ca70521bf8a7f7345dfe893d117c4414cae9151",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-ETH05",
+            "address": "0xf874d4957861e193aec9937223062679c14f9aca",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-ETH05",
+            "address": "0x8b6e73f17b613ce189be413f5dc435139f5fd45c",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-WBTC05",
+            "address": "0x6002d7714e8038f2058e8162b0b86c0b19c31908",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWBTC-USDC3",
+            "address": "0xd08b593eb3460b7aa5ce76ffb0a3c5c938fd89b8",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-USDC05-1",
+            "address": "0xf5bfa20f4a77933fee0c7bb7f39e7642a070d599",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xETH-USDT3",
+            "address": "0xfa4bf5c7d995642f908318275e816dc023924ad7",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWBTC-ETH05",
+            "address": "0x0f548d7ad1a0cb30d1872b8c18894484d76e1569",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-FRAX3",
+            "address": "0xed354a827d99992d9cdada809449985cb73b8bb1",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-FRAX05",
+            "address": "0x8cacde53d63fda23a8f802653eeef931c8528cac",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xETH-UNI3",
+            "address": "0xd4bcfc023736db5617e5638748e127581d5929bd",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-miMATIC01",
+            "address": "0x8a6df1c1ea92d2583f7d58fefc9885fceff2d808",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-DAI05",
+            "address": "0x6b3d98406779ddca311e6c43553773207b506fa6",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-UST05",
+            "address": "0x8d6d90f2e7a20d5ec355287c37e3f20de50b8349",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xFRAX-MAI05",
+            "address": "0x8891450de400229a58eb23457a7984c6b461beda",
+            "startBlock": 38414827
+          },
+          {
+            "name": "LINK-ETH3",
+            "address": "0xde8edc067b079b3965fde36d11aa834287f9b663",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-AAVE3",
+            "address": "0xe64c62244c48f9d0aa70d411432b825e2f8b05b0",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-CRV3-1",
+            "address": "0x3fe6f25da67dc6ad2a5117a691f9951ea14d6f15",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-USDT05-1",
+            "address": "0xd1c24a1eaf4b6978ea4152634be62e947dfca142",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-USDT01-1",
+            "address": "0x7268bdc2135364d4d74385d075a3ecefe0bf8924",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-USDT01-2",
+            "address": "0x91d6569946a11ca0d5564f31a594210bf06c1f0a",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-WETH3-1",
+            "address": "0xc604b42b9bf109590effe16a68a13fc55dc58425",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-USDT05",
+            "address": "0xc8562dd252cededb9683bd3b5cbaa2a10e2775c3",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-miMATIC05",
+            "address": "0xc1ce30066d90b5f57cbc5a71f13e90005f565db7",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-DAI01-2",
+            "address": "0x987135c52fd3613c35576074e6df047f70151630",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-wtPOKT1",
+            "address": "0xcb27d08bf34b8076dc82ce33692ead6b38e2d280",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-THX3-1",
+            "address": "0xb7e9beef9cc9f3047db8b502611f19b5fff75b1a",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-agEUR01",
+            "address": "0xa29193af0816d43cf44a3745755bf5f5e2f4f170",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-WETH05",
+            "address": "0x778a726de200a6acd3eefe31a7d45c6f9e4eab36",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-USDC05-2",
+            "address": "0x9f7c179735fd409d148bb864ceef1d6537553e11",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWBTC-USDC05",
+            "address": "0x1dd8f0cd92a17266ba1560eb46ff8325c20e811f",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWBTC-WETH05",
+            "address": "0x525dd4c7b043d3a3adf7fc9276986079e939cbb3",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWETH-USDT3",
+            "address": "0xa19aede2987b74776ffb0e8dff50305c745ac699",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWETH-USDC05",
+            "address": "0x435254d188cb5dfcf62517aa3dc6cd33aaa94e25",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-CRV3-2",
+            "address": "0x002e2a8215e892e77681e2568f85c8f720ce63db",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xLINK-WETH3",
+            "address": "0x431f6e577a431d9ee87a535fde2db830e352e33c",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-WTPOKT10",
+            "address": "0x4735eca8d0c18b6a42fc3a722f5f0ca394a5c667",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-WETH3-2",
+            "address": "0x93d37be58e9631391ce878aadd40ba760eb0730b",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-THX3-2",
+            "address": "0xd5b29cd75879d49ffe0475bc87f124cbf6e22d6d",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xagEUR-USDC01",
+            "address": "0xaf825f3b0ad8b509db6a991c5dae092591f675e2",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-DAI01-1",
+            "address": "0xa78a2ce1c72198bacf1f5a64b407cf1e86f623f6",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-USDT05-2",
+            "address": "0xa5eb3401b93b859b4638f9d40868f89e200f8a44",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-USDT05-3",
+            "address": "0x38f81e638f9e268e8417f2ff76c270597fa077a0",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-USDT01-3",
+            "address": "0x8da6ff41dcdec7aeb88f785baf11443d03aba001",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xUSDC-MAI01",
+            "address": "0xe8df0dd4320b128b87cfcd9554cb1bd182f52a96",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xWMATIC-stMATIC01",
+            "address": "0xbdb10439d9b5eb8ca6c0d7d5a60fe9fd784b5d05",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xDAI-GNS10-1",
+            "address": "0xe4cd269546f9e20246afc88b7d4b8f4e226bba11",
+            "startBlock": 38414827
+          },
+          {
+            "name": "xDAI-GNS10-2",
+            "address": "0x153c5d94955cdf5725e65cfb9818caf0a55f716f",
+            "startBlock": 38414827
+          }
+    ],
+    "uniswapV3PoolOrphan": [
+        {
+            "name": "WETH-USDC",
+            "address": "0x45dda9cb7c25131df268515131f647d726f50608",
+            "startBlock": 38414827
+        }
+    ],
+    "hypeRegistry": [
+        {
+            "name": "HypeRegistry",
+            "address": "0x0Ac4C7b794f3D7e7bF1093A4f179bA792CF15055",
+            "startBlock": 38414827
+        }
+    ],
+    "uniProxy": [
+        {
+            "name": "UniProxy",
+            "address": "0xE96349bcd1756aFb65CE322cB99852e07aBaDBD9",
+            "startBlock": 38414827,
+            "useEventHandlers": true
+        }
+    ],
+    "masterChefRegistry": [
+        {
+            "name": "MasterChefRegistry",
+            "address": "0x135B02F8b110Fe2Dd8B6a5e2892Ee781264c2fbe",
+            "startBlock": 38414827
+        }
+    ],
+    "masterChefOrphan": [
+        {
+            "name": "MasterChef-1",
+            "address": "0x03C3BA58f2C2b6DFa6411910a8129393eDd48722",
+            "startBlock": 38414827
+        }
+    ],
+    "masterChefTemplate": true,
+    "masterChefV2Template": true
+}
