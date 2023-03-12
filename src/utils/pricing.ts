@@ -27,9 +27,9 @@ export function getExchangeRate(
 
   let price = ZERO_BD;
   if (baseTokenIndex == 0 && num > ZERO_BD) {
-    price = denom / num; // This is rate of token1 in token0
+    price = denom.div(num); // This is rate of token1 in token0
   } else if (baseTokenIndex == 1) {
-    price = num / denom; // This is rate of token0 in token1
+    price = num.div(denom); // This is rate of token0 in token1
   }
   return price;
 }
@@ -45,8 +45,9 @@ export function getEthRateInUSDC(): BigDecimal {
     Address.fromString(poolAddress),
     usdcIndex
   );
-  let rate =
-    ethInUsdcRate / BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString());
+  let rate = ethInUsdcRate.div(
+    BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())
+  );
 
   return rate as BigDecimal;
 }
@@ -64,9 +65,9 @@ export function getGammaRateInUSDC(): BigDecimal {
     Address.fromString(poolAddressUsdc),
     usdcIndex
   );
-  let rate =
-    (gammaInEthRate * ethInUsdcRate) /
-    BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString());
+  let rate = gammaInEthRate
+    .times(ethInUsdcRate)
+    .div(BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString()));
 
   return rate as BigDecimal;
 }
@@ -84,9 +85,9 @@ export function getVisrRateInUSDC(): BigDecimal {
     Address.fromString(poolAddressUsdc),
     usdcIndex
   );
-  let rate =
-    (visrInEthRate * ethInUsdcRate) /
-    BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString());
+  let rate = visrInEthRate
+    .times(ethInUsdcRate)
+    .div(BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString()));
 
   return rate as BigDecimal;
 }
@@ -111,8 +112,7 @@ export function getBaseTokenRateInUSDC(hypervisorId: string): BigDecimal {
     }
   }
   // After conversions the rate will always be in USDC, which has 6 decimals
-  return (rate /
-    BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())) as BigDecimal;
+  return rate.div(BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString()));
 }
 
 export function calcTwoTokenUSD(

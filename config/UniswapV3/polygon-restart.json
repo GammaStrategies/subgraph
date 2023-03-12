@@ -283,6 +283,13 @@
             "startBlock": 38414827
         }
     ],
+    "masterChefV2Registry": [
+      {
+        "name": "MasterChefV2Registry",
+        "address": "0x02C8D3FCE5f072688e156F503Bd5C7396328613A",
+        "startBlock": 39885513
+      }
+    ],
     "masterChefTemplate": true,
     "masterChefV2Template": true
 }

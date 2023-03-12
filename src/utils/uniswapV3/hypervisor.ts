@@ -219,14 +219,14 @@ export function getOrCreateHypervisorShare(
     hypervisorShare.initialUSD = ZERO_BD;
     // increment counts
     const account = getOrCreateAccount(accountAddress);
-    account.hypervisorCount += ONE_BI;
+    account.hypervisorCount = account.hypervisorCount.plus(ONE_BI);
     account.save();
     getOrCreateUser(account.parent, true);
 
     const hypervisor = UniswapV3Hypervisor.load(
       hypervisorAddress
     ) as UniswapV3Hypervisor;
-    hypervisor.accountCount += ONE_BI;
+    hypervisor.accountCount = hypervisor.accountCount.plus(ONE_BI);
     hypervisor.save();
   }
 

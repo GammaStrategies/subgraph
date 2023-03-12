@@ -1,9 +1,5 @@
 {
   "network": "matic",
-  "graft": [{
-    "base": "QmNXvPGuXP9nKtd7YuG24M4wmDZJtdpmfyayRC4mUaD5YT",
-    "block": 39885512
-  }],
   "uniswapV3HypervisorOrphan": [
     {
       "name": "USDC-ETH-500",
