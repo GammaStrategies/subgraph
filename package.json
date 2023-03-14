@@ -14,6 +14,7 @@
     "deploy:celo": "graph deploy --node https://api.thegraph.com/deploy/ gammastrategies/celo",
     "deploy:quickswap:polygon": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/algebra-polygon",
     "deploy:zyberswap:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/zyberswap-arbitrum",
+    "deploy:thena:bsc": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/thena",
     "deploy:loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
     "deploy:loc:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/visor-arbitrum",
     "deploy:loc:celo": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-celo",
@@ -33,6 +34,7 @@
     "prepare:celo": "mustache config/UniswapV3/celo.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:quickswap:polygon": "mustache config/Quickswap/polygon.json templates/algebra.template.yaml > subgraph.yaml",
     "prepare:zyberswap:arbitrum": "mustache config/Zyberswap/arbitrum.json templates/algebra.template.yaml > subgraph.yaml",
+    "prepare:thena:bsc": "mustache config/Thena/bsc.json templates/algebra.template.yaml > subgraph.yaml",
     "prepare:polygon-restart": "mustache config/UniswapV3/polygon-restart.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
