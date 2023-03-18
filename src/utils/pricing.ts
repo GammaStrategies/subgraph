@@ -13,7 +13,13 @@ import {
 } from "../../generated/schema";
 import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";
 
-let USDC_DECIMAL_FACTOR = 10 ** 6;
+function getUsdcDecimalFactor(): BigInt {
+  if (dataSource.network() == "bsc") {
+    return BigInt.fromString("1000000000000000000");
+  }
+  return BigInt.fromString("1000000");
+}
+
 export function getExchangeRate(
   poolAddress: Address,
   baseTokenIndex: i32
@@ -46,7 +52,7 @@ export function getEthRateInUSDC(): BigDecimal {
     usdcIndex
   );
   let rate = ethInUsdcRate.div(
-    BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString())
+    getUsdcDecimalFactor().toBigDecimal()
   );
 
   return rate as BigDecimal;
@@ -67,7 +73,7 @@ export function getGammaRateInUSDC(): BigDecimal {
   );
   let rate = gammaInEthRate
     .times(ethInUsdcRate)
-    .div(BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString()));
+    .div(getUsdcDecimalFactor().toBigDecimal());
 
   return rate as BigDecimal;
 }
@@ -87,7 +93,7 @@ export function getVisrRateInUSDC(): BigDecimal {
   );
   let rate = visrInEthRate
     .times(ethInUsdcRate)
-    .div(BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString()));
+    .div(getUsdcDecimalFactor().toBigDecimal());
 
   return rate as BigDecimal;
 }
@@ -112,7 +118,7 @@ export function getBaseTokenRateInUSDC(hypervisorId: string): BigDecimal {
     }
   }
   // After conversions the rate will always be in USDC, which has 6 decimals
-  return rate.div(BigDecimal.fromString(USDC_DECIMAL_FACTOR.toString()));
+  return rate.div(getUsdcDecimalFactor().toBigDecimal());
 }
 
 export function calcTwoTokenUSD(

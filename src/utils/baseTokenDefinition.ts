@@ -172,6 +172,47 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static bsc(): TypedMap<string, BasePool> {
+    const BTCB = "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c";
+    const WETH = "0x2170ed0880ac9a755fd29b2688956bd959f933f8";
+    const WBNB = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
+    const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
+    const USDT = "0x55d398326f99059ff775485246999027b3197955";
+    const USDC = "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d";
+
+    const USDT_USDC = "0x2c3c320d49019d4f9a92352e947c7e5acfe47d68";
+    const USDT_BUSD = "0x84e47c7f2fe86f6b5efbe14fee46b8bb871b2e05";
+    const WBNB_BUSD = "0x32776ed4d96ed069a2d812773f0ad8ad9ef83cf8";
+    const WETH_WBNB = "0x4fb87838a29b37598099ef5aa6b3fbeeef987c50";
+    const BTCB_WBNB = "0x28df0835942396b7a1b7ae1cd068728e6ddbbafd";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 6 });
+    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 5 });
+    lookup.set(BUSD, {
+      pathIdx: [0, 1],
+      path: [USDT_BUSD, USDT_USDC],
+      priority: 4,
+    });
+    lookup.set(WBNB, {
+      pathIdx: [1, 0, 1],
+      path: [WBNB_BUSD, USDT_BUSD, USDT_USDC],
+      priority: 3,
+    });
+    lookup.set(WETH, {
+      pathIdx: [1, 1, 0, 1],
+      path: [WETH_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
+      priority: 2,
+    });
+    lookup.set(BTCB, {
+      pathIdx: [1, 1, 0, 1],
+      path: [BTCB_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -193,6 +234,8 @@ export class BaseTokenDefinition {
       mapping = this.optimism();
     } else if (network == "celo") {
       mapping = this.celo();
+    } else if (network == "bsc") {
+      mapping = this.bsc();
     }
 
     return mapping as TypedMap<string, BasePool>;

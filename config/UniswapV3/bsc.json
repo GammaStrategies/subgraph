@@ -1,0 +1,19 @@
+{
+  "network": "bsc",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0x0b4645179C1b668464Df01362fC6219a7ab3234c",
+      "startBlock": 26520492
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x4F0f66ad5232957343784629858075FF72b9Aa06",
+      "startBlock": 26520527
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
+}
