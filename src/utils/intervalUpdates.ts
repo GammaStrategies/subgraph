@@ -19,12 +19,12 @@ export function updateDistributionDayData(
   timestamp: BigInt,
   utcDiffHours: BigInt
 ): DistributionDayData {
-  let utcDiffSeconds = utcDiffHours * SECONDS_IN_HOUR;
+  let utcDiffSeconds = utcDiffHours.times(SECONDS_IN_HOUR);
   let timezone =
     utcDiffHours == ZERO_BI ? "UTC" : "UTC" + utcDiffHours.toString();
 
-  let dayNumber = (timestamp + utcDiffSeconds) / SECONDS_IN_DAY;
-  let dayStartTimestamp = dayNumber * SECONDS_IN_DAY - utcDiffSeconds;
+  let dayNumber = timestamp.plus(utcDiffSeconds).div(SECONDS_IN_DAY);
+  let dayStartTimestamp = dayNumber.times(SECONDS_IN_DAY).minus(utcDiffSeconds);
   let dayId = tokenId + "-" + timezone + "-" + dayNumber.toString();
 
   let distDayData = DistributionDayData.load(dayId);
@@ -33,12 +33,12 @@ export function updateDistributionDayData(
     distDayData.date = dayStartTimestamp;
     distDayData.timezone = timezone;
     distDayData.token = tokenId;
-    distDayData.distributed = ZERO_BI
-    distDayData.distributedUSD = ZERO_BD
+    distDayData.distributed = ZERO_BI;
+    distDayData.distributedUSD = ZERO_BD;
   }
 
-  distDayData.distributed += distributed;
-  distDayData.distributedUSD += distributedUSD;
+  distDayData.distributed = distDayData.distributed.plus(distributed);
+  distDayData.distributedUSD = distDayData.distributedUSD.plus(distributedUSD);
   distDayData.save();
 
   return distDayData as DistributionDayData;
@@ -48,12 +48,12 @@ export function updateRewardHypervisorDayData(
   timestamp: BigInt,
   utcDiffHours: BigInt
 ): RewardHypervisorDayData {
-  let utcDiffSeconds = utcDiffHours * SECONDS_IN_HOUR;
+  let utcDiffSeconds = utcDiffHours.times(SECONDS_IN_HOUR);
   let timezone =
     utcDiffHours == ZERO_BI ? "UTC" : "UTC" + utcDiffHours.toString();
 
-  let dayNumber = (timestamp + utcDiffSeconds) / SECONDS_IN_DAY;
-  let dayStartTimestamp = dayNumber * SECONDS_IN_DAY - utcDiffSeconds;
+  let dayNumber = timestamp.plus(utcDiffSeconds).div(SECONDS_IN_DAY);
+  let dayStartTimestamp = dayNumber.times(SECONDS_IN_DAY).minus(utcDiffSeconds);
   let dayId = timezone + "-" + dayNumber.toString();
 
   let rewardHypervisorDayData = RewardHypervisorDayData.load(dayId);
@@ -107,12 +107,14 @@ function getOrCreateHypervisorDayData(
     hypervisorAddress
   ) as UniswapV3Hypervisor;
 
-  let utcDiffSeconds = utcDiffHours * SECONDS_IN_HOUR;
+  let utcDiffSeconds = utcDiffHours.times(SECONDS_IN_HOUR);
   let timezone =
     utcDiffHours == ZERO_BI ? "UTC" : "UTC" + utcDiffHours.toString();
 
-  let dayNumber = (hypervisor.lastUpdated + utcDiffSeconds) / SECONDS_IN_DAY;
-  let dayStartTimestamp = dayNumber * SECONDS_IN_DAY - utcDiffSeconds;
+  let dayNumber = hypervisor.lastUpdated
+    .plus(utcDiffSeconds)
+    .div(SECONDS_IN_DAY);
+  let dayStartTimestamp = dayNumber.times(SECONDS_IN_DAY).minus(utcDiffSeconds);
 
   let dayHypervisorId =
     hypervisorAddress + "-" + timezone + "-" + dayNumber.toString();
@@ -121,25 +123,25 @@ function getOrCreateHypervisorDayData(
     hypervisorDayData = new UniswapV3HypervisorDayData(dayHypervisorId);
     hypervisorDayData.date = dayStartTimestamp;
     hypervisorDayData.hypervisor = hypervisorAddress;
-    hypervisorDayData.deposited0 = ZERO_BI
-    hypervisorDayData.deposited1 = ZERO_BI
-    hypervisorDayData.depositedUSD = ZERO_BD
-    hypervisorDayData.withdrawn0 = ZERO_BI
-    hypervisorDayData.withdrawn1 = ZERO_BI
-    hypervisorDayData.withdrawnUSD = ZERO_BD
-    hypervisorDayData.grossFeesClaimed0 = ZERO_BI
-    hypervisorDayData.grossFeesClaimed1 = ZERO_BI
-    hypervisorDayData.grossFeesClaimedUSD = ZERO_BD
-    hypervisorDayData.protocolFeesCollected0 = ZERO_BI
-    hypervisorDayData.protocolFeesCollected1 = ZERO_BI
-    hypervisorDayData.protocolFeesCollectedUSD = ZERO_BD
-    hypervisorDayData.feesReinvested0 = ZERO_BI
-    hypervisorDayData.feesReinvested1 = ZERO_BI
-    hypervisorDayData.feesReinvestedUSD = ZERO_BD
-    hypervisorDayData.totalSupply = ZERO_BI
-    hypervisorDayData.tvl0 = ZERO_BI
-    hypervisorDayData.tvl1 = ZERO_BI
-    hypervisorDayData.tvlUSD = ZERO_BD
+    hypervisorDayData.deposited0 = ZERO_BI;
+    hypervisorDayData.deposited1 = ZERO_BI;
+    hypervisorDayData.depositedUSD = ZERO_BD;
+    hypervisorDayData.withdrawn0 = ZERO_BI;
+    hypervisorDayData.withdrawn1 = ZERO_BI;
+    hypervisorDayData.withdrawnUSD = ZERO_BD;
+    hypervisorDayData.grossFeesClaimed0 = ZERO_BI;
+    hypervisorDayData.grossFeesClaimed1 = ZERO_BI;
+    hypervisorDayData.grossFeesClaimedUSD = ZERO_BD;
+    hypervisorDayData.protocolFeesCollected0 = ZERO_BI;
+    hypervisorDayData.protocolFeesCollected1 = ZERO_BI;
+    hypervisorDayData.protocolFeesCollectedUSD = ZERO_BD;
+    hypervisorDayData.feesReinvested0 = ZERO_BI;
+    hypervisorDayData.feesReinvested1 = ZERO_BI;
+    hypervisorDayData.feesReinvestedUSD = ZERO_BD;
+    hypervisorDayData.totalSupply = ZERO_BI;
+    hypervisorDayData.tvl0 = ZERO_BI;
+    hypervisorDayData.tvl1 = ZERO_BI;
+    hypervisorDayData.tvlUSD = ZERO_BD;
     hypervisorDayData.open = hypervisor.pricePerShare;
     hypervisorDayData.close = hypervisor.pricePerShare;
     hypervisorDayData.low = hypervisor.pricePerShare;

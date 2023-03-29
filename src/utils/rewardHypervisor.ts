@@ -11,7 +11,7 @@ export function decreaseRewardHypervisorShares(
 
   let xgammaShare = RewardHypervisorShare.load(id);
   if (xgammaShare) {
-    xgammaShare.shares -= shares;
+    xgammaShare.shares = xgammaShare.shares.minus(shares);
     xgammaShare.save();
   }
 }

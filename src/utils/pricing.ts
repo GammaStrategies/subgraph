@@ -51,9 +51,7 @@ export function getEthRateInUSDC(): BigDecimal {
     Address.fromString(poolAddress),
     usdcIndex
   );
-  let rate = ethInUsdcRate.div(
-    getUsdcDecimalFactor().toBigDecimal()
-  );
+  let rate = ethInUsdcRate.div(getUsdcDecimalFactor().toBigDecimal());
 
   return rate as BigDecimal;
 }

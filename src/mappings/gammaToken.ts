@@ -34,7 +34,7 @@ export function handleTransfer(event: TransferEvent): void {
   let gamma = getOrCreateToken(Address.fromString(gammaAddress));
   if (event.params.from == Address.fromString(ADDRESS_ZERO)) {
     // Mint event
-    gamma.totalSupply += gammaAmount;
+    gamma.totalSupply = gamma.totalSupply.plus(gammaAmount);
     gamma.save();
   }
 
@@ -44,18 +44,19 @@ export function handleTransfer(event: TransferEvent): void {
   xgammaTx.gammaAmount = gammaAmount;
 
   if (event.params.to == REWARD_HYPERVISOR) {
-    xgamma.totalGamma += gammaAmount;
+    xgamma.totalGamma = gamma.totalSupply.plus(gammaAmount);
     // Deposit into reward hypervisor
-    if (GAMMA_SOURCE_ADDRESSES.includes(event.params.from)){
+    if (GAMMA_SOURCE_ADDRESSES.includes(event.params.from)) {
       // Distribution event if from swapper
       let protocolDist = getOrCreateProtocolDistribution(gammaAddress);
       let tokenRate = getGammaRateInUSDC();
 
       let distributed = gammaAmount;
-      let distributedUSD = gammaAmount.toBigDecimal() * tokenRate;
+      let distributedUSD = gammaAmount.toBigDecimal().times(tokenRate);
 
-      protocolDist.distributed += distributed;
-      protocolDist.distributedUSD += distributedUSD;
+      protocolDist.distributed = protocolDist.distributed.plus(distributed);
+      protocolDist.distributedUSD =
+        protocolDist.distributedUSD.plus(distributedUSD);
       protocolDist.save();
 
       // Update daily distributed data
@@ -82,7 +83,7 @@ export function handleTransfer(event: TransferEvent): void {
       if (accountFrom.type === "non-visor") {
         getOrCreateUser(accountFrom.parent, true);
       }
-      accountFrom.gammaDeposited += gammaAmount;
+      accountFrom.gammaDeposited = accountFrom.gammaDeposited.plus(gammaAmount);
       accountFrom.save();
     }
   } else if (event.params.from == REWARD_HYPERVISOR) {
@@ -93,7 +94,7 @@ export function handleTransfer(event: TransferEvent): void {
       event.params.to.toHexString(),
       event.transaction.hash.toHex()
     );
-    xgamma.totalGamma -= gammaAmount;
+    xgamma.totalGamma = xgamma.totalGamma.minus(gammaAmount);
   }
 
   xgamma.save();

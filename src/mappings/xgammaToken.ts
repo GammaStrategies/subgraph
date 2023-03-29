@@ -29,7 +29,7 @@ export function handleTransfer(event: TransferEvent): void {
   let fromShare = getOrCreateRewardHypervisorShare(fromAddress);
   let fromSharesBefore = fromShare.shares;
 
-  xgammaTx.block = event.block.number
+  xgammaTx.block = event.block.number;
   xgammaTx.timestamp = event.block.timestamp;
   xgammaTx.xgammaAmount = shares;
   xgammaTx.xgammaSupplyBefore = xgamma.totalSupply;
@@ -39,12 +39,12 @@ export function handleTransfer(event: TransferEvent): void {
     xgammaTx.action = "stake";
     xgammaTx.account = toAddress;
     xgammaTx.xgammaAmountBefore = toSharesBefore;
-    xgamma.totalSupply += shares;
+    xgamma.totalSupply = xgamma.totalSupply.plus(shares);
     xgammaTx.xgammaSupplyAfter = xgamma.totalSupply;
   } else {
     // Decrease shares of from account
     decreaseRewardHypervisorShares(fromAddress, shares);
-    xgammaTx.xgammaAmountAfter = fromSharesBefore - shares;
+    xgammaTx.xgammaAmountAfter = fromSharesBefore.minus(shares);
   }
 
   if (burnEvent) {
@@ -52,12 +52,12 @@ export function handleTransfer(event: TransferEvent): void {
     xgammaTx.action = "unstake";
     xgammaTx.account = fromAddress;
     xgammaTx.xgammaAmountBefore = fromSharesBefore;
-    xgamma.totalSupply -= shares;
+    xgamma.totalSupply = xgamma.totalSupply.minus(shares);
     xgammaTx.xgammaSupplyAfter = xgamma.totalSupply;
   } else {
     // Increase shares of to account
-    toShare.shares += shares;
-    xgammaTx.xgammaAmountAfter = toSharesBefore + shares;
+    toShare.shares = toShare.shares.plus(shares);
+    xgammaTx.xgammaAmountAfter = toSharesBefore.plus(shares);
     toShare.save();
   }
 
@@ -70,14 +70,16 @@ export function handleTransfer(event: TransferEvent): void {
   } else {
     // If neither mint nor burn, then this is a purely transfer event
     // xgamma transfers have no gamma transfer event, so we need to deal with gammaDeposited logic here.
-    let underlyingGamma =
-      (xgamma.totalGamma * xgammaTx.xgammaAmount) / xgammaTx.xgammaSupplyBefore;
+    let underlyingGamma = xgamma.totalGamma
+      .times(xgammaTx.xgammaAmount)
+      .div(xgammaTx.xgammaSupplyBefore);
     // Decrease gammaDeposited by the appropriate amount
     let fromAccount = getOrCreateAccount(fromAddress);
-    fromAccount.gammaDeposited -= underlyingGamma;
+    fromAccount.gammaDeposited =
+      fromAccount.gammaDeposited.minus(underlyingGamma);
     // Also increase gammaDepoisted by the appropriate amount
     let toAccount = getOrCreateAccount(toAddress);
-    toAccount.gammaDeposited += underlyingGamma;
+    toAccount.gammaDeposited = toAccount.gammaDeposited.plus(underlyingGamma);
 
     fromAccount.save();
     toAccount.save();

@@ -15,18 +15,19 @@ export function unstakeGammaFromAccount(
   let account = Account.load(accountAddress);
   if (account != null) {
     let amount = xgammaTx.gammaAmount;
-    let gammaStaked =
-      (xgammaTx.xgammaAmountBefore * xgamma.totalGamma) /
-      xgammaTx.xgammaSupplyBefore;
-    let gammaEarned = gammaStaked - account.gammaDeposited;
+    let gammaStaked = xgammaTx.xgammaAmountBefore
+      .times(xgamma.totalGamma)
+      .div(xgammaTx.xgammaSupplyBefore);
+    let gammaEarned = gammaStaked.minus(account.gammaDeposited);
 
     if (amount > gammaEarned) {
       account.gammaDeposited -= amount - gammaEarned;
       // If unstake amount is larger than earned, then all earned gamma is realized
-      account.gammaEarnedRealized += gammaEarned;
+      account.gammaEarnedRealized =
+        account.gammaEarnedRealized.plus(gammaEarned);
     } else {
       // If unstake amount <= earned, then only unstaked amount is realized
-      account.gammaEarnedRealized += amount;
+      account.gammaEarnedRealized = account.gammaEarnedRealized.plus(amount);
     }
     account.save();
   }
