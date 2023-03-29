@@ -23,10 +23,10 @@ export function handleSwapVISR(event: SwapVISR): void {
 		let tokenRate = (targetTokenName === "GAMMA") ? getGammaRateInUSDC() : getVisrRateInUSDC()
 
 		let distributed = event.params.amountOut
-		let distributedUSD = distributed.toBigDecimal() * tokenRate
+		let distributedUSD = distributed.toBigDecimal().times(tokenRate)
 
-		protocolDist.distributed += distributed
-		protocolDist.distributedUSD += distributedUSD
+		protocolDist.distributed = protocolDist.distributed.plus(distributed)
+		protocolDist.distributedUSD = protocolDist.distributedUSD.plus(distributedUSD)
 		protocolDist.save()
 
 		// Update Daily Data
