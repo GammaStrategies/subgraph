@@ -1,0 +1,19 @@
+{
+  "network": "arbitrum-one",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xa216C2b6554A0293f69A1555dd22f4b7e60Fe907",
+      "startBlock": 87343880
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x26da8473AaA54e8c7835fA5fdd1599eB4c144d31",
+      "startBlock": 87344222
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
+}

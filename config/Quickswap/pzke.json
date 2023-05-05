@@ -1,0 +1,19 @@
+{
+  "network": "polygon-zkevm",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xD08B593eb3460B7aa5Ce76fFB0A3c5c938fd89b8",
+      "startBlock": 152596
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x5b8F58a33808222d1fF93C919D330cfA5c8e1B7d",
+      "startBlock": 196006
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
+}

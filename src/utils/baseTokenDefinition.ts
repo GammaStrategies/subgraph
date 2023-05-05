@@ -116,22 +116,32 @@ export class BaseTokenDefinition {
     const DAI = "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1";
     const USDT = "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58";
     const USDC = "0x7f5c764cbc14f9669b88837ca1490cca17c31607";
+    const alUSD = "0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a";
+    const WSTETH = "0x1f32b1c2345538c0c6f582fcb022739c4a194ebb"
 
     const WETH_WBTC = "0x73b14a78a0d396c521f954532d43fd5ffe385216";
     const WETH_USDC = "0x85149247691df622eaf1a8bd0cafd40bc45154a9";
     const USDC_DAI = "0x100bdc1431a9b09c61c0efc5776814285f8fb248";
     const USDC_USDT = "0xf3f3433c3a97f70349c138ada81da4d3554982db";
+    const USDC_alUSD = "0xf3ade441be8c0579ca8d0b05ca33ed35dd90338c ";
+    const WSTETH_WETH = "0x04f6c85a1b00f6d9b75f91fd23835974cc07e65c"
 
     let lookup = new TypedMap<string, BasePool>();
-    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 4 });
-    lookup.set(USDT, { pathIdx: [0], path: [USDC_USDT], priority: 3 });
-    lookup.set(DAI, { pathIdx: [0], path: [USDC_DAI], priority: 2 });
-    lookup.set(WETH, { pathIdx: [1], path: [WETH_USDC], priority: 1 });
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 6 });
+    lookup.set(USDT, { pathIdx: [0], path: [USDC_USDT], priority: 5 });
+    lookup.set(DAI, { pathIdx: [0], path: [USDC_DAI], priority: 4 });
+    lookup.set(WETH, { pathIdx: [1], path: [WETH_USDC], priority: 3 });
     lookup.set(WBTC, {
       pathIdx: [0, 1],
       path: [WETH_WBTC, WETH_USDC],
-      priority: 0,
+      priority: 2,
     });
+    lookup.set(alUSD, { pathIdx: [0], path: [USDC_alUSD], priority: 1 });
+    lookup.set(WSTETH, {
+      pathIdx: [1, 1],
+      path: [WSTETH_WETH, WETH_USDC],
+      priority: 0,
+    })
 
     return lookup as TypedMap<string, BasePool>;
   }
@@ -179,36 +189,67 @@ export class BaseTokenDefinition {
     const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
     const USDT = "0x55d398326f99059ff775485246999027b3197955";
     const USDC = "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d";
+    const ANKRBNB = "0x52f24a5e03aee338da5fd9df68d2b6fae1178827";
+    const BNBX = "0x1bdd3cf7f79cfb8edbb955f20ad99211551ba275";
 
     const USDT_USDC = "0x2c3c320d49019d4f9a92352e947c7e5acfe47d68";
     const USDT_BUSD = "0x84e47c7f2fe86f6b5efbe14fee46b8bb871b2e05";
     const WBNB_BUSD = "0x32776ed4d96ed069a2d812773f0ad8ad9ef83cf8";
     const WETH_WBNB = "0x4fb87838a29b37598099ef5aa6b3fbeeef987c50";
     const BTCB_WBNB = "0x28df0835942396b7a1b7ae1cd068728e6ddbbafd";
+    const ANKRBNB_WBNB = "0x2f6c6e00e517944ee5efe310cd0b98a3fc61cb98";
+    const BNBX_WBNB = "0xf2a4e4261fcdfbb891bcf703640fbe713c6cd0fe";
 
     let lookup = new TypedMap<string, BasePool>();
-    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 6 });
-    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 5 });
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 8 });
+    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 7 });
     lookup.set(BUSD, {
       pathIdx: [0, 1],
       path: [USDT_BUSD, USDT_USDC],
-      priority: 4,
+      priority: 6,
     });
     lookup.set(WBNB, {
       pathIdx: [1, 0, 1],
       path: [WBNB_BUSD, USDT_BUSD, USDT_USDC],
-      priority: 3,
+      priority: 5,
     });
     lookup.set(WETH, {
       pathIdx: [1, 1, 0, 1],
       path: [WETH_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
-      priority: 2,
+      priority: 4,
     });
     lookup.set(BTCB, {
       pathIdx: [1, 1, 0, 1],
       path: [BTCB_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
+      priority: 3,
+    });
+    lookup.set(ANKRBNB, {
+      pathIdx: [1, 1, 0, 1],
+      path: [ANKRBNB_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
+      priority: 2,
+    });
+    lookup.set(BNBX, {
+      pathIdx: [1, 1, 0, 1],
+      path: [BNBX_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
       priority: 1,
     });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
+  static polygonZkEvm(): TypedMap<string, BasePool> {
+    const WETH = "0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9";
+    const USDT = "0x1e4a5963abfd975d8c9021ce480b42188849d41d";
+    const USDC = "0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035";
+
+    const WETH_USDC = "0xc44ad482f24fd750caeba387d2726d8653f8c4bb";
+    const USDT_USDC = "0x9591b8a30c3a52256ea93e98da49ee43afa136a8";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 3 });
+    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 2 });
+    lookup.set(WETH, { pathIdx: [1], path: [WETH_USDC], priority: 1 });
+
 
     return lookup as TypedMap<string, BasePool>;
   }
@@ -236,6 +277,8 @@ export class BaseTokenDefinition {
       mapping = this.celo();
     } else if (network == "bsc") {
       mapping = this.bsc();
+    } else if (network == "polygon-zkevm") {
+      mapping = this.polygonZkEvm();
     }
 
     return mapping as TypedMap<string, BasePool>;

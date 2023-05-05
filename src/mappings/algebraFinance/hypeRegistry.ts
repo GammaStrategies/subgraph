@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { log } from "@graphprotocol/graph-ts";
+import { dataSource, log } from "@graphprotocol/graph-ts";
 import { HypeAdded } from "../../../generated/HypeRegistry/HypeRegistry";
 import { Hypervisor as HypervisorContract } from "../../../generated/templates/Hypervisor/Hypervisor";
 import { Hypervisor as HypervisorTemplate } from "../../../generated/templates";
@@ -9,6 +9,7 @@ import { UniswapV3Hypervisor } from "../../../generated/schema";
 import { getOrCreateProtocol } from "../../utils/entities";
 
 export function handleHypeAdded(event: HypeAdded): void {
+  log.warning("network name: {}", [dataSource.network()])
   let hypervisor = UniswapV3Hypervisor.load(event.params.hype.toHex());
   if (hypervisor) {
     return; // No need to add if hype was already added manually as orphan.

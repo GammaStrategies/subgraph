@@ -82,6 +82,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static polygonZkEvm(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -96,6 +103,8 @@ export class constantAddresses {
       mapping = this.celo();
     } else if (network == "bsc") {
       mapping = this.bsc();
+    } else if (network == "polygon-zkevm") {
+      mapping = this.polygonZkEvm();
     }
 
     return mapping as TypedMap<string, string>;
@@ -111,8 +120,16 @@ protocolLookup.set(
   "matic:0xaec731f69fa39ad84c7749e913e3bc227427adfd",
   "algebra"
 );
-protocolLookup.set("bsc:0xd4bcfc023736db5617e5638748e127581d5929bd", "algebra");
 protocolLookup.set(
   "arbitrum-one:0x37595fcaf29e4fbac0f7c1863e3df2fe6e2247e9",
+  "algebra"
+);
+protocolLookup.set("bsc:0xd4bcfc023736db5617e5638748e127581d5929bd", "algebra");
+protocolLookup.set(
+  "polygon-zkevm:0xd08b593eb3460b7aa5ce76ffb0a3c5c938fd89b8",
+  "algebra"
+);
+protocolLookup.set(
+  "arbitrum-one:0xa216C2b6554A0293f69A1555dd22f4b7e60Fe907",
   "algebra"
 );

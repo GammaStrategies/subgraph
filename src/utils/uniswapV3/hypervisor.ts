@@ -43,7 +43,7 @@ export function getOrCreateHypervisor(
     hypervisor.version = "";
     hypervisor.owner = hypervisorContract.owner();
     hypervisor.symbol = hypervisorContract.symbol();
-    hypervisor.fee = 10;
+    hypervisor.fee = hypervisorContract.fee();
     hypervisor.created = timestamp.toI32();
     hypervisor.tick = hypervisorContract.currentTick();
     hypervisor.baseLower = hypervisorContract.baseLower();
@@ -287,20 +287,3 @@ export function updateUniV3FeeGrowth(
     isRebalance
   );
 }
-
-// export function updateAmounts(hypervisorAddress: Address, sqrtPrice: BigInt): void {
-//   let hypervisor = getOrCreateHypervisor(hypervisorAddress)
-//   let baseAmounts = getAmounts(
-//     sqrtPrice,
-//     BigInt.fromI32(hypervisor.baseLower),  // need to convert ticks to sqrtPrice
-//     BigInt.fromI32(hypervisor.baseUpper),
-//     hypervisor.baseLiquidity
-//   )
-
-//   let limitAmounts = getAmounts(
-//     sqrtPrice,
-//     BigInt.fromI32(hypervisor.limitLower),
-//     BigInt.fromI32(hypervisor.limitUpper),
-//     hypervisor.limitLiquidity
-//   )
-// }
