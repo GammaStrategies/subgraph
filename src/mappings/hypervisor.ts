@@ -29,7 +29,7 @@ function getOrCreateStakingHypervisor(addressString: string): Hypervisor {
     hypervisor.rewardToken = ADDRESS_ZERO;
   }
 
-  return hypervisor as Hypervisor;
+  return hypervisor;
 }
 
 export function handleBonusTokenRegistered(event: BonusTokenRegistered): void {
@@ -59,7 +59,9 @@ export function handleHypervisorCreated(event: HypervisorCreated): void {
 
 export function handleHypervisorFunded(event: HypervisorFunded): void {
   let hypervisor = getOrCreateStakingHypervisor(event.address.toHex());
-  hypervisor.rewardPoolAmount += event.params.amount;
+  hypervisor.rewardPoolAmount = hypervisor.rewardPoolAmount!.plus(
+    event.params.amount
+  );
   hypervisor.save();
 }
 
@@ -73,7 +75,9 @@ export function handleRewardClaimed(event: RewardClaimed): void {
   // there is both reward token and bonus token
   let hypervisor = getOrCreateStakingHypervisor(event.address.toHex());
   if (event.params.token.toHex() == hypervisor.rewardToken) {
-    hypervisor.rewardPoolAmount -= event.params.amount;
+    hypervisor.rewardPoolAmount = hypervisor.rewardPoolAmount!.minus(
+      event.params.amount
+    );
   }
   hypervisor.save();
 
@@ -86,34 +90,36 @@ export function handleRewardClaimed(event: RewardClaimed): void {
       Address.fromString(hypervisor.rewardToken)
     );
   }
-  rewardedToken.amount += event.params.amount;
+  rewardedToken.amount = rewardedToken.amount.plus(event.params.amount);
   rewardedToken.save();
 }
 
 export function handleStaked(event: Staked): void {
   // Add data to visor instance - amount staked
   let hypervisor = getOrCreateStakingHypervisor(event.address.toHex());
-  hypervisor.totalStakedAmount += event.params.amount;
+  hypervisor.totalStakedAmount = hypervisor.totalStakedAmount!.plus(
+    event.params.amount
+  );
   hypervisor.save();
-
   let stakedToken = getOrCreateStakedToken(
     event.params.vault,
     Address.fromString(hypervisor.stakingToken)
   );
-  stakedToken.amount += event.params.amount;
+  stakedToken.amount = stakedToken.amount.plus(event.params.amount);
   stakedToken.save();
 }
 
 export function handleUnstaked(event: Unstaked): void {
   let hypervisor = getOrCreateStakingHypervisor(event.address.toHex());
-  hypervisor.totalStakedAmount -= event.params.amount;
+  hypervisor.totalStakedAmount = hypervisor.totalStakedAmount!.minus(
+    event.params.amount
+  );
   hypervisor.save();
-
   let stakedToken = getOrCreateStakedToken(
     event.params.vault,
     Address.fromString(hypervisor.stakingToken)
   );
-  stakedToken.amount -= event.params.amount;
+  stakedToken.amount = stakedToken.amount.minus(event.params.amount);
   stakedToken.save();
 }
 

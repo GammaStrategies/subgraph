@@ -44,7 +44,7 @@ export function handleTransfer(event: TransferEvent): void {
   xgammaTx.gammaAmount = gammaAmount;
 
   if (event.params.to == REWARD_HYPERVISOR) {
-    xgamma.totalGamma = gamma.totalSupply.plus(gammaAmount);
+    xgamma.totalGamma = xgamma.totalGamma.plus(gammaAmount);
     // Deposit into reward hypervisor
     if (GAMMA_SOURCE_ADDRESSES.includes(event.params.from)) {
       // Distribution event if from swapper

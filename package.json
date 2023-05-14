@@ -25,6 +25,8 @@
     "deploy:loc:optimism": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-optimism",
     "deploy:loc:algebra:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-algebra-polygon",
     "deploy:loc:camelot:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-camelot-arbitrum",
+    "deploy:loc:glacier:avalanche": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-glacier-avax",
+    "deploy:loc:retro:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-retro-polygon",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -40,6 +42,8 @@
     "prepare:polygon-restart": "mustache config/UniswapV3/polygon-restart.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:quickswap:pzke": "mustache config/Quickswap/pzke.json templates/algebra.template.yaml > subgraph.yaml",
     "prepare:camelot:arbitrum": "mustache config/Camelot/arbitrum.json templates/algebra.template.yaml > subgraph.yaml",
+    "prepare:glacier:avalanche": "mustache config/Glacier/avalanche.json templates/algebra.template.yaml > subgraph.yaml",
+    "prepare:retro:polygon": "mustache config/Retro/polygon.json templates/algebra.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

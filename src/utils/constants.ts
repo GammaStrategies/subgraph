@@ -89,6 +89,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static avalanche(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -105,6 +112,8 @@ export class constantAddresses {
       mapping = this.bsc();
     } else if (network == "polygon-zkevm") {
       mapping = this.polygonZkEvm();
+    } else if (network == "avalanche") {
+      mapping = this.avalanche();
     }
 
     return mapping as TypedMap<string, string>;
@@ -131,5 +140,13 @@ protocolLookup.set(
 );
 protocolLookup.set(
   "arbitrum-one:0xa216C2b6554A0293f69A1555dd22f4b7e60Fe907",
+  "algebra"
+);
+protocolLookup.set(
+  "avalanche:0x3fe6f25da67dc6ad2a5117a691f9951ea14d6f15",
+  "algebra"
+);
+protocolLookup.set(
+  "polygon:0xcac19d43c9558753d7535978a370055614ce832e",
   "algebra"
 );

@@ -1,5 +1,9 @@
 {
   "network": "mainnet",
+  "graft": [{
+    "base": "QmainqrymYCd34heSpnoNq2BEhvr2Ag3Eda3TKhnRzBQ3B",
+    "block": 17240357
+  }],
   "gammaToken": [
     {
       "name": "GammaToken",
@@ -263,6 +267,14 @@
       "startBlock": 15890619
     }
   ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x9A0171C20a1f3254B12095C361F0c3E7e82fe43B",
+      "startBlock": 17240358
+    }
+  ],
   "masterChefTemplate": true,
+  "masterChefV2Template": true,
   "hypervisorTemplateUseCallHandlers": false
 }
