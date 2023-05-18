@@ -96,6 +96,20 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static fantom(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x04068da6c83afcfa0e13ba15a6696662335d5b75");
+
+    return lookup as TypedMap<string, string>;
+  }
+
+  static moonbeam(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x931715fee2d06333043d11f658c8ce934ac61d0c");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -114,6 +128,10 @@ export class constantAddresses {
       mapping = this.polygonZkEvm();
     } else if (network == "avalanche") {
       mapping = this.avalanche();
+    } else if (network == "fantom") {
+      mapping = this.fantom();
+    } else if (network == "moonbeam") {
+      mapping = this.moonbeam();
     }
 
     return mapping as TypedMap<string, string>;
@@ -148,5 +166,13 @@ protocolLookup.set(
 );
 protocolLookup.set(
   "polygon:0xcac19d43c9558753d7535978a370055614ce832e",
-  "algebra"
+  "uniswap-v3"
 );
+protocolLookup.set(
+  "fantom:0xf874d4957861e193aec9937223062679c14f9aca",
+  "algebra"
+)
+protocolLookup.set(
+  "moonbeam:0x6002d7714e8038f2058e8162b0b86c0b19c31908",
+  "algebra"
+)

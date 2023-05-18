@@ -288,6 +288,43 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static fantom(): TypedMap<string, BasePool> {
+    const WBTC = "0x321162cd933e2be498cd2267a90534a804051b11";
+    const WETH = "0x74b23882a30290451a17c44f4f05243b6b58c76d";
+    const USDT = "0x049d68029688eabf473097a2fc38ef61633a3c7a";
+    const USDC = "0x04068da6c83afcfa0e13ba15a6696662335d5b75";
+    const WFTM = "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83";
+
+    // const USDT_USDC = "";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 3 });
+    // lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 2 });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
+  static moonbeam(): TypedMap<string, BasePool> {
+    const WBTC = "0x922d641a426dcffaef11680e5358f34d97d112e1";
+    const WETH = "0xab3f0245b83feb11d15aaffefd7ad465a59817ed";
+    // const USDT = "0xffffffffea09fb06d082fd1275cd48b191cbcd1d";
+    const USDC = "0x931715fee2d06333043d11f658c8ce934ac61d0c";
+    const WGLMR = "0xacc15dc74880c9944775448304b263d191c6077f";
+
+    // const USDT_USDC = "";
+    const WGLMR_WBTC = "0x416bd9798d5214cae6f837c0a53a73beb3ced465"
+    const WETH_WGLMR = "0x7e71d586ad01c0bf7953eb82e7b76c1338b0068c"
+    const USDC_WGLMR = "0xab8c35164a8e3ef302d18da953923ea31f0fe393"
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 4 });
+    lookup.set(WGLMR, { pathIdx: [0], path: [USDC_WGLMR], priority: 3 });
+    lookup.set(WETH, { pathIdx: [1, 0], path: [WETH_WGLMR, USDC_WGLMR], priority: 2 });
+    lookup.set(WBTC, { pathIdx: [0, 0], path: [WGLMR_WBTC, USDC_WGLMR], priority: 1 });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -315,6 +352,10 @@ export class BaseTokenDefinition {
       mapping = this.polygonZkEvm();
     } else if (network == "avalanche") {
       mapping = this.avalanche();
+    } else if (network == "fantom") {
+      mapping = this.fantom();
+    } else if (network == "moonbeam") {
+      mapping = this.moonbeam();
     }
 
     return mapping as TypedMap<string, BasePool>;
