@@ -1,9 +1,5 @@
 {
   "network": "mainnet",
-  "graft": [{
-    "base": "QmainqrymYCd34heSpnoNq2BEhvr2Ag3Eda3TKhnRzBQ3B",
-    "block": 17240357
-  }],
   "gammaToken": [
     {
       "name": "GammaToken",

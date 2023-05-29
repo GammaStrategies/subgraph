@@ -1,0 +1,19 @@
+{
+  "network": "moonbeam",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xB7dfC304D9cd88D98A262cE5B6a39Bb9d6611063",
+      "startBlock": 3591244
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x1cc4eE0cB063e9db36E51F5d67218ff1f8dbfA0f",
+      "startBlock": 3583069
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
+}

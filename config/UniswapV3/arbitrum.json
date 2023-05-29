@@ -83,5 +83,14 @@
       "startBlock": 7530812,
       "useEventHandlers": true
     }
-  ]
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x58B115d9c02628A56595bc513586A8b3cC6d1ac3",
+      "startBlock": 92323875
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
 }
