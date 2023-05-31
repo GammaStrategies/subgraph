@@ -1,4 +1,4 @@
-import { Swap } from "../../../generated/templates/AlgebraPool/AlgebraPool";
+import { Swap } from "../../../generated/templates/Pool/AlgebraV1Pool";
 import { processSwap } from "../../utils/common/pool";
 
 export function handleSwap(event: Swap): void {

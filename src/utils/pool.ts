@@ -1,6 +1,6 @@
 import { Address } from "@graphprotocol/graph-ts";
 import { UniswapV3Pool } from "../../generated/schema";
-import { createAlgebraPool } from "./algebraFinance/pool";
+import { createAlgebraV1Pool, createAlgebraV2Pool } from "./algebraFinance/pool";
 import { createUniV3Pool } from "./uniswapV3/pool";
 
 export function getOrCreatePool(poolAddress: Address): UniswapV3Pool {
@@ -9,7 +9,10 @@ export function getOrCreatePool(poolAddress: Address): UniswapV3Pool {
     // const protocol = getOrCreateProtocol();
     pool = createUniV3Pool(poolAddress);
     if (!pool) {
-      pool = createAlgebraPool(poolAddress);
+      pool = createAlgebraV1Pool(poolAddress);
+      if (!pool) {
+        pool = createAlgebraV2Pool(poolAddress);
+      }
     }
   }
   return pool as UniswapV3Pool;

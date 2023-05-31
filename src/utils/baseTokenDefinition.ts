@@ -192,6 +192,9 @@ export class BaseTokenDefinition {
     const ANKRBNB = "0x52f24a5e03aee338da5fd9df68d2b6fae1178827";
     const BNBX = "0x1bdd3cf7f79cfb8edbb955f20ad99211551ba275";
     const FRXETH = "0x64048a7eecf3a2f1ba9e144aac3d7db6e58f555e";
+    const FRAX = "0x90c97f71e18723b0cf0dfa30ee176ab653e89f40";
+    const DOLA = "0x2f29bc0ffaf9bff337b31cbe6cb5fb3bf12e5840";
+    const STKBNB = "0xc2e9d07f66a89c44062459a47a0d2dc038e4fb16";
 
     const USDT_USDC = "0x2c3c320d49019d4f9a92352e947c7e5acfe47d68";
     const USDT_BUSD = "0x84e47c7f2fe86f6b5efbe14fee46b8bb871b2e05";
@@ -202,43 +205,61 @@ export class BaseTokenDefinition {
     const BNBX_WBNB = "0xf2a4e4261fcdfbb891bcf703640fbe713c6cd0fe";
     const HAY_FRXETH = "0xf8a4cdf9efc4b9b38eaa6e27ee281cb2111fa664";
     const HAY_USDT = "0x5b0baf66718caabda49a4af32eb455c3b99b5821";
+    const WBNB_STKBNB = "0x84b78452a97c5afda1400943333f691448069a29";
+    const USDT_FRAX = "0x8d65dbe7206a768c466073af0ab6d76f9e14fc6d";
+    const DOLA_FRAX = "0xfd66a4a4c921cd7194abab38655476a06fbaea05";
 
     let lookup = new TypedMap<string, BasePool>();
-    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 8 });
-    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 7 });
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 12 });
+    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 11 });
     lookup.set(BUSD, {
       pathIdx: [0, 1],
       path: [USDT_BUSD, USDT_USDC],
-      priority: 7,
+      priority: 10,
     });
     lookup.set(WBNB, {
       pathIdx: [1, 0, 1],
       path: [WBNB_BUSD, USDT_BUSD, USDT_USDC],
-      priority: 6,
+      priority: 9,
     });
     lookup.set(WETH, {
       pathIdx: [1, 1, 0, 1],
       path: [WETH_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
-      priority: 5,
+      priority: 8,
     });
     lookup.set(BTCB, {
       pathIdx: [1, 1, 0, 1],
       path: [BTCB_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
-      priority: 4,
+      priority: 7,
+    });
+    lookup.set(FRAX, {
+      pathIdx: [0, 1],
+      path: [USDT_FRAX, USDT_USDC],
+      priority: 6,
+    });
+    lookup.set(DOLA, {
+      pathIdx: [1, 0, 1],
+      path: [DOLA_FRAX, USDT_FRAX, USDT_USDC],
+      priority: 5,
     });
     lookup.set(ANKRBNB, {
       pathIdx: [1, 1, 0, 1],
       path: [ANKRBNB_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
-      priority: 3,
+      priority: 4,
     });
     lookup.set(BNBX, {
       pathIdx: [1, 1, 0, 1],
       path: [BNBX_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
-      priority: 2,
+      priority: 3,
     });
     lookup.set(FRXETH, {
       pathIdx: [0, 1, 1],
       path: [HAY_FRXETH, HAY_USDT, USDT_USDC],
+      priority: 2,
+    });
+    lookup.set(STKBNB, {
+      pathIdx: [0, 1, 0, 1],
+      path: [WBNB_STKBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
       priority: 1,
     });
 
@@ -312,15 +333,23 @@ export class BaseTokenDefinition {
     const WGLMR = "0xacc15dc74880c9944775448304b263d191c6077f";
 
     // const USDT_USDC = "";
-    const WGLMR_WBTC = "0x416bd9798d5214cae6f837c0a53a73beb3ced465"
-    const WETH_WGLMR = "0x7e71d586ad01c0bf7953eb82e7b76c1338b0068c"
-    const USDC_WGLMR = "0xab8c35164a8e3ef302d18da953923ea31f0fe393"
+    const WGLMR_WBTC = "0x416bd9798d5214cae6f837c0a53a73beb3ced465";
+    const WETH_WGLMR = "0x7e71d586ad01c0bf7953eb82e7b76c1338b0068c";
+    const USDC_WGLMR = "0xab8c35164a8e3ef302d18da953923ea31f0fe393";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 4 });
     lookup.set(WGLMR, { pathIdx: [0], path: [USDC_WGLMR], priority: 3 });
-    lookup.set(WETH, { pathIdx: [1, 0], path: [WETH_WGLMR, USDC_WGLMR], priority: 2 });
-    lookup.set(WBTC, { pathIdx: [0, 0], path: [WGLMR_WBTC, USDC_WGLMR], priority: 1 });
+    lookup.set(WETH, {
+      pathIdx: [1, 0],
+      path: [WETH_WGLMR, USDC_WGLMR],
+      priority: 2,
+    });
+    lookup.set(WBTC, {
+      pathIdx: [0, 0],
+      path: [WGLMR_WBTC, USDC_WGLMR],
+      priority: 1,
+    });
 
     return lookup as TypedMap<string, BasePool>;
   }

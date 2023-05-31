@@ -13,7 +13,6 @@ import {
   createWithdraw,
   getOrCreateHypervisor,
   getOrCreateHypervisorShare,
-  updatePositions,
   updateUniV3FeeGrowth,
 } from "../uniswapV3/hypervisor";
 
@@ -416,7 +415,7 @@ export function updateFeeGrowth(
   isRebalance: boolean = false
 ): void {
   const protocol = getOrCreateProtocol();
-  if (protocol.name == "algebra") {
+  if (protocol.name == "algebraV1" || protocol.name == "algebraV2") {
     updateAlgebraFeeGrowth(hypervisorAddress, isRebalance);
   } else {
     updateUniV3FeeGrowth(hypervisorAddress, isRebalance);

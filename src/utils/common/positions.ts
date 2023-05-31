@@ -13,7 +13,7 @@ export function positionKey(
   let key = Bytes.fromHexString(
     "0x0000000000000000000000000000000000000000000000000000000000000000"
   );
-  if (protocol.name == "algebra") {
+  if (protocol.name == "algebraV1" || protocol.name == "algebraV2") {
     key = algebraPositionKey(ownerAddress, tickLower, tickUpper);
   } else {
     key = uniswapPositionKey(ownerAddress, tickLower, tickUpper);

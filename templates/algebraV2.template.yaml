@@ -10,201 +10,19 @@ graft:
 schema:
   file: ./schema.graphql
 dataSources:
-  {{#gammaToken}}
-  - kind: ethereum/contract
-    name: {{name}}
-    network: {{network}}
-    source:
-      address: "{{address}}"
-      abi: ERC20
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - ProtocolDistribution
-        - DistributionDayData
-        - Account
-        - RewardHypervisor
-        - RewardHypervisorShare
-        - RewardHypervisorTx
-      abis:
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: Pool
-          file: ./abis/UniswapV3Pool.json
-        - name: AlgebraV1Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
-        - name: AlgebraV2Pool
-          file: ./abis/AlgebraFinance/V2Pool.json
-        - name: UniswapV3Pool
-          file: ./abis/UniswapV3Pool.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mappings/gammaToken.ts
-  {{/gammaToken}}
-  {{#xgammaToken}}
-  - kind: ethereum/contract
-    name: {{name}}
-    network: {{network}}
-    source:
-      address: "{{address}}"
-      abi: ERC20
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - RewardHypervisor
-        - RewardHypervisorShare
-        - RewardHypervisorTx
-      abis:
-        - name: ERC20
-          file: ./abis/ERC20.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mappings/xgammaToken.ts
-  {{/xgammaToken}}
-  {{#VisorFactory}}
-  - kind: ethereum/contract
-    name: {{name}}
-    network: {{network}}
-    source:
-      address: "{{address}}"
-      abi: VisorFactory
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - Factory
-        - Account
-        - VisorTemplate
-        - User
-        - OwnerOperator
-      abis:
-        - name: VisorFactory
-          file: ./abis/VisorFactory.json
-        - name: Visor
-          file: ./abis/Visor.json
-      eventHandlers:
-        - event: InstanceAdded(address)
-          handler: handleInstanceAdded
-        - event: InstanceRemoved(address)
-          handler: handleInstanceRemoved
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: TemplateActive(indexed bytes32,indexed address)
-          handler: handleTemplateActive
-        - event: TemplateAdded(indexed bytes32,indexed address)
-          handler: handleTemplateAdded
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-      file: ./src/mappings/visorFactory.ts
-  {{/VisorFactory}}
-  {{#liquidityMining}}
-  - kind: ethereum/contract
-    name: {{name}}
-    network: {{network}}
-    source:
-      address: "{{address}}"
-      abi: Hypervisor
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - Hypervisor
-        - StakedToken
-        - RewardToken
-      abis:
-        - name: Hypervisor
-          file: ./abis/Hypervisor.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-      eventHandlers:
-        - event: BonusTokenRegistered(address)
-          handler: handleBonusTokenRegistered
-        - event: HypervisorCreated(address,address)
-          handler: handleHypervisorCreated
-        - event: HypervisorFunded(uint256,uint256)
-          handler: handleHypervisorFunded
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: RewardClaimed(address,address,address,uint256)
-          handler: handleRewardClaimed
-        - event: Staked(address,uint256)
-          handler: handleStaked
-        - event: Unstaked(address,uint256)
-          handler: handleUnstaked
-        - event: VaultFactoryRegistered(address)
-          handler: handleVaultFactoryRegistered
-        - event: VaultFactoryRemoved(address)
-          handler: handleVaultFactoryRemoved
-      file: ./src/mappings/hypervisor.ts
-  {{/liquidityMining}}
-  {{#uniswapV3HypervisorFactory}}
-  - kind: ethereum/contract
-    name: {{name}}
-    network: {{network}}
-    source:
-      address: "{{address}}"
-      abi: UniswapV3HypervisorFactory
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/mappings/uniswapV3/hypervisorFactory.ts
-      entities:
-        - UniswapV3HypervisorFactory
-        - UniswapV3Hypervisor
-      abis:
-        - name: UniswapV3HypervisorFactory
-          file: ./abis/UniswapV3HypervisorFactory.json
-        - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
-        - name: Pool
-          file: ./abis/UniswapV3Pool.json
-        - name: AlgebraHypervisor
-          file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraV1Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
-        - name: AlgebraV2Pool
-          file: ./abis/AlgebraFinance/V2Pool.json
-        - name: UniswapV3Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
-        - name: UniswapV3Pool
-          file: ./abis/UniswapV3Pool.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-      eventHandlers:
-        - event: HypervisorCreated(address,address,uint24,address,uint256)
-          handler: handleHypervisorCreated
-  {{/uniswapV3HypervisorFactory}}
-  {{#uniswapV3HypervisorOrphan}}
+  {{#hypervisorOrphan}}
   - name: {{name}}
     kind: ethereum/contract
     network: {{network}}
     source:
       address: "{{address}}"
-      abi: UniswapV3Hypervisor
+      abi: AlgebraHypervisor
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/uniswapV3/hypervisor.ts
+      file: ./src/mappings/algebraFinanceV2/hypervisor.ts
       entities:
         - Account
         - UniswapV3Hypervisor
@@ -214,9 +32,9 @@ dataSources:
         - UniswapV3HypervisorShare
       abis:
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -246,27 +64,20 @@ dataSources:
           handler: handleZeroBurn
         - event: SetFee(uint8)
           handler: handleSetFee
-      {{#useCallHandlers}}
-      callHandlers:
-        - function: setDepositMax(uint256,uint256)
-          handler: handleSetDepositMax
-        - function: setMaxTotalSupply(uint256)
-          handler: handleSetMaxTotalSupply
-      {{/useCallHandlers}}
-  {{/uniswapV3HypervisorOrphan}}
-  {{#uniswapV3PoolOrphan}}
+  {{/hypervisorOrphan}}
+  {{#poolOrphan}}
   - name: {{name}}
     kind: ethereum/contract
     network: {{network}}
     source:
       address: "{{address}}"
-      abi: UniswapV3Pool
+      abi: Pool
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/uniswapV3/pool.ts
+      file: ./src/mappings/algebraFinanceV2/pool.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -274,9 +85,9 @@ dataSources:
         - name: ERC20
           file: ./abis/ERC20.json
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -290,7 +101,7 @@ dataSources:
       eventHandlers:
         - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
           handler: handleSwap
-  {{/uniswapV3PoolOrphan}}
+  {{/poolOrphan}}
   {{#hypeRegistry}}
   - name: {{name}}
     kind: ethereum/contract
@@ -303,7 +114,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/uniswapV3/hypeRegistry.ts
+      file: ./src/mappings/algebraFinanceV2/hypeRegistry.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -313,9 +124,9 @@ dataSources:
         - name: ERC20
           file: ./abis/ERC20.json
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -351,7 +162,7 @@ dataSources:
         - name: FeeDistributor
           file: ./abis/FeeDistributor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraV1Pool
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
@@ -385,7 +196,7 @@ dataSources:
         - name: SwapContract
           file: ./abis/SwapContract.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraV1Pool
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
@@ -415,9 +226,9 @@ dataSources:
         - name: UniProxy
           file: ./abis/UniProxy.json
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -560,9 +371,9 @@ dataSources:
         - name: MasterChef
           file: ./abis/MasterChef.json
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -598,12 +409,12 @@ templates:
     kind: ethereum/contract
     network: {{network}}
     source:
-      abi: UniswapV3Hypervisor
+      abi: AlgebraHypervisor
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/uniswapV3/hypervisor.ts
+      file: ./src/mappings/algebraFinanceV2/hypervisor.ts
       entities:
         - Account
         - UniswapV3Hypervisor
@@ -613,9 +424,9 @@ templates:
         - UniswapV3HypervisorShare
       abis:
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -639,31 +450,24 @@ templates:
           handler: handleZeroBurn
         - event: SetFee(uint8)
           handler: handleSetFee
-      {{#hypervisorTemplateUseCallHandlers}}
-      callHandlers:
-        - function: setDepositMax(uint256,uint256)
-          handler: handleSetDepositMax
-        - function: setMaxTotalSupply(uint256)
-          handler: handleSetMaxTotalSupply
-      {{/hypervisorTemplateUseCallHandlers}}
   - name: Pool
     kind: ethereum/contract
     network: {{network}}
     source:
-      abi: UniswapV3Pool
+      abi: Pool
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/uniswapV3/pool.ts
+      file: ./src/mappings/algebraFinanceV2/pool.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
       abis:
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -678,8 +482,8 @@ templates:
         - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
           handler: handleSwap
   {{#masterChefTemplate}}
-  - name: MasterChef
-    kind: ethereum/contract
+  - kind: ethereum/contract
+    name: MasterChef
     network: {{network}}
     source:
       abi: MasterChef
@@ -694,13 +498,13 @@ templates:
         - MasterChefPoolAccount
       abis:
         - name: MasterChef
-          file: ./abis/MasterChef.json
+          file: ./abis/MasterChef.json 
         - name: MasterChefV2
           file: ./abis/MasterChefV2.json
         - name: Hypervisor
-          file: ./abis/UniswapV3Hypervisor.json
+          file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/UniswapV3Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -757,7 +561,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -816,7 +620,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool

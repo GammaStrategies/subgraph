@@ -22,7 +22,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinance/hypervisor.ts
+      file: ./src/mappings/algebraFinanceV1/hypervisor.ts
       entities:
         - Account
         - UniswapV3Hypervisor
@@ -34,11 +34,13 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -69,13 +71,13 @@ dataSources:
     network: {{network}}
     source:
       address: "{{address}}"
-      abi: AlgebraPool
+      abi: Pool
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinance/pool.ts
+      file: ./src/mappings/algebraFinanceV1/pool.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -85,11 +87,13 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -110,7 +114,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinance/hypeRegistry.ts
+      file: ./src/mappings/algebraFinanceV1/hypeRegistry.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -122,11 +126,13 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -156,9 +162,11 @@ dataSources:
         - name: FeeDistributor
           file: ./abis/FeeDistributor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Pool
           file: ./abis/UniswapV3Pool.json
       eventHandlers:
@@ -188,9 +196,11 @@ dataSources:
         - name: SwapContract
           file: ./abis/SwapContract.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Pool
           file: ./abis/UniswapV3Pool.json
       eventHandlers:
@@ -218,11 +228,13 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -361,11 +373,13 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -400,7 +414,7 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinance/hypervisor.ts
+      file: ./src/mappings/algebraFinanceV1/hypervisor.ts
       entities:
         - Account
         - UniswapV3Hypervisor
@@ -412,11 +426,13 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -438,12 +454,12 @@ templates:
     kind: ethereum/contract
     network: {{network}}
     source:
-      abi: AlgebraPool
+      abi: Pool
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinance/pool.ts
+      file: ./src/mappings/algebraFinanceV1/pool.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -451,11 +467,13 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -486,11 +504,13 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -541,11 +561,13 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -598,11 +620,13 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
-        - name: AlgebraPool
-          file: ./abis/AlgebraFinance/Pool.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
