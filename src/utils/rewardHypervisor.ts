@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import { BigInt } from "@graphprotocol/graph-ts";
-import { REWARD_HYPERVISOR_ADDRESS } from "./constants";
+import { REWARD_HYPERVISOR_ADDRESS } from "../config/constants";
 import { RewardHypervisorShare } from "../../generated/schema";
 
 export function decreaseRewardHypervisorShares(

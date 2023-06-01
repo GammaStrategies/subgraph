@@ -11,7 +11,7 @@ import {
 import { Pool as PoolTemplate } from "../../../generated/templates";
 import { getOrCreatePool } from "../pool";
 import { createConversion } from "../tokens";
-import { ADDRESS_ZERO, ZERO_BI, ONE_BI, ZERO_BD } from "../constants";
+import { ADDRESS_ZERO, ZERO_BI, ONE_BI, ZERO_BD } from "../../config/constants";
 import { positionKey } from "../common/positions";
 import { getOrCreateAccount, getOrCreateUser } from "../entities";
 import { splitFees } from "../fees";

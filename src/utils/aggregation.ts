@@ -9,7 +9,7 @@ import {
 import { getOrCreateFactory } from "../utils/uniswapV3/hypervisorFactory";
 import { getOrCreateHypervisor } from "../utils/uniswapV3/hypervisor";
 import { getExchangeRate, getBaseTokenRateInUSDC } from "../utils/pricing";
-import { ZERO_BI, ZERO_BD } from "./constants";
+import { ZERO_BI, ZERO_BD } from "../config/constants";
 
 export function resetAggregates(hypervisorAddress: string): void {
   // Resets aggregates in factory

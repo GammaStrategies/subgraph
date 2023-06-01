@@ -1,6 +1,12 @@
 /* eslint-disable prefer-const */
 import { Address, BigInt, BigDecimal, TypedMap } from "@graphprotocol/graph-ts";
 
+export const VERSION = "1.0.0";
+
+export const PROTOCOL_ALGEBRA_V1 = "algebraV1";
+export const PROTOCOL_ALGEBRA_V2 = "algebraV2";
+export const PROTOCOL_UNISWAP_V3 = "uniswapV3";
+
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 export const REWARD_HYPERVISOR_ADDRESS =
   "0x26805021988f1a45dc708b5fb75fc75f21747d8c";
@@ -137,46 +143,3 @@ export class constantAddresses {
     return mapping as TypedMap<string, string>;
   }
 }
-
-export const protocolLookup = new TypedMap<string, string>();
-protocolLookup.set(
-  "matic:0x5ca313118358e3f5efe0c49f239b66c964f9aef0",
-  "algebraV1"
-);
-protocolLookup.set(
-  "matic:0xaec731f69fa39ad84c7749e913e3bc227427adfd",
-  "algebraV1"
-);
-protocolLookup.set(
-  "arbitrum-one:0x37595fcaf29e4fbac0f7c1863e3df2fe6e2247e9",
-  "algebraV1"
-);
-protocolLookup.set("bsc:0xd4bcfc023736db5617e5638748e127581d5929bd", "algebraV1");
-protocolLookup.set(
-  "polygon-zkevm:0xd08b593eb3460b7aa5ce76ffb0a3c5c938fd89b8",
-  "algebraV1"
-);
-protocolLookup.set(
-  "arbitrum-one:0xa216C2b6554A0293f69A1555dd22f4b7e60Fe907",
-  "algebraV1"
-);
-protocolLookup.set(
-  "avalanche:0x3fe6f25da67dc6ad2a5117a691f9951ea14d6f15",
-  "algebraV1"
-);
-protocolLookup.set(
-  "polygon:0xcac19d43c9558753d7535978a370055614ce832e",
-  "uniswap-v3"
-);
-protocolLookup.set(
-  "fantom:0xf874d4957861e193aec9937223062679c14f9aca",
-  "algebraV2"
-)
-protocolLookup.set(
-  "moonbeam:0x6002d7714e8038f2058e8162b0b86c0b19c31908",
-  "algebraV1"
-)
-protocolLookup.set(
-  "moonbeam:0xb7dfc304d9cd88d98a262ce5b6a39bb9d6611063",
-  "uniswap-v3"
-)

@@ -757,7 +757,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/UniswapV3Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -816,7 +816,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/Pool.json
+          file: ./abis/UniswapV3Pool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool

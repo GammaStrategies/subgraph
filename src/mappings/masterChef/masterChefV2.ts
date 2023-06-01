@@ -19,7 +19,7 @@ import {
   isValidRewarder,
   syncRewarderPoolInfo,
 } from "../../utils/masterChefV2";
-import { ZERO_BI } from "../../utils/constants";
+import { ZERO_BI } from "../../config/constants";
 import { Address } from "@graphprotocol/graph-ts";
 
 export function handleDeposit(event: Deposit): void {

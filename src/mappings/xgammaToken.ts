@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import { Address } from "@graphprotocol/graph-ts";
-import { ADDRESS_ZERO, TZ_UTC, TZ_EST } from "../utils/constants";
+import { ADDRESS_ZERO, TZ_UTC, TZ_EST } from "../config/constants";
 import { Transfer as TransferEvent } from "../../generated/GammaToken/ERC20";
 import { decreaseRewardHypervisorShares } from "../utils/rewardHypervisor";
 import { updateRewardHypervisorDayData } from "../utils/intervalUpdates";

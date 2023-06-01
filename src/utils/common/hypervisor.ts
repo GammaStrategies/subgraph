@@ -2,7 +2,7 @@ import { Address, BigInt, ethereum, store } from "@graphprotocol/graph-ts";
 import { Account, UniswapV3HypervisorShare } from "../../../generated/schema";
 import { resetAggregates, updateAggregates, updateTvl } from "../aggregation";
 import { updateAlgebraFeeGrowth } from "../algebraFinance/hypervisor";
-import { ADDRESS_ZERO, ONE_BI, ZERO_BD, ZERO_BI } from "../constants";
+import { ADDRESS_ZERO, ONE_BI, ZERO_BD, ZERO_BI } from "../../config/constants";
 import { getOrCreateProtocol } from "../entities";
 import { splitFees } from "../fees";
 import { updateAndGetUniswapV3HypervisorDayData } from "../intervalUpdates";
@@ -415,7 +415,7 @@ export function updateFeeGrowth(
   isRebalance: boolean = false
 ): void {
   const protocol = getOrCreateProtocol();
-  if (protocol.name == "algebraV1" || protocol.name == "algebraV2") {
+  if (protocol.underlyingProtocol == "algebraV1" || protocol.underlyingProtocol == "algebraV2") {
     updateAlgebraFeeGrowth(hypervisorAddress, isRebalance);
   } else {
     updateUniV3FeeGrowth(hypervisorAddress, isRebalance);

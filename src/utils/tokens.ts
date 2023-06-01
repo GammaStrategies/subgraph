@@ -3,8 +3,8 @@ import { Address, dataSource } from "@graphprotocol/graph-ts";
 import { ERC20 } from "../../generated/UniswapV3HypervisorFactory/ERC20";
 import { ERC20SymbolBytes } from "../../generated/UniswapV3HypervisorFactory/ERC20SymbolBytes";
 import { ERC20NameBytes } from "../../generated/UniswapV3HypervisorFactory/ERC20NameBytes";
-import { StaticTokenDefinition } from "./staticTokenDefinition";
-import { BaseTokenDefinition } from "./baseTokenDefinition";
+import { StaticTokenDefinition } from "../config/staticTokenDefinition";
+import { BaseTokenDefinition } from "../config/baseTokenDefinition";
 import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";
 import {
   Token,
@@ -20,7 +20,7 @@ import {
   ADDRESS_ZERO,
   DEFAULT_DECIMAL,
   constantAddresses,
-} from "./constants";
+} from "../config/constants";
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
   let contract = ERC20.bind(tokenAddress);

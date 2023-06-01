@@ -4,7 +4,7 @@ import { HypervisorCreated } from "../../../generated/UniswapV3HypervisorFactory
 import { Hypervisor as HypervisorTemplate } from "../../../generated/templates"
 import { getOrCreateHypervisor } from "../../utils/uniswapV3/hypervisor"
 import { getOrCreateFactory } from "../../utils/uniswapV3/hypervisorFactory"
-import { ONE_BI } from '../../utils/constants'
+import { ONE_BI } from '../../config/constants'
 
 //Hypervisors that were created with invalid parameters and should not be indexed
 let INVALID_HYPERVISORS: Array<Address> = [

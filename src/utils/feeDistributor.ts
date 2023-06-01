@@ -5,7 +5,7 @@ import {
 } from "../../generated/FeeDistributor/FeeDistributor";
 import { getEthRateInUSDC } from "./pricing";
 import { updateDistributionDayData } from "./intervalUpdates";
-import { TZ_UTC, TZ_EST } from "./constants";
+import { TZ_UTC, TZ_EST } from "../config/constants";
 import { getOrCreateProtocolDistribution } from "./entities";
 import { getOrCreateEthToken } from "./tokens";
 

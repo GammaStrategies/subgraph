@@ -6,7 +6,7 @@ import {
   UniswapV3HypervisorDayData,
   UniswapV3Hypervisor,
 } from "../../generated/schema";
-import { ZERO_BD, ZERO_BI } from "./constants";
+import { ZERO_BD, ZERO_BI } from "../config/constants";
 import { getOrCreateRewardHypervisor } from "./entities";
 
 let SECONDS_IN_HOUR = BigInt.fromI32(60 * 60);

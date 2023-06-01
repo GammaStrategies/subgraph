@@ -1,6 +1,33 @@
-type Protocol @entity {
-  id: ID!
+enum UnderlyingProtocol {
+  uniswapV3
+  algebraV1
+  algebraV2
+}
+
+enum Network {
+  mainnet
+  arbitrum
+  celo
+  matic
+  optimism
+  bsc
+  pzke
+  avalanche
+  fantom
+  moonbeam
+}
+
+type Protocol @entity(immutable: true) {
+  "Hypervisor registry address"
+  id: String!
+  "Name of protocol"
   name: String!
+  "Underlying infrastructure protocol"
+  underlyingProtocol: UnderlyingProtocol!
+  "Network/chain"
+  network: Network!
+  "Subgraph version"
+  version: String!
 }
 
 type ProtocolDistribution @entity {

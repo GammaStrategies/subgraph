@@ -5,7 +5,7 @@ import {
   MasterChefPool,
   MasterChefPoolAccount,
 } from "../../generated/schema";
-import { ZERO_BI } from "./constants";
+import { ZERO_BI } from "../config/constants";
 import { getOrCreateAccount } from "./entities";
 import { getOrCreateToken } from "./tokens";
 import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";

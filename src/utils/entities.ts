@@ -11,25 +11,50 @@ import {
   UniswapV3FeeUpdate,
 } from "../../generated/schema";
 import {
-  protocolLookup,
+  PROTOCOL_UNISWAP_V3,
   REWARD_HYPERVISOR_ADDRESS,
+  VERSION,
   ZERO_BD,
   ZERO_BI,
-} from "./constants";
+} from "../config/constants";
 import { getOrCreateToken } from "./tokens";
+import { protocolLookup } from "../config/lookups";
 
 export function getOrCreateProtocol(): Protocol {
   let protocol = Protocol.load("0");
   if (!protocol) {
     protocol = new Protocol("0");
-    let name = protocolLookup.get(
-      dataSource.network().concat(":").concat(dataSource.address().toHex())
+    const network = dataSource.network();
+
+    let name = "uniswap";
+    let underlyingProtocol = PROTOCOL_UNISWAP_V3;
+    const protocolInfo = protocolLookup.get(
+      network.concat(":").concat(dataSource.address().toHex())
     );
-    if (!name) {
-      name = "uniswap-v3";
+    if (protocolInfo) {
+      name = protocolInfo.name;
+      underlyingProtocol = protocolInfo.underlyingProtocol;
     }
 
-    protocol.name = name as string;
+    let networkName = network;
+    if (network == "arbitrum-one") {
+      networkName = "arbitrum";
+    } else if (network == "polygon-zkevm") {
+      networkName = "pzke";
+    }
+
+    protocol.name = "gamma"
+      .concat("-")
+      .concat(name)
+      .concat("-")
+      .concat(underlyingProtocol)
+      .concat("-")
+      .concat(networkName)
+      .concat("-")
+      .concat(VERSION);
+    protocol.underlyingProtocol = underlyingProtocol;
+    protocol.network = networkName;
+    protocol.version = VERSION;
     protocol.save();
   }
   return protocol;

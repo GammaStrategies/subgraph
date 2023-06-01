@@ -14,7 +14,7 @@ import {
 } from "../../generated/Hypervisor/Hypervisor";
 import { Hypervisor, RewardedToken } from "../../generated/schema";
 import { getOrCreateStakedToken, createRewardedToken } from "../utils/tokens";
-import { ADDRESS_ZERO, ZERO_BI } from "../utils/constants";
+import { ADDRESS_ZERO, ZERO_BI } from "../config/constants";
 
 function getOrCreateStakingHypervisor(addressString: string): Hypervisor {
   let nullAddress = Address.fromString(ADDRESS_ZERO);

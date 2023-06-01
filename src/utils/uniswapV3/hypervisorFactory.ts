@@ -1,5 +1,5 @@
 import { UniswapV3HypervisorFactory } from "../../../generated/schema";
-import { ZERO_BD, ZERO_BI } from "../constants";
+import { ZERO_BD, ZERO_BI } from "../../config/constants";
 
 export function getOrCreateFactory(
   addressString: string

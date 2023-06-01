@@ -12,7 +12,7 @@ import {
   constantAddresses,
   TZ_UTC,
   TZ_EST,
-} from "../utils/constants";
+} from "../config/constants";
 import { unstakeGammaFromAccount } from "../utils/gammaToken";
 import {
   getOrCreateAccount,

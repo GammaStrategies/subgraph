@@ -27,7 +27,7 @@ export function updateAlgebraFeeGrowth(
       hypervisor.limitUpper
     );
     
-    if (protocol.name == "algebraV1") {
+    if (protocol.underlyingProtocol == "algebraV1") {
 
       const poolContract = V1PoolContract.bind(poolAddress);
       const basePosition = poolContract.positions(baseKey);
@@ -47,7 +47,7 @@ export function updateAlgebraFeeGrowth(
           limitPosition.getInnerFeeGrowth1Token(),
           isRebalance
       )
-    } else if (protocol.name == "algebraV2") {
+    } else if (protocol.underlyingProtocol == "algebraV2") {
 
       const poolContract = V2PoolContract.bind(poolAddress);
       const basePosition = poolContract.positions(baseKey);

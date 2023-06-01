@@ -6,7 +6,7 @@ import {
   dataSource,
 } from "@graphprotocol/graph-ts";
 import { isUSDC, isZero } from "./tokens";
-import { ONE_BD, ZERO_BD, constantAddresses } from "./constants";
+import { ONE_BD, ZERO_BD, constantAddresses } from "../config/constants";
 import {
   UniswapV3Pool,
   UniswapV3HypervisorConversion,

@@ -9,7 +9,7 @@ import {
 } from "../../generated/schema";
 import { MasterChefV2 as MasterChefContract } from "../../generated/templates/MasterChefV2/MasterChefV2";
 import { MasterChefV2Rewarder as RewarderContract } from "../../generated/templates/Rewarder/MasterChefV2Rewarder";
-import { ZERO_BI } from "./constants";
+import { ZERO_BI } from "../config/constants";
 import { getOrCreateAccount } from "./entities";
 import { getOrCreateToken } from "./tokens";
 import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";

@@ -9,7 +9,7 @@ import {
 	GAMMA_START_BLOCK,
 	TZ_UTC,
 	TZ_EST
-} from '../utils/constants'
+} from '../config/constants'
 import { getOrCreateProtocolDistribution } from '../utils/entities'
 
 
