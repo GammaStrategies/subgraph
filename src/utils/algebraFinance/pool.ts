@@ -16,14 +16,18 @@ export function createAlgebraV1Pool(
     return null;
   }
 
-  const globalState = poolContract.globalState(); // Equivalent to slot0
+  const globalState = poolContract.try_globalState(); // Equivalent to slot0
+
+  if (globalState.reverted) {
+    return null;
+  }
 
   const pool = createPool(
     poolAddress,
     poolContract.token0(),
     poolContract.token1(),
     0,
-    globalState.getPrice()
+    globalState.value.getPrice()
   );
 
   return pool as UniswapV3Pool;
@@ -40,14 +44,19 @@ export function createAlgebraV2Pool(
   if (communityFeeLastTimestamp.reverted) {
     return null;
   }
-  const globalState = poolContract.globalState(); // Equivalent to slot0
+
+  const globalState = poolContract.try_globalState(); // Equivalent to slot0
+
+  if (globalState.reverted) {
+    return null;
+  }
 
   const pool = createPool(
     poolAddress,
     poolContract.token0(),
     poolContract.token1(),
     0,
-    globalState.getPrice()
+    globalState.value.getPrice()
   );
 
   return pool as UniswapV3Pool;

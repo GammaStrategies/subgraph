@@ -206,8 +206,9 @@ export class BaseTokenDefinition {
     const HAY_FRXETH = "0xf8a4cdf9efc4b9b38eaa6e27ee281cb2111fa664";
     const HAY_USDT = "0x5b0baf66718caabda49a4af32eb455c3b99b5821";
     const WBNB_STKBNB = "0x84b78452a97c5afda1400943333f691448069a29";
-    const USDT_FRAX = "0x8d65dbe7206a768c466073af0ab6d76f9e14fc6d";
-    const DOLA_FRAX = "0xfd66a4a4c921cd7194abab38655476a06fbaea05";
+    const BNBX_FRAX = "0x8ab8fd902039a48e51735452b1f97c93cb034e80";
+    const WUSDR_USDC = "0x3f8062cf591a918bc3b183fa241ec49efbd30e2b";
+    const WUSDR_DOLA = "0xdb6bff81311c5c4f72668d9c4c8a5e2cb4584a82";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 12 });
@@ -233,13 +234,13 @@ export class BaseTokenDefinition {
       priority: 7,
     });
     lookup.set(FRAX, {
-      pathIdx: [0, 1],
-      path: [USDT_FRAX, USDT_USDC],
+      pathIdx: [0, 1, 1, 0, 1],
+      path: [BNBX_FRAX, BNBX_WBNB, WBNB_BUSD, USDT_BUSD, USDT_USDC],
       priority: 6,
     });
     lookup.set(DOLA, {
-      pathIdx: [1, 0, 1],
-      path: [DOLA_FRAX, USDT_FRAX, USDT_USDC],
+      pathIdx: [0, 1],
+      path: [WUSDR_DOLA, WUSDR_USDC],
       priority: 5,
     });
     lookup.set(ANKRBNB, {

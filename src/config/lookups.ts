@@ -48,15 +48,15 @@ class protocolInfo {
     underlyingProtocol: PROTOCOL_UNISWAP_V3,
   });
   protocolLookup.set("fantom:0xf874d4957861e193aec9937223062679c14f9aca", {
-    name: "Spiritswap",
+    name: "spiritswap",
     underlyingProtocol: PROTOCOL_ALGEBRA_V2,
   });
   protocolLookup.set("moonbeam:0x6002d7714e8038f2058e8162b0b86c0b19c31908", {
-    name: "Stellaswap",
+    name: "stellaswap",
     underlyingProtocol: PROTOCOL_ALGEBRA_V1,
   });
   protocolLookup.set("moonbeam:0xb7dfc304d9cd88d98a262ce5b6a39bb9d6611063", {
-    name: "Beamswap",
+    name: "beamswap",
     underlyingProtocol: PROTOCOL_UNISWAP_V3,
   });
   

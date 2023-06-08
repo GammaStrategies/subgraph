@@ -37,13 +37,19 @@ export function getOrCreateHypervisor(
     pool.hypervisors = hypervisors;
     pool.save();
 
+    // Older hypes store the pool fee. Hardcode 10 for these
+    let hypervisorFee = hypervisorContract.fee();
+    if (hypervisorFee > 100) {
+      hypervisorFee = 10
+    }
+
     hypervisor = new UniswapV3Hypervisor(hypervisorId);
     hypervisor.pool = poolAddress.toHex();
     hypervisor.factory = ADDRESS_ZERO;
     hypervisor.version = "";
     hypervisor.owner = hypervisorContract.owner();
     hypervisor.symbol = hypervisorContract.symbol();
-    hypervisor.fee = hypervisorContract.fee();
+    hypervisor.fee = hypervisorFee;
     hypervisor.created = timestamp.toI32();
     hypervisor.tick = hypervisorContract.currentTick();
     hypervisor.baseLower = hypervisorContract.baseLower();

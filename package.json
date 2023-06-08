@@ -23,7 +23,7 @@
     "deploy:loc:celo": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-celo",
     "deploy:loc:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-polygon",
     "deploy:loc:optimism": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-optimism",
-    "deploy:loc:algebra:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-algebra-polygon",
+    "deploy:loc:quickswap:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-algebra-polygon",
     "deploy:loc:camelot:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-camelot-arbitrum",
     "deploy:loc:glacier:avalanche": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-glacier-avax",
     "deploy:loc:retro:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-retro-polygon",
