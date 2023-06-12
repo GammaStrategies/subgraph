@@ -59,4 +59,8 @@ class protocolInfo {
     name: "beamswap",
     underlyingProtocol: PROTOCOL_UNISWAP_V3,
   });
+  protocolLookup.set("matic:0x97686103b3e7238ca6c2c439146b30adbd84a593", {
+    name: "sushi",
+    underlyingProtocol: PROTOCOL_UNISWAP_V3,
+  });
   

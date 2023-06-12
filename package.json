@@ -30,6 +30,7 @@
     "deploy:loc:spiritswap:fantom": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-spiritswap-fantom",
     "deploy:loc:stellaswap:moonbeam": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-stellaswap-moonbeam",
     "deploy:loc:beamswap:moonbeam": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-beamswap-moonbeam",
+    "deploy:loc:sushi:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-sushi-polygon",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -50,6 +51,7 @@
     "prepare:spiritswap:fantom": "mustache config/spiritswap/fantom.json templates/algebraV2.template.yaml > subgraph.yaml",
     "prepare:stellaswap:moonbeam": "mustache config/stellaswap/moonbeam.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:beamswap:moonbeam": "mustache config/beamswap/moonbeam.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:sushi:polygon": "mustache config/sushi/polygon.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {
