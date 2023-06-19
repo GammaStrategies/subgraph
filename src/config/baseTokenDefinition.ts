@@ -271,14 +271,21 @@ export class BaseTokenDefinition {
     const WETH = "0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9";
     const USDT = "0x1e4a5963abfd975d8c9021ce480b42188849d41d";
     const USDC = "0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035";
+    const MATIC = "0xa2036f0538221a77a3937f1379699f44945018d0";
 
     const WETH_USDC = "0xc44ad482f24fd750caeba387d2726d8653f8c4bb";
     const USDT_USDC = "0x9591b8a30c3a52256ea93e98da49ee43afa136a8";
+    const WETH_MATIC = "0xb73abfb5a2c89f4038baa476ff3a7942a021c196";
 
     let lookup = new TypedMap<string, BasePool>();
-    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 3 });
-    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 2 });
-    lookup.set(WETH, { pathIdx: [1], path: [WETH_USDC], priority: 1 });
+    lookup.set(USDC, { pathIdx: [-1], path: [ADDRESS_ZERO], priority: 4 });
+    lookup.set(USDT, { pathIdx: [1], path: [USDT_USDC], priority: 3 });
+    lookup.set(WETH, { pathIdx: [1], path: [WETH_USDC], priority: 2 });
+    lookup.set(MATIC, {
+      pathIdx: [0, 1],
+      path: [WETH_MATIC, WETH_USDC],
+      priority: 1,
+    });
 
     return lookup as TypedMap<string, BasePool>;
   }

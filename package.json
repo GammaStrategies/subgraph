@@ -31,6 +31,7 @@
     "deploy:loc:stellaswap:moonbeam": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-stellaswap-moonbeam",
     "deploy:loc:beamswap:moonbeam": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-beamswap-moonbeam",
     "deploy:loc:sushi:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-sushi-polygon",
+    "deploy:loc:sushi:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-sushi-arbitrum",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -52,11 +53,12 @@
     "prepare:stellaswap:moonbeam": "mustache config/stellaswap/moonbeam.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:beamswap:moonbeam": "mustache config/beamswap/moonbeam.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:sushi:polygon": "mustache config/sushi/polygon.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:sushi:arbitrum": "mustache config/sushi/arbitrum.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.50.1",
-    "@graphprotocol/graph-ts": "^0.30.0",
+    "@graphprotocol/graph-cli": "^0.51.1",
+    "@graphprotocol/graph-ts": "^0.31.0",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
     "eslint": "^8.41.0",
