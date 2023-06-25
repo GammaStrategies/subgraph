@@ -35,9 +35,9 @@ class protocolInfo {
     name: "quickswap",
     underlyingProtocol: PROTOCOL_ALGEBRA_V1,
   });
-  protocolLookup.set("arbitrum-one:0xa216C2b6554A0293f69A1555dd22f4b7e60Fe907", {
+  protocolLookup.set("arbitrum-one:0xa216c2b6554a0293f69a1555dd22f4b7e60fe907", {
     name: "camelot",
-    underlyingProtocol: PROTOCOL_ALGEBRA_V1,
+    underlyingProtocol: PROTOCOL_ALGEBRA_V2,
   });
   protocolLookup.set("avalanche:0x3fe6f25da67dc6ad2a5117a691f9951ea14d6f15", {
     name: "glacier",

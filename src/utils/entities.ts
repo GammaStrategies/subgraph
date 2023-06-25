@@ -1,4 +1,10 @@
-import { Address, BigInt, dataSource, ethereum } from "@graphprotocol/graph-ts";
+import {
+  Address,
+  BigInt,
+  dataSource,
+  ethereum,
+  log,
+} from "@graphprotocol/graph-ts";
 import {
   User,
   Account,
@@ -23,6 +29,10 @@ import { protocolLookup } from "../config/lookups";
 export function getOrCreateProtocol(): Protocol {
   let protocol = Protocol.load("0");
   if (!protocol) {
+    log.info("Initializing protocol for {} on {}", [
+      dataSource.address().toHex(),
+      dataSource.network(),
+    ]);
     protocol = new Protocol("0");
     const network = dataSource.network();
 

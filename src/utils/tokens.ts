@@ -13,6 +13,7 @@ import {
   UniswapV3HypervisorConversion,
 } from "../../generated/schema";
 import { Pool as PoolTemplate } from "../../generated/templates";
+import { Token as TokenTemplate } from "../../generated/templates";
 import { getOrCreatePool } from "./pool";
 import {
   ZERO_BI,
@@ -108,9 +109,21 @@ export function getOrCreateToken(tokenAddress: Address): Token {
     token.decimals = fetchTokenDecimals(tokenAddress);
     token.totalSupply = ZERO_BI;
     token.save();
+
+    // Track token contract for any name/symbol changes
+    TokenTemplate.create(tokenAddress)
   }
 
   return token as Token;
+}
+
+export function updateToken(tokenAddress: Address): void {
+  const token = getOrCreateToken(tokenAddress);
+
+  token.symbol = fetchTokenSymbol(tokenAddress);
+  token.name = fetchTokenName(tokenAddress);
+
+  token.save();
 }
 
 export function getOrCreateEthToken(): Token {
