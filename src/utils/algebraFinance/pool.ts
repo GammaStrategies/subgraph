@@ -1,4 +1,4 @@
-import { Address, Bytes } from "@graphprotocol/graph-ts";
+import { Address, Bytes, log } from "@graphprotocol/graph-ts";
 import { UniswapV3Pool } from "../../../generated/schema";
 import { AlgebraV1Pool as V1PoolContract } from "../../../generated/templates/Pool/AlgebraV1Pool";
 import { AlgebraV2Pool as V2PoolContract } from "../../../generated/templates/Pool/AlgebraV2Pool";
@@ -9,7 +9,6 @@ export function createAlgebraV1Pool(
   poolAddress: Address
 ): UniswapV3Pool | null {
   const poolContract = V1PoolContract.bind(poolAddress);
-
   const liquidityCooldown = poolContract.try_liquidityCooldown();
 
   if (liquidityCooldown.reverted) {
@@ -19,6 +18,7 @@ export function createAlgebraV1Pool(
   const globalState = poolContract.try_globalState(); // Equivalent to slot0
 
   if (globalState.reverted) {
+    log.warning("{} is not a valid Algebra V1 pool", [poolAddress.toHex()]);
     return null;
   }
 

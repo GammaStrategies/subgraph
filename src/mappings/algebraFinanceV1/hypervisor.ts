@@ -5,7 +5,7 @@ import {
   Transfer,
   Withdraw,
   ZeroBurn,
-} from "../../../generated/templates/AlgebraHypervisor/AlgebraHypervisor";
+} from "../../../generated/templates/Hypervisor/AlgebraHypervisor";
 import {
   getOrCreateHypervisor,
   updatePositions,

@@ -9,7 +9,7 @@ import { UniswapV3Hypervisor } from "../../../generated/schema";
 import { getOrCreateProtocol } from "../../utils/entities";
 
 export function handleHypeAdded(event: HypeAdded): void {
-  log.warning("network name: {}", [dataSource.network()])
+  log.info("Adding hypervisor: {}", [event.address.toHex()])
   let hypervisor = UniswapV3Hypervisor.load(event.params.hype.toHex());
   if (hypervisor) {
     return; // No need to add if hype was already added manually as orphan.
@@ -40,4 +40,5 @@ export function handleHypeAdded(event: HypeAdded): void {
   hypervisor.save();
 
   HypervisorTemplate.create(event.params.hype);
+  log.info("Hypervisor added: {}", [event.address.toHex()])
 }

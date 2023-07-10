@@ -37,7 +37,7 @@ class protocolInfo {
   });
   protocolLookup.set("arbitrum-one:0xa216c2b6554a0293f69a1555dd22f4b7e60fe907", {
     name: "camelot",
-    underlyingProtocol: PROTOCOL_ALGEBRA_V2,
+    underlyingProtocol: PROTOCOL_ALGEBRA_V1,
   });
   protocolLookup.set("avalanche:0x3fe6f25da67dc6ad2a5117a691f9951ea14d6f15", {
     name: "glacier",
@@ -67,5 +67,7 @@ class protocolInfo {
     name: "sushi",
     underlyingProtocol: PROTOCOL_UNISWAP_V3,
   });
-  
-  
+  protocolLookup.set("arbitrum-one:0x34ffbd9db6b9bd8b095a0d156de69a2ad2944666", {
+    name: "ramses",
+    underlyingProtocol: PROTOCOL_ALGEBRA_V1,
+  });

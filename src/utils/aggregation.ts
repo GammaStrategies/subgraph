@@ -1,5 +1,5 @@
-import { Address, log } from "@graphprotocol/graph-ts";
-import { UniswapV3Hypervisor as HypervisorContract } from "../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
+import { Address } from "@graphprotocol/graph-ts";
+import { UniswapV3Hypervisor as HypervisorContract } from "../../generated/templates/Hypervisor/UniswapV3Hypervisor";
 import {
   UniswapV3HypervisorFactory,
   UniswapV3Hypervisor,
