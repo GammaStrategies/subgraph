@@ -69,5 +69,5 @@ class protocolInfo {
   });
   protocolLookup.set("arbitrum-one:0x34ffbd9db6b9bd8b095a0d156de69a2ad2944666", {
     name: "ramses",
-    underlyingProtocol: PROTOCOL_ALGEBRA_V1,
+    underlyingProtocol: PROTOCOL_UNISWAP_V3,
   });

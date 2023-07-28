@@ -4,7 +4,8 @@
     {
       "name": "HypeRegistry",
       "address": "0x34Ffbd9Db6B9bD8b095A0d156de69a2AD2944666",
-      "startBlock": 99952729
+      "startBlock": 110473379
     }
-  ]
+  ],
+  "RamsesRewardsTemplate": true
 }

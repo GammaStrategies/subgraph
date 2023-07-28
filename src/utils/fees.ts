@@ -1,4 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
+import { getOrCreateProtocol } from "./entities";
+import { ONE_BI, ZERO_BI } from "../config/constants";
 
 export class CollectedFees {
   grossFees: BigInt;
@@ -6,8 +8,19 @@ export class CollectedFees {
   netFees: BigInt;
 }
 
-export function splitFees(grossFees: BigInt, feeRate: i32): CollectedFees {
-  const protocolFees = grossFees.div(BigInt.fromI32(feeRate));
+export function splitFees(grossFees: BigInt, feeParam: i32): CollectedFees {
+  const protocol = getOrCreateProtocol();
+
+  let feeRate: BigInt;
+  if (feeParam == 0) {
+    feeRate = ZERO_BI;
+  } else if (protocol.name == "ramses") {
+    feeRate = BigInt.fromI32(feeParam).div(BigInt.fromI32(100));
+  } else {
+    feeRate = ONE_BI.div(BigInt.fromI32(feeParam));
+  }
+
+  const protocolFees = grossFees.times(feeRate);
   const netFees = grossFees.minus(protocolFees);
 
   return {

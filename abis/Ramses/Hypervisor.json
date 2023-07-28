@@ -3,6 +3,8 @@
     "inputs": [
       { "internalType": "address", "name": "_pool", "type": "address" },
       { "internalType": "address", "name": "_owner", "type": "address" },
+      { "internalType": "address", "name": "_voter", "type": "address" },
+      { "internalType": "address", "name": "_receiver", "type": "address" },
       { "internalType": "string", "name": "name", "type": "string" },
       { "internalType": "string", "name": "symbol", "type": "string" }
     ],
@@ -150,6 +152,19 @@
       }
     ],
     "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newReceiver",
+        "type": "address"
+      }
+    ],
+    "name": "TransferReceiver",
     "type": "event"
   },
   {
@@ -394,6 +409,15 @@
   },
   {
     "inputs": [],
+    "name": "gauge",
+    "outputs": [
+      { "internalType": "contract IGaugeV2", "name": "", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getBasePosition",
     "outputs": [
       { "internalType": "uint128", "name": "liquidity", "type": "uint128" },
@@ -412,6 +436,13 @@
       { "internalType": "uint256", "name": "amount1", "type": "uint256" }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getReward",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -498,7 +529,7 @@
     "name": "pool",
     "outputs": [
       {
-        "internalType": "contract IUniswapV3Pool",
+        "internalType": "contract IRamsesV2Pool",
         "name": "",
         "type": "address"
       }
@@ -527,6 +558,17 @@
   },
   {
     "inputs": [
+      { "internalType": "uint256", "name": "amount0", "type": "uint256" },
+      { "internalType": "uint256", "name": "amount1", "type": "uint256" },
+      { "internalType": "bytes", "name": "data", "type": "bytes" }
+    ],
+    "name": "ramsesV2MintCallback",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "int24", "name": "_baseLower", "type": "int24" },
       { "internalType": "int24", "name": "_baseUpper", "type": "int24" },
       { "internalType": "int24", "name": "_limitLower", "type": "int24" },
@@ -538,6 +580,19 @@
     "name": "rebalance",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "receiver",
+    "outputs": [
+      {
+        "internalType": "contract IMultiFeeDistribution",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -641,13 +696,47 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "amount0", "type": "uint256" },
-      { "internalType": "uint256", "name": "amount1", "type": "uint256" },
-      { "internalType": "bytes", "name": "data", "type": "bytes" }
+      { "internalType": "address", "name": "newReceiver", "type": "address" }
     ],
-    "name": "uniswapV3MintCallback",
+    "name": "transferReceiver",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newVeRamTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferVeRamTokenId",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newVoter", "type": "address" }
+    ],
+    "name": "transferVoter",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "veRamTokenId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "voter",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -675,18 +764,5 @@
     ],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newReceiver",
-        "type": "address"
-      }
-    ],
-    "name": "TransferReceiver",
-    "type": "event"
   }
 ]

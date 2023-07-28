@@ -1,4 +1,4 @@
-import { Collect, Swap } from "../../../generated/templates/UniswapV3Pool/UniswapV3Pool"
+import { Swap } from "../../../generated/templates/Pool/UniswapV3Pool"
 import { processSwap } from '../../utils/common/pool'
 
 export function handleSwap(event: Swap): void {

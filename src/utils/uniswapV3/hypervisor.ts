@@ -136,13 +136,13 @@ export function createRebalance(
   feeAmount0: BigInt,
   feeAmount1: BigInt,
   totalSupply: BigInt,
-  feeRate: i32,
+  feeParam: i32,
   event: ethereum.Event
 ): UniswapV3Rebalance {
   const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
-  const collectedFees0 = splitFees(feeAmount0, feeRate);
-  const collectedFees1 = splitFees(feeAmount1, feeRate);
+  const collectedFees0 = splitFees(feeAmount0, feeParam);
+  const collectedFees1 = splitFees(feeAmount1, feeParam);
 
   const rebalance = new UniswapV3Rebalance(id);
   rebalance.hypervisor = event.address.toHex();

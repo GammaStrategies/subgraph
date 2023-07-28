@@ -55,7 +55,7 @@
     "prepare:beamswap:moonbeam": "mustache config/beamswap/moonbeam.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:sushi:polygon": "mustache config/sushi/polygon.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:sushi:arbitrum": "mustache config/sushi/arbitrum.json templates/uniV3.template.yaml > subgraph.yaml",
-    "prepare:ramses:arbitrum": "mustache config/ramses/arbitrum.json templates/algebraV1.template.yaml > subgraph.yaml",
+    "prepare:ramses:arbitrum": "mustache config/ramses/arbitrum.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

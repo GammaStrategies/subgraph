@@ -3,10 +3,14 @@ import {
   Withdraw as WithdrawEvent,
   Rebalance as RebalanceEvent,
   Transfer as TransferEvent,
-  SetDepositMaxCall,
-  SetMaxTotalSupplyCall,
-} from "../../../generated/templates/UniswapV3Hypervisor/UniswapV3Hypervisor";
-import { getOrCreateHypervisor, updatePositions } from "../../utils/uniswapV3/hypervisor";
+  TransferReceiver,
+  // SetDepositMaxCall,
+  // SetMaxTotalSupplyCall,
+} from "../../../generated/templates/Hypervisor/UniswapV3Hypervisor";
+import {
+  getOrCreateHypervisor,
+  updatePositions,
+} from "../../utils/uniswapV3/hypervisor";
 import {
   processDeposit,
   processFees,
@@ -16,8 +20,16 @@ import {
   setHypervisorVersion,
   updateFeeGrowth,
 } from "../../utils/common/hypervisor";
-import { SetFee, ZeroBurn } from "../../../generated/templates/Hypervisor/Hypervisor";
-import { getOrCreateFeeUpdate } from "../../utils/entities";
+import {
+  SetFee,
+  ZeroBurn,
+} from "../../../generated/templates/Hypervisor/Hypervisor";
+import {
+  getOrCreateFeeUpdate,
+  getOrCreateRamsesHypervisor,
+} from "../../utils/entities";
+import { RamsesMultiFeeDistribution as RamsesMfdTemplate } from "../../../generated/templates";
+import { Address } from "@graphprotocol/graph-ts";
 
 export function handleDeposit(event: DepositEvent): void {
   processDeposit(
@@ -29,7 +41,7 @@ export function handleDeposit(event: DepositEvent): void {
     event
   );
 
-  getOrCreateFeeUpdate(event.address, event.block);  // Track zeroBurn in deposit for legacy hypes
+  getOrCreateFeeUpdate(event.address, event.block); // Track zeroBurn in deposit for legacy hypes
 
   updatePositions(event.address);
   updateFeeGrowth(event.address);
@@ -45,12 +57,16 @@ export function handleRebalance(event: RebalanceEvent): void {
     event.params.totalSupply,
     event
   );
-  
-  const hypervisor = getOrCreateHypervisor(event.address)
+
+  const hypervisor = getOrCreateHypervisor(event.address);
   if (hypervisor.version !== "ZeroBurn") {
-    processFees(event.address, event.params.feeAmount0, event.params.feeAmount1);
+    processFees(
+      event.address,
+      event.params.feeAmount0,
+      event.params.feeAmount1
+    );
   }
-  getOrCreateFeeUpdate(event.address, event.block);  // Track zeroBurn in deposit for legacy hypes
+  getOrCreateFeeUpdate(event.address, event.block); // Track zeroBurn in deposit for legacy hypes
 
   updatePositions(event.address);
   updateFeeGrowth(event.address, true);
@@ -65,8 +81,8 @@ export function handleWithdraw(event: WithdrawEvent): void {
     event.params.amount1,
     event
   );
-  
-  getOrCreateFeeUpdate(event.address, event.block)  // Track zeroBurn in deposit for legacy hypes
+
+  getOrCreateFeeUpdate(event.address, event.block); // Track zeroBurn in deposit for legacy hypes
 
   updatePositions(event.address);
   updateFeeGrowth(event.address);
@@ -82,7 +98,7 @@ export function handleTransfer(event: TransferEvent): void {
 }
 
 export function handleZeroBurn(event: ZeroBurn): void {
-  setHypervisorVersion(event.address, "ZeroBurn")
+  setHypervisorVersion(event.address, "ZeroBurn");
   processFees(event.address, event.params.fees0, event.params.fees1);
   updatePositions(event.address);
   updateFeeGrowth(event.address);
@@ -94,15 +110,20 @@ export function handleSetFee(event: SetFee): void {
   hypervisor.save();
 }
 
-export function handleSetDepositMax(call: SetDepositMaxCall): void {
-  const hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp);
-  hypervisor.deposit0Max = call.inputs._deposit0Max;
-  hypervisor.deposit1Max = call.inputs._deposit1Max;
-  hypervisor.save();
+export function handleTransferReceiver(event: TransferReceiver): void {
+  const ramsesHypervisor = getOrCreateRamsesHypervisor(event.address);
+  RamsesMfdTemplate.create(Address.fromString(ramsesHypervisor.receiver));
 }
 
-export function handleSetMaxTotalSupply(call: SetMaxTotalSupplyCall): void {
-  const hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp);
-  hypervisor.maxTotalSupply = call.inputs._maxTotalSupply;
-  hypervisor.save();
-}
+// export function handleSetDepositMax(call: SetDepositMaxCall): void {
+//   const hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp);
+//   hypervisor.deposit0Max = call.inputs._deposit0Max;
+//   hypervisor.deposit1Max = call.inputs._deposit1Max;
+//   hypervisor.save();
+// }
+
+// export function handleSetMaxTotalSupply(call: SetMaxTotalSupplyCall): void {
+//   const hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp);
+//   hypervisor.maxTotalSupply = call.inputs._maxTotalSupply;
+//   hypervisor.save();
+// }

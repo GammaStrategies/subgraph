@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { Address, BigInt, BigDecimal, TypedMap } from "@graphprotocol/graph-ts";
 
-export const VERSION = "1.0.1";
+export const VERSION = "1.1.1";
 
 export const PROTOCOL_ALGEBRA_V1 = "algebraV1";
 export const PROTOCOL_ALGEBRA_V2 = "algebraV2";
@@ -45,7 +45,8 @@ export class constantAddresses {
 
   static arbitrum_one(): TypedMap<string, string> {
     let lookup = new TypedMap<string, string>();
-    lookup.set("USDC", "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8");
+    lookup.set("USDCe", "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8");
+    lookup.set("USDC", "0xaf88d065e77c8cc2239327c5edb3a432268e5831");
     lookup.set("VISR", "0x995c235521820f2637303ca1970c7c044583df44");
     lookup.set("WETH-USDC", "0x17c14d2c404d167802b16c450d3c99f88f2c4f4d");
     lookup.set("WETH-VISR", "0x4985C5b657d916bA745Afb16ace048c0a03ca2f5");

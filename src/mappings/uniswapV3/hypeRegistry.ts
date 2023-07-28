@@ -1,15 +1,22 @@
 /* eslint-disable prefer-const */
-import { log } from "@graphprotocol/graph-ts";
+import { Address, log } from "@graphprotocol/graph-ts";
 import { HypeAdded } from "../../../generated/HypeRegistry/HypeRegistry";
 import { Hypervisor as HypervisorContract } from "../../../generated/templates/Hypervisor/Hypervisor";
-import { Hypervisor as HypervisorTemplate } from "../../../generated/templates";
+import {
+  Hypervisor as HypervisorTemplate,
+  RamsesGaugeV2 as RamsesGaugeTemplate,
+  RamsesMultiFeeDistribution as RamsesMfdTemplate,
+} from "../../../generated/templates";
 import { Pool as PoolContract } from "../../../generated/templates/Pool/Pool";
 import { getOrCreateHypervisor } from "../../utils/uniswapV3/hypervisor";
 import { UniswapV3Hypervisor } from "../../../generated/schema";
-import { getOrCreateProtocol } from "../../utils/entities";
+import {
+  getOrCreateProtocol,
+  getOrCreateRamsesHypervisor,
+} from "../../utils/entities";
 
 export function handleHypeAdded(event: HypeAdded): void {
-  log.info("Adding hypervisor: {}", [event.address.toHex()])
+  log.info("Adding hypervisor: {}", [event.address.toHex()]);
   let hypervisor = UniswapV3Hypervisor.load(event.params.hype.toHex());
   if (hypervisor) {
     return; // No need to add if hype was already added manually as orphan.
@@ -34,11 +41,18 @@ export function handleHypeAdded(event: HypeAdded): void {
     return;
   }
 
-  getOrCreateProtocol();
+  const protocol = getOrCreateProtocol();
 
   hypervisor = getOrCreateHypervisor(event.params.hype, event.block.timestamp);
   hypervisor.save();
 
   HypervisorTemplate.create(event.params.hype);
-  log.info("Hypervisor added: {}", [event.address.toHex()])
+  log.info("Hypervisor added: {}", [event.address.toHex()]);
+
+  if (protocol.name == "ramses") {
+    const ramsesHypervisor = getOrCreateRamsesHypervisor(event.params.hype);
+    RamsesGaugeTemplate.create(Address.fromString(ramsesHypervisor.gauge));
+    RamsesMfdTemplate.create(Address.fromString(ramsesHypervisor.receiver));
+    log.warning("Tracking receiver: {}", [ramsesHypervisor.receiver]);
+  }
 }
