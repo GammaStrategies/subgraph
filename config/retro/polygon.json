@@ -1,5 +1,9 @@
 {
   "network": "matic",
+  "graft": {
+    "base": "QmWmc3xfmwYvqwPPSJevHdGySf3Z23PAJH4DwNyieDFL8Z",
+    "block": 45476475
+  },
   "hypeRegistry": [
     {
       "name": "HypeRegistry",
@@ -15,5 +19,6 @@
     }
   ],
   "masterChefTemplate": true,
-  "masterChefV2Template": true
+  "masterChefV2Template": true,
+  "RamsesRewardsTemplate": true
 }

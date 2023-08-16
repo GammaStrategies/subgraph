@@ -117,6 +117,21 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static mantle(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9");
+    lookup.set("USDT_MANTLE", "0x201eba5cc46d216ce6dc03f6a759e8e766e956ae");
+
+    return lookup as TypedMap<string, string>;
+  }
+
+  static linea(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x176211869ca2b568f2a7d4ee941e073a821ee1ff");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -139,6 +154,10 @@ export class constantAddresses {
       mapping = this.fantom();
     } else if (network == "moonbeam") {
       mapping = this.moonbeam();
+    } else if (network == "mantle") {
+      mapping = this.mantle();
+    } else if (network == "linea") {
+      mapping = this.linea();
     }
 
     return mapping as TypedMap<string, string>;

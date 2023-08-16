@@ -14,7 +14,7 @@ export function splitFees(grossFees: BigInt, feeParam: i32): CollectedFees {
   let feeRate: BigInt;
   if (feeParam == 0) {
     feeRate = ZERO_BI;
-  } else if (protocol.name == "ramses") {
+  } else if (protocol.name == "ramses" || protocol.name == "camelot") {
     feeRate = BigInt.fromI32(feeParam).div(BigInt.fromI32(100));
   } else {
     feeRate = ONE_BI.div(BigInt.fromI32(feeParam));

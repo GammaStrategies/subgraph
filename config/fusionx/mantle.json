@@ -1,0 +1,21 @@
+{
+    "network": "mainnet",
+    "hypeRegistry": [
+      {
+        "name": "HypeRegistry",
+        "address": "0x683292172e2175bd08e3927a5e72fc301b161300",
+        "startBlock": 4564
+      }
+    ],
+    "masterChefV2Registry": [
+      {
+        "name": "MasterChefV2Registry",
+        "address": "0xC27DDd78FC49875Fe6F844B72bbf31DFBB099881",
+        "startBlock": 4567
+      }
+    ],
+    "masterChefTemplate": true,
+    "masterChefV2Template": true,
+    "RamsesRewardsTemplate": true
+  }
+  

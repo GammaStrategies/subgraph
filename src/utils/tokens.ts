@@ -22,6 +22,7 @@ import {
   DEFAULT_DECIMAL,
   constantAddresses,
 } from "../config/constants";
+import { getOrCreateProtocol } from "./entities";
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
   let contract = ERC20.bind(tokenAddress);
@@ -111,7 +112,7 @@ export function getOrCreateToken(tokenAddress: Address): Token {
     token.save();
 
     // Track token contract for any name/symbol changes
-    TokenTemplate.create(tokenAddress)
+    TokenTemplate.create(tokenAddress);
   }
 
   return token as Token;
@@ -187,21 +188,29 @@ function isToken(tokenAddress: Address, refAddress: Address): boolean {
 }
 
 export function isUSDC(tokenAddress: Address): boolean {
-  const addressLookup = constantAddresses.network(dataSource.network());
+  const protocol = getOrCreateProtocol()
+  const addressLookup = constantAddresses.network(protocol.network);
   const usdcAddress = addressLookup.get("USDC") as string;
-  const usdceAddress = addressLookup.get("USDCe")
+  const usdceAddress = addressLookup.get("USDCe");
+  const usdtMantleAddress = addressLookup.get("USDT_MANTLE");
 
   if (tokenAddress == Address.fromString(usdcAddress)) {
-    return true
+    return true;
   }
 
   if (usdceAddress) {
-    if ( tokenAddress == Address.fromString(usdceAddress)) {
-      return true
+    if (tokenAddress == Address.fromString(usdceAddress)) {
+      return true;
     }
   }
 
-  return false
+  if (usdtMantleAddress) {
+    if (tokenAddress == Address.fromString(usdtMantleAddress)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export function isZero(tokenAddress: Address): boolean {
@@ -224,7 +233,16 @@ export function createConversion(address: string): void {
   if (conversion == null) {
     conversion = new UniswapV3HypervisorConversion(address);
 
-    let baseTokenLookup = BaseTokenDefinition.network(dataSource.network());
+    let network: string;
+    const dataSourceNetwork = dataSource.network();
+    const protocol = getOrCreateProtocol();
+    if (protocol.name == "fusionx" && dataSourceNetwork == "mainnet") {
+      network = "mantle";
+    } else {
+      network = dataSourceNetwork;
+    }
+
+    let baseTokenLookup = BaseTokenDefinition.network(network);
     let token0Lookup = baseTokenLookup.get(pool.token0);
     if (token0Lookup == null) {
       token0Lookup = BaseTokenDefinition.nonBase();

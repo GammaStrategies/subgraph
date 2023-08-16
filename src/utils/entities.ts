@@ -59,6 +59,10 @@ export function getOrCreateProtocol(): Protocol {
       networkName = "arbitrum";
     } else if (network == "polygon-zkevm") {
       networkName = "pzke";
+    } else if (name == "linea-mainnet") {
+      networkName = "linea";
+    } else if (name == "fusionx") {
+      networkName = "mantle";
     }
 
     protocol.name = name;
@@ -285,7 +289,7 @@ export function getOrCreateRamsesReceiver(
 
 export function createRamsesClaimRewardsEvent(event: ClaimRewards): void {
   const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
-  getOrCreateToken(event.params.reward)
+  getOrCreateToken(event.params.reward);
 
   const claimRewards = new RamsesClaimRewardsEvent(id);
   claimRewards.block = event.block.number;

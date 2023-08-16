@@ -15,6 +15,9 @@ enum Network {
   avalanche
   fantom
   moonbeam
+  mantle
+  rollux
+  linea
 }
 
 type Protocol @entity(immutable: true) {

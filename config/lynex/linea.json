@@ -1,0 +1,11 @@
+{
+  "network": "linea-mainnet",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xC27DDd78FC49875Fe6F844B72bbf31DFBB099881",
+      "startBlock": 163300
+    }
+  ],
+  "RamsesRewardsTemplate": true
+}
