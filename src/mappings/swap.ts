@@ -10,12 +10,14 @@ import {
 	TZ_UTC,
 	TZ_EST
 } from '../config/constants'
-import { getOrCreateProtocolDistribution } from '../utils/entities'
+import { getOrCreateProtocol, getOrCreateProtocolDistribution } from '../utils/entities'
 
 
 export function handleSwapVISR(event: SwapVISR): void {
 	if (event.params.recipient.toHex() == REWARD_HYPERVISOR_ADDRESS) {
-		let addressLookup = constantAddresses.network(dataSource.network())
+		const protocol = getOrCreateProtocol()
+		
+		let addressLookup = constantAddresses.network(protocol.network)
 		const targetTokenName = (event.block.number > GAMMA_START_BLOCK) ? "GAMMA" : "VISR"
 		const targetToken = addressLookup.get(targetTokenName) as string
 		let protocolDist = getOrCreateProtocolDistribution(targetToken)

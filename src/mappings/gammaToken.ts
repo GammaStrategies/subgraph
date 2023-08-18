@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { dataSource, Address } from "@graphprotocol/graph-ts";
+import { Address } from "@graphprotocol/graph-ts";
 import { Transfer as TransferEvent } from "../../generated/GammaToken/ERC20";
 import {
   updateDistributionDayData,
@@ -20,6 +20,7 @@ import {
   getOrCreateProtocolDistribution,
   getOrCreateRewardHypervisor,
   getOrCreateRewardHypervisorTx,
+  getOrCreateProtocol,
 } from "../utils/entities";
 import { getOrCreateToken } from "../utils/tokens";
 import { getGammaRateInUSDC } from "../utils/pricing";
@@ -27,7 +28,9 @@ import { getGammaRateInUSDC } from "../utils/pricing";
 let REWARD_HYPERVISOR = Address.fromString(REWARD_HYPERVISOR_ADDRESS);
 
 export function handleTransfer(event: TransferEvent): void {
-  let addressLookup = constantAddresses.network(dataSource.network());
+  const protocol = getOrCreateProtocol()
+
+  let addressLookup = constantAddresses.network(protocol.network);
   let gammaAddress = addressLookup.get("GAMMA") as string;
   let gammaAmount = event.params.value;
 

@@ -138,7 +138,7 @@ export class constantAddresses {
       mapping = this.mainnet();
     } else if (network == "matic") {
       mapping = this.polygon();
-    } else if (network == "arbitrum-one") {
+    } else if (network == "arbitrum") {
       mapping = this.arbitrum_one();
     } else if (network == "optimism") {
       mapping = this.optimism();
@@ -146,7 +146,7 @@ export class constantAddresses {
       mapping = this.celo();
     } else if (network == "bsc") {
       mapping = this.bsc();
-    } else if (network == "polygon-zkevm") {
+    } else if (network == "pzke") {
       mapping = this.polygonZkEvm();
     } else if (network == "avalanche") {
       mapping = this.avalanche();

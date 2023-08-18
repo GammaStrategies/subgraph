@@ -12,6 +12,7 @@ import {
   UniswapV3HypervisorConversion,
 } from "../../generated/schema";
 import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";
+import { getOrCreateProtocol } from "./entities";
 
 function getUsdcDecimalFactor(): BigInt {
   if (dataSource.network() == "bsc") {
@@ -41,7 +42,9 @@ export function getExchangeRate(
 }
 
 export function getEthRateInUSDC(): BigDecimal {
-  let addressLookup = constantAddresses.network(dataSource.network());
+  const protocol = getOrCreateProtocol()
+
+  let addressLookup = constantAddresses.network(protocol.network);
   let poolAddress = addressLookup.get("WETH-USDC") as string;
   let usdcIndex = BigInt.fromString(
     addressLookup.get("WETH-USDC-Index") as string
@@ -57,7 +60,8 @@ export function getEthRateInUSDC(): BigDecimal {
 }
 
 export function getGammaRateInUSDC(): BigDecimal {
-  let addressLookup = constantAddresses.network(dataSource.network());
+  const protocol = getOrCreateProtocol()
+  let addressLookup = constantAddresses.network(protocol.network);
   let poolAddressGamma = addressLookup.get("GAMMA-WETH") as string;
   let poolAddressUsdc = addressLookup.get("WETH-USDC") as string;
   let usdcIndex = BigInt.fromString(
@@ -77,7 +81,8 @@ export function getGammaRateInUSDC(): BigDecimal {
 }
 
 export function getVisrRateInUSDC(): BigDecimal {
-  let addressLookup = constantAddresses.network(dataSource.network());
+  const protocol = getOrCreateProtocol()
+  let addressLookup = constantAddresses.network(protocol.network);
   let poolAddressVisr = addressLookup.get("WETH-VISR") as string;
   let poolAddressUsdc = addressLookup.get("WETH-USDC") as string;
   let usdcIndex = BigInt.fromString(
