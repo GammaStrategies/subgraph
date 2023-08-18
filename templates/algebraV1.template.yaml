@@ -127,6 +127,10 @@ dataSources:
           file: ./abis/HypeRegistry.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
@@ -685,3 +689,58 @@ templates:
         - event: LogUpdatePool(indexed uint256,uint64,uint256,uint256)
           handler: handleLogUpdatePool
   {{/masterChefV2Template}}
+  {{#RamsesRewardsTemplate}}
+  - kind: ethereum/contract
+    name: RamsesGaugeV2
+    network: {{network}}
+    source:
+      abi: RamsesGaugeV2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/ramses/gaugeV2.ts
+      entities:
+        - RamsesGauge
+        - RamsesClaimRewardsEvent
+      abis:
+        - name: RamsesGaugeV2
+          file: ./abis/Ramses/GaugeV2.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: ClaimRewards(uint256,bytes32,address,address,uint256)
+          handler: handleClaimRewards
+  - kind: ethereum/contract
+    name: RamsesMultiFeeDistribution
+    network: {{network}}
+    source:
+      abi: RamsesMultiFeeDistribution
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/ramses/multiFeeDistribution.ts
+      entities:
+        - RamsesReceiver
+        - RamsesReceiverAccount
+        - Account
+      abis:
+        - name: RamsesMultiFeeDistribution
+          file: ./abis/Ramses/MultiFeeDistribution.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Stake(indexed address,uint256)
+          handler: handleStake
+        - event: Unstake(indexed address,uint256)
+          handler: handleUnstake
+  {{/RamsesRewardsTemplate}}

@@ -1,8 +1,8 @@
 /* eslint-disable prefer-const */
 import { Address, dataSource } from "@graphprotocol/graph-ts";
-import { ERC20 } from "../../generated/UniswapV3HypervisorFactory/ERC20";
-import { ERC20SymbolBytes } from "../../generated/UniswapV3HypervisorFactory/ERC20SymbolBytes";
-import { ERC20NameBytes } from "../../generated/UniswapV3HypervisorFactory/ERC20NameBytes";
+import { ERC20 } from "../../generated/HypeRegistry/ERC20";
+import { ERC20SymbolBytes } from "../../generated/HypeRegistry/ERC20SymbolBytes";
+import { ERC20NameBytes } from "../../generated/HypeRegistry/ERC20NameBytes";
 import { StaticTokenDefinition } from "../config/staticTokenDefinition";
 import { BaseTokenDefinition } from "../config/baseTokenDefinition";
 import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";

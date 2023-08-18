@@ -318,6 +318,10 @@ dataSources:
           file: ./abis/HypeRegistry.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
         - name: Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: Pool

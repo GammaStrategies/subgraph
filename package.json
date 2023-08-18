@@ -66,16 +66,16 @@
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.51.1",
+    "@graphprotocol/graph-cli": "^0.55.0",
     "@graphprotocol/graph-ts": "^0.31.0",
-    "@typescript-eslint/eslint-plugin": "^5.59.7",
-    "@typescript-eslint/parser": "^5.59.7",
-    "eslint": "^8.41.0",
-    "eslint-config-prettier": "^8.8.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
     "matchstick-as": "^0.5.2",
     "mustache": "^4.2.0",
-    "prettier": "2.8.8",
+    "prettier": "3.0.2",
     "rimraf": "^5.0.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.6"
   }
 }
