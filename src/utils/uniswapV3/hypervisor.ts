@@ -19,7 +19,8 @@ import { updateHypervisorFeeGrowth } from "../common/hypervisor";
 
 export function getOrCreateHypervisor(
   hypervisorAddress: Address,
-  timestamp: BigInt = ZERO_BI
+  timestamp: BigInt = ZERO_BI,
+  blockNumber: BigInt = ZERO_BI
 ): UniswapV3Hypervisor {
   const hypervisorId = hypervisorAddress.toHex();
   let hypervisor = UniswapV3Hypervisor.load(hypervisorId);
@@ -97,7 +98,7 @@ export function getOrCreateHypervisor(
     hypervisor.save();
 
     // Create Conversion entity to track path to USD calculations
-    createConversion(hypervisorId);
+    createConversion(hypervisorId, blockNumber);
 
     PoolTemplate.create(poolAddress);
   }

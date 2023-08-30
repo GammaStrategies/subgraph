@@ -1,0 +1,645 @@
+specVersion: 0.0.5
+features:
+  - nonFatalErrors
+{{#graft}}
+  - grafting
+graft:
+  base: {{base}}
+  block: {{block}}
+{{/graft}}
+schema:
+  file: ./schema.graphql
+dataSources:
+  {{#uniswapV3HypervisorOrphan}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: UniswapV3Hypervisor
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Account
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: ZeroBurn(uint8,uint256,uint256)
+          handler: handleZeroBurn
+        - event: SetFee(uint8)
+          handler: handleSetFee
+      {{#useCallHandlers}}
+      callHandlers:
+        - function: setDepositMax(uint256,uint256)
+          handler: handleSetDepositMax
+        - function: setMaxTotalSupply(uint256)
+          handler: handleSetMaxTotalSupply
+      {{/useCallHandlers}}
+  {{/uniswapV3HypervisorOrphan}}
+  {{#uniswapV3PoolOrphan}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: Pool
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/pool.ts
+      entities:
+        - UniswapV3Hypervisor
+        - UniswapV3HypervisorDayData
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
+  {{/uniswapV3PoolOrphan}}
+  {{#hypeRegistry}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: HypeRegistry
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypeRegistry.ts
+      entities:
+        - UniswapV3Hypervisor
+        - UniswapV3HypervisorDayData
+      abis:
+        - name: HypeRegistry
+          file: ./abis/HypeRegistry.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+      eventHandlers:
+        - event: HypeAdded(address,uint256)
+          handler: handleHypeAdded
+  {{/hypeRegistry}}
+  {{#masterChefRegistry}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: HypeRegistry
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/masterChef/masterChefRegistry.ts
+      entities:
+        - MasterChef
+      abis:
+        - name: HypeRegistry
+          file: ./abis/HypeRegistry.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json 
+        - name: MasterChefV2
+          file: ./abis/MasterChefV2.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: HypeAdded(address,uint256)
+          handler: handleHypeAdded
+  {{/masterChefRegistry}}
+  {{#masterChefV2Registry}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: HypeRegistry
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/masterChef/masterChefRegistry.ts
+      entities:
+        - MasterChefV2
+      abis:
+        - name: HypeRegistry
+          file: ./abis/HypeRegistry.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json 
+        - name: MasterChefV2
+          file: ./abis/MasterChefV2.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: HypeAdded(address,uint256)
+          handler: handleHypeAddedV2
+  {{/masterChefV2Registry}}
+  {{#rewardsRegistry}}
+  - name: {{name}}
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: RewardsRegistry
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/masterChef/rewardsRegistry.ts
+      entities:
+        - MasterChef
+      abis:
+        - name: RewardsRegistry
+          file: ./abis/RewardsRegistry.json
+        - name: MasterChef
+          file: ./abis/MasterChef.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: RewardsAdded(address,uint256)
+          handler: handleRewardsAdded
+  {{/rewardsRegistry}}
+  {{#masterChefOrphan}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: MasterChef
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/masterChef/masterChef.ts
+      entities:
+        - MasterChef
+        - MasterChefPool
+        - MasterChefPoolAccount
+      abis:
+        - name: MasterChef
+          file: ./abis/MasterChef.json
+        - name: Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed uint256,uint256)
+          handler: handleWithdraw
+        - event: AddLp(uint256,(address,uint256,uint256,uint256))
+          handler: handleAddLp
+        - event: SetAllocPoint(uint256,(address,uint256,uint256,uint256))
+          handler: handleSetAllocPoint
+        - event: PoolUpdated(uint256,(address,uint256,uint256,uint256))
+          handler: handlePoolUpdated
+        - event: UpdateEmissionRate(indexed address,uint256)
+          handler: handleUpdateEmissionRate
+  {{/masterChefOrphan}}
+templates:
+  - name: Hypervisor
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: UniswapV3Hypervisor
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/uniswapV3/hypervisor.ts
+      entities:
+        - Account
+        - UniswapV3Hypervisor
+        - UniswapV3Deposit
+        - UniswapV3Rebalance
+        - UniswapV3Withdraw
+        - UniswapV3HypervisorShare
+      abis:
+        - name: Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: ZeroBurn(uint8,uint256,uint256)
+          handler: handleZeroBurn
+        - event: SetFee(uint8)
+          handler: handleSetFee
+        - event: TransferReceiver(address)
+          handler: handleTransferReceiver
+      {{#hypervisorTemplateUseCallHandlers}}
+      callHandlers:
+        - function: setDepositMax(uint256,uint256)
+          handler: handleSetDepositMax
+        - function: setMaxTotalSupply(uint256)
+          handler: handleSetMaxTotalSupply
+      {{/hypervisorTemplateUseCallHandlers}}
+  - name: Pool
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: Pool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/fusionx/pool.ts
+      entities:
+        - UniswapV3Hypervisor
+        - UniswapV3HypervisorDayData
+      abis:
+        - name: Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24,uint128,uint128)
+          handler: handleSwap
+  - name: Token
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: ERC20
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Token
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: ./src/mappings/token.ts
+  {{#masterChefTemplate}}
+  - name: MasterChef
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: MasterChef
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/masterChef/masterChef.ts
+      entities:
+        - MasterChef
+        - MasterChefPool
+        - MasterChefPoolAccount
+      abis:
+        - name: MasterChef
+          file: ./abis/MasterChef.json
+        - name: MasterChefV2
+          file: ./abis/MasterChefV2.json
+        - name: Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed uint256,uint256)
+          handler: handleWithdraw
+        - event: AddLp(uint256,(address,uint256,uint256,uint256))
+          handler: handleAddLp
+        - event: SetAllocPoint(uint256,(address,uint256,uint256,uint256))
+          handler: handleSetAllocPoint
+        - event: PoolUpdated(uint256,(address,uint256,uint256,uint256))
+          handler: handlePoolUpdated
+        - event: UpdateEmissionRate(indexed address,uint256)
+          handler: handleUpdateEmissionRate
+  {{/masterChefTemplate}}
+  {{#masterChefV2Template}}
+  - kind: ethereum/contract
+    name: MasterChefV2
+    network: {{network}}
+    source:
+      abi: MasterChefV2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/masterChef/masterChefV2.ts
+      entities:
+        - MasterChefV2
+        - MasterChefV2Pool
+        - MasterChefV2Rewarder
+        - MasterChefV2RewarderAccount
+      abis:
+        - name: MasterChef
+          file: ./abis/MasterChef.json 
+        - name: MasterChefV2
+          file: ./abis/MasterChefV2.json
+        - name: MasterChefV2Rewarder
+          file: ./abis/MasterChefV2Rewarder.json
+        - name: Hypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed uint256,uint256,indexed address)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed uint256,uint256,indexed address)
+          handler: handleWithdraw
+        - event: EmergencyWithdraw(indexed address,indexed uint256,uint256,indexed address)
+          handler: handleEmergencyWithdraw
+        - event: LogPoolAddition(indexed uint256,uint256,indexed address)
+          handler: handleLogPoolAddition
+        - event: LogSetPool(indexed uint256,uint256)
+          handler: handleLogSetPool
+        - event: LogUpdatePool(indexed uint256,uint64,uint256,uint256)
+          handler: handleLogUpdatePool
+        - event: LogSushiPerSecond(uint256)
+          handler: handleLogSushiPerSecond
+        - event: LogRewarderAdded(indexed uint256,indexed address)
+          handler: handleLogRewarderAdded
+  - kind: ethereum/contract
+    name: Rewarder
+    network: {{network}}
+    source:
+      abi: MasterChefV2Rewarder
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/masterChef/rewarder.ts
+      entities:
+        - MasterChefV2
+        - MasterChefV2Pool
+        - MasterChefV2Rewarder
+        - MasterChefV2RewarderAccount
+      abis:
+        - name: MasterChef
+          file: ./abis/MasterChef.json 
+        - name: MasterChefV2
+          file: ./abis/MasterChefV2.json
+        - name: MasterChefV2Rewarder
+          file: ./abis/MasterChefV2Rewarder.json
+        - name: Hypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: Pool
+          file: ./abis/FusionxPool.json
+        - name: AlgebraHypervisor
+          file: ./abis/AlgebraFinance/Hypervisor.json
+        - name: AlgebraV1Pool
+          file: ./abis/AlgebraFinance/V1Pool.json
+        - name: AlgebraV2Pool
+          file: ./abis/AlgebraFinance/V2Pool.json
+        - name: UniswapV3Hypervisor
+          file: ./abis/UniswapV3Hypervisor.json
+        - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: RamsesHypervisor
+          file: ./abis/Ramses/Hypervisor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: LogPoolAddition(indexed uint256,uint256)
+          handler: handleLogPoolAddition
+        - event: LogSetPool(indexed uint256,uint256)
+          handler: handleLogSetPool
+        - event: LogRewardPerSecond(uint256)
+          handler: handleLogRewardPerSecond
+        - event: LogUpdatePool(indexed uint256,uint64,uint256,uint256)
+          handler: handleLogUpdatePool
+  {{/masterChefV2Template}}
+  {{#RamsesRewardsTemplate}}
+  - kind: ethereum/contract
+    name: RamsesGaugeV2
+    network: {{network}}
+    source:
+      abi: RamsesGaugeV2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/ramses/gaugeV2.ts
+      entities:
+        - RamsesGauge
+        - RamsesClaimRewardsEvent
+      abis:
+        - name: RamsesGaugeV2
+          file: ./abis/Ramses/GaugeV2.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: ClaimRewards(uint256,bytes32,address,address,uint256)
+          handler: handleClaimRewards
+  - kind: ethereum/contract
+    name: RamsesMultiFeeDistribution
+    network: {{network}}
+    source:
+      abi: RamsesMultiFeeDistribution
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/ramses/multiFeeDistribution.ts
+      entities:
+        - RamsesReceiver
+        - RamsesReceiverAccount
+        - Account
+      abis:
+        - name: RamsesMultiFeeDistribution
+          file: ./abis/Ramses/MultiFeeDistribution.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: Stake(indexed address,uint256)
+          handler: handleStake
+        - event: Unstake(indexed address,uint256)
+          handler: handleUnstake
+  {{/RamsesRewardsTemplate}}

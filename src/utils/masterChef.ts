@@ -1,5 +1,5 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { MasterChef as MasterChefContract } from "../../generated/MasterChef/MasterChef";
+import { MasterChef as MasterChefContract } from "../../generated/MasterChefRegistry/MasterChef";
 import {
   MasterChef,
   MasterChefPool,

@@ -20,6 +20,7 @@ import {
   RamsesReceiver,
   RamsesClaimRewardsEvent,
   RamsesReceiverAccount,
+  _PoolQueue,
 } from "../../generated/schema";
 import {
   ADDRESS_ZERO,
@@ -317,4 +318,15 @@ export function getOrCreateRamsesReceiverAccount(
     receiverAccount.save();
   }
   return receiverAccount;
+}
+
+export function getOrCreatePoolQueue(): _PoolQueue {
+  let queue = _PoolQueue.load("0");
+  if (!queue) {
+    queue = new _PoolQueue("0");
+    queue.addresses = [];
+    queue.startBlocks = [];
+    queue.save();
+  }
+  return queue;
 }

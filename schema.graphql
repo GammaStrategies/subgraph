@@ -18,6 +18,7 @@ enum Network {
   mantle
   rollux
   linea
+  base
 }
 
 type Protocol @entity(immutable: true) {
@@ -385,6 +386,7 @@ type UniswapV3HypervisorConversion @entity {
   usdPath: [String!]!
   # Whether the USD token in usdPool is token0 or token1
   usdPathIndex: [Int!]!
+  usdPathStartBlock: [Int!]!
   priceTokenInBase: BigDecimal!
   priceBaseInUSD: BigDecimal!
 }
@@ -515,4 +517,10 @@ type RamsesReceiverAccount @entity {
   receiver: RamsesReceiver!
   account: Account!
   stakedAmount: BigInt!
+}
+
+type _PoolQueue @entity {
+  id: ID!
+  addresses: [String!]!
+  startBlocks: [BigInt!]!
 }

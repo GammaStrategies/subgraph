@@ -83,3 +83,7 @@ class protocolInfo {
     name: "lynex",
     underlyingProtocol: PROTOCOL_ALGEBRA_V1,
   });
+  protocolLookup.set("base:0x1e86a593e55215957c4755f1be19a229af3286f6", {
+    name: "synthswap",
+    underlyingProtocol: PROTOCOL_ALGEBRA_V1,
+  });

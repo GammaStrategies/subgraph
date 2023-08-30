@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { Address, dataSource } from "@graphprotocol/graph-ts";
+import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { ERC20 } from "../../generated/HypeRegistry/ERC20";
 import { ERC20SymbolBytes } from "../../generated/HypeRegistry/ERC20SymbolBytes";
 import { ERC20NameBytes } from "../../generated/HypeRegistry/ERC20NameBytes";
@@ -22,7 +22,7 @@ import {
   DEFAULT_DECIMAL,
   constantAddresses,
 } from "../config/constants";
-import { getOrCreateProtocol } from "./entities";
+import { getOrCreatePoolQueue, getOrCreateProtocol } from "./entities";
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
   let contract = ERC20.bind(tokenAddress);
@@ -188,7 +188,7 @@ function isToken(tokenAddress: Address, refAddress: Address): boolean {
 }
 
 export function isUSDC(tokenAddress: Address): boolean {
-  const protocol = getOrCreateProtocol()
+  const protocol = getOrCreateProtocol();
   const addressLookup = constantAddresses.network(protocol.network);
   const usdcAddress = addressLookup.get("USDC") as string;
   const usdceAddress = addressLookup.get("USDCe");
@@ -224,7 +224,7 @@ export function isNullEthValue(value: string): boolean {
   );
 }
 
-export function createConversion(address: string): void {
+export function createConversion(address: string, blockNumber: BigInt): void {
   let hypervisor = getOrCreateHypervisor(Address.fromString(address));
   let pool = getOrCreatePool(Address.fromString(hypervisor.pool));
   let conversion = UniswapV3HypervisorConversion.load(address);
@@ -233,16 +233,9 @@ export function createConversion(address: string): void {
   if (conversion == null) {
     conversion = new UniswapV3HypervisorConversion(address);
 
-    let network: string;
-    const dataSourceNetwork = dataSource.network();
     const protocol = getOrCreateProtocol();
-    if (protocol.name == "fusionx" && dataSourceNetwork == "mainnet") {
-      network = "mantle";
-    } else {
-      network = dataSourceNetwork;
-    }
 
-    let baseTokenLookup = BaseTokenDefinition.network(network);
+    let baseTokenLookup = BaseTokenDefinition.network(protocol.network);
     let token0Lookup = baseTokenLookup.get(pool.token0);
     if (token0Lookup == null) {
       token0Lookup = BaseTokenDefinition.nonBase();
@@ -259,31 +252,49 @@ export function createConversion(address: string): void {
       conversion.baseTokenIndex = 0;
       conversion.usdPath = token0Lookup.path;
       conversion.usdPathIndex = token0Lookup.pathIdx;
+      conversion.usdPathStartBlock = token0Lookup.pathStartBlock;
     } else if (token1Lookup.priority > token0Lookup.priority) {
       // token1 is the base token
       conversion.baseToken = pool.token1;
       conversion.baseTokenIndex = 1;
       conversion.usdPath = token1Lookup.path;
       conversion.usdPathIndex = token1Lookup.pathIdx;
+      conversion.usdPathStartBlock = token1Lookup.pathStartBlock;
     } else {
       // This means token0 == token1 == -1, unidentified base token
       conversion.baseToken = ADDRESS_ZERO;
       conversion.baseTokenIndex = -1;
       conversion.usdPath = [ADDRESS_ZERO];
       conversion.usdPathIndex = [-1];
+      conversion.usdPathStartBlock = [-1];
     }
     conversion.priceTokenInBase = ZERO_BD;
     conversion.priceBaseInUSD = ZERO_BD;
     conversion.hypervisor = address;
     conversion.save();
 
+    const queue = getOrCreatePoolQueue();
+    const queueAddresses = queue.addresses;
+    const queueStartBlocks = queue.startBlocks;
+
     for (let i = 0; i < conversion.usdPath.length; i++) {
       if (conversion.usdPath[i] != ADDRESS_ZERO) {
-        let pathPoolAddress = Address.fromString(conversion.usdPath[i]);
-        let pool = getOrCreatePool(pathPoolAddress);
-        pool.save();
-        PoolTemplate.create(pathPoolAddress);
+        if (blockNumber >= BigInt.fromI32(conversion.usdPathStartBlock[i])) {
+          let pathPoolAddress = Address.fromString(conversion.usdPath[i]);
+          let pool = getOrCreatePool(pathPoolAddress);
+          pool.save();
+          PoolTemplate.create(pathPoolAddress);
+        } else {
+          // Add pool to queue to be created
+          queueAddresses.push(conversion.usdPath[i]);
+          queueStartBlocks.push(
+            BigInt.fromI32(conversion.usdPathStartBlock[i])
+          );
+        }
       }
     }
+    queue.addresses = queueAddresses;
+    queue.startBlocks = queueStartBlocks;
+    queue.save();
   }
 }

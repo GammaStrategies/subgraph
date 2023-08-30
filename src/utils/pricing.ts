@@ -25,19 +25,21 @@ export function getExchangeRate(
   poolAddress: Address,
   baseTokenIndex: i32
 ): BigDecimal {
-  // Get ratios to convert token0 to token1 and vice versa
-  let pool = UniswapV3Pool.load(poolAddress.toHex()) as UniswapV3Pool;
-  let sqrtPriceX96 = pool.sqrtPriceX96;
-  let num = sqrtPriceX96.times(sqrtPriceX96).toBigDecimal();
-  let Q192_BI = BigInt.fromI32(2).pow(192);
-  let denom = new BigDecimal(Q192_BI);
-
   let price = ZERO_BD;
-  if (baseTokenIndex == 0 && num > ZERO_BD) {
-    price = denom.div(num); // This is rate of token1 in token0
-  } else if (baseTokenIndex == 1) {
-    price = num.div(denom); // This is rate of token0 in token1
+  // Get ratios to convert token0 to token1 and vice versa
+  let pool = UniswapV3Pool.load(poolAddress.toHex());
+  if (pool) {
+    let sqrtPriceX96 = pool.sqrtPriceX96;
+    let num = sqrtPriceX96.times(sqrtPriceX96).toBigDecimal();
+    let Q192_BI = BigInt.fromI32(2).pow(192);
+    let denom = new BigDecimal(Q192_BI);
+    if (baseTokenIndex == 0 && num > ZERO_BD) {
+      price = denom.div(num); // This is rate of token1 in token0
+    } else if (baseTokenIndex == 1) {
+      price = num.div(denom); // This is rate of token0 in token1
+    }
   }
+  
   return price;
 }
 

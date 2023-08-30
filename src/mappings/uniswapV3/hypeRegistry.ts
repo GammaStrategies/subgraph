@@ -14,8 +14,12 @@ import {
   getOrCreateProtocol,
   getOrCreateRamsesHypervisor,
 } from "../../utils/entities";
+import { processPoolQueue } from "../../utils/pool";
 
 export function handleHypeAdded(event: HypeAdded): void {
+  // Try and clear pool queue
+  processPoolQueue(event.block.number);
+
   log.info("Adding hypervisor: {}", [event.address.toHex()]);
   let hypervisor = UniswapV3Hypervisor.load(event.params.hype.toHex());
   if (hypervisor) {
@@ -43,7 +47,11 @@ export function handleHypeAdded(event: HypeAdded): void {
 
   const protocol = getOrCreateProtocol();
 
-  hypervisor = getOrCreateHypervisor(event.params.hype, event.block.timestamp);
+  hypervisor = getOrCreateHypervisor(
+    event.params.hype,
+    event.block.timestamp,
+    event.block.number
+  );
   hypervisor.save();
 
   HypervisorTemplate.create(event.params.hype);
