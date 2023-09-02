@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { Address, BigInt, BigDecimal, TypedMap } from "@graphprotocol/graph-ts";
 
-export const VERSION = "1.3.0";
+export const VERSION = "1.4.0";
 
 export const PROTOCOL_ALGEBRA_V1 = "algebraV1";
 export const PROTOCOL_ALGEBRA_V2 = "algebraV2";
@@ -139,6 +139,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static rollux(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x368433cac2a0b8d76e64681a9835502a1f2a8a30");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -167,6 +174,8 @@ export class constantAddresses {
       mapping = this.linea();
     } else if (network == "base") {
       mapping = this.base();
+    } else if (network == "syscoin") {
+      mapping = this.rollux();
     }
 
     return mapping as TypedMap<string, string>;

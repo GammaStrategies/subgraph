@@ -16,7 +16,7 @@ enum Network {
   fantom
   moonbeam
   mantle
-  rollux
+  syscoin
   linea
   base
 }
@@ -94,8 +94,8 @@ type RewardHypervisorDayData @entity {
 }
 
 type Factory @entity {
-    id: ID!
-    owner: Bytes!
+  id: ID!
+  owner: Bytes!
 }
 
 type Hypervisor @entity {
@@ -118,15 +118,17 @@ type Account @entity {
   parent: User!
   gammaDeposited: BigInt!
   gammaEarnedRealized: BigInt!
-  rewardHypervisorShares: [RewardHypervisorShare!]! @derivedFrom(field: "account")
+  rewardHypervisorShares: [RewardHypervisorShare!]!
+    @derivedFrom(field: "account")
   hypervisorCount: BigInt!
   hypervisorShares: [UniswapV3HypervisorShare!]! @derivedFrom(field: "account")
   mcPoolAccounts: [MasterChefPoolAccount!]! @derivedFrom(field: "account")
   mcv2PoolAccounts: [MasterChefV2PoolAccount!]! @derivedFrom(field: "account")
-  mcv2RewarderPoolAccounts: [MasterChefV2RewarderPoolAccount!]! @derivedFrom(field: "account")
-  ramsesReceiverAccounts: [RamsesReceiverAccount!]! @derivedFrom(field: "account")
+  mcv2RewarderPoolAccounts: [MasterChefV2RewarderPoolAccount!]!
+    @derivedFrom(field: "account")
+  ramsesReceiverAccounts: [RamsesReceiverAccount!]!
+    @derivedFrom(field: "account")
 }
-
 
 type VisorTemplate @entity {
   id: ID!
@@ -137,21 +139,21 @@ type VisorTemplate @entity {
 type User @entity {
   id: ID!
   activeAccount: Account!
-  accountsOwned: [Account!] @derivedFrom(field: "parent")  # Visors owned by this user
+  accountsOwned: [Account!] @derivedFrom(field: "parent") # Visors owned by this user
 }
 
 type StakedToken @entity {
-    id: ID!  # Vault address-Token address
-    token: Token!
-    account: Account!
-    amount: BigInt!
+  id: ID! # Vault address-Token address
+  token: Token!
+  account: Account!
+  amount: BigInt!
 }
 
 type RewardedToken @entity {
-    id: ID!  # Vault address-Token address
-    token: Token!
-    account: Account!
-    amount: BigInt!
+  id: ID! # Vault address-Token address
+  token: Token!
+  account: Account!
+  amount: BigInt!
 }
 
 type Token @entity {
@@ -365,7 +367,7 @@ type UniswapV3HypervisorDayData @entity {
 }
 
 type UniswapV3HypervisorShare @entity {
-  id: ID!  # HypervisorAddress-VisorAddress
+  id: ID! # HypervisorAddress-VisorAddress
   account: Account!
   hypervisor: UniswapV3Hypervisor!
   shares: BigInt!
@@ -461,7 +463,8 @@ type MasterChefV2RewarderPool @entity {
   rewarder: MasterChefV2Rewarder!
   pool: MasterChefV2Pool!
   allocPoint: BigInt!
-  accounts: [MasterChefV2RewarderPoolAccount!]! @derivedFrom(field: "rewarderPool")
+  accounts: [MasterChefV2RewarderPoolAccount!]!
+    @derivedFrom(field: "rewarderPool")
 }
 
 type MasterChefV2PoolAccount @entity {

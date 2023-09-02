@@ -39,6 +39,7 @@
     "deploy:fusionx:mantle": "graph deploy --node https://deploy.graph.fusionx.finance gamma-fusionx-mantle",
     "deploy:fusionx-dev:mantle": "graph deploy --node https://deploy.graph.fusionx.finance gamma-dev",
     "deploy:lynex:linea": "graph deploy --node https://graph-deploy.linea.build --ipfs https://graph-ipfs.linea.build gammastrategies/lynex-linea",
+    "deploy:pegasys:rollux": "graph deploy --node https://rollux.graph.pegasys.fi/deploy --ipfs https://rollux.ipfs.pegasys.fi/ gammastrategies/pegasys-rollux",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -66,6 +67,7 @@
     "prepare:fusionx:mantle": "mustache config/fusionx/mantle.json templates/fusionx.template.yaml > subgraph.yaml",
     "prepare:lynex:linea": "mustache config/lynex/linea.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:synthswap:base": "mustache config/synthswap/base.json templates/algebraV1.template.yaml > subgraph.yaml",
+    "prepare:pegasys:rollux": "mustache config/pegasys/rollux.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {
