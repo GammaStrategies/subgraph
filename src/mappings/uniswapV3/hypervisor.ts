@@ -24,11 +24,7 @@ import {
   SetFee,
   ZeroBurn,
 } from "../../../generated/templates/Hypervisor/Hypervisor";
-import {
-  getOrCreateFeeUpdate,
-  getOrCreateRamsesHypervisor,
-} from "../../utils/entities";
-import { RamsesMultiFeeDistribution as RamsesMfdTemplate } from "../../../generated/templates";
+import { getOrCreateFeeUpdate } from "../../utils/entities";
 import { Address } from "@graphprotocol/graph-ts";
 
 export function handleDeposit(event: DepositEvent): void {
@@ -109,21 +105,3 @@ export function handleSetFee(event: SetFee): void {
   hypervisor.fee = event.params.newFee;
   hypervisor.save();
 }
-
-export function handleTransferReceiver(event: TransferReceiver): void {
-  const ramsesHypervisor = getOrCreateRamsesHypervisor(event.address);
-  RamsesMfdTemplate.create(Address.fromString(ramsesHypervisor.receiver));
-}
-
-// export function handleSetDepositMax(call: SetDepositMaxCall): void {
-//   const hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp);
-//   hypervisor.deposit0Max = call.inputs._deposit0Max;
-//   hypervisor.deposit1Max = call.inputs._deposit1Max;
-//   hypervisor.save();
-// }
-
-// export function handleSetMaxTotalSupply(call: SetMaxTotalSupplyCall): void {
-//   const hypervisor = getOrCreateHypervisor(call.to, call.block.timestamp);
-//   hypervisor.maxTotalSupply = call.inputs._maxTotalSupply;
-//   hypervisor.save();
-// }

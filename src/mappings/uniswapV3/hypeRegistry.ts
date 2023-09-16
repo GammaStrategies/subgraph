@@ -1,19 +1,12 @@
 /* eslint-disable prefer-const */
-import { Address, log } from "@graphprotocol/graph-ts";
+import { log } from "@graphprotocol/graph-ts";
 import { HypeAdded } from "../../../generated/HypeRegistry/HypeRegistry";
 import { Hypervisor as HypervisorContract } from "../../../generated/templates/Hypervisor/Hypervisor";
-import {
-  Hypervisor as HypervisorTemplate,
-  RamsesGaugeV2 as RamsesGaugeTemplate,
-  RamsesMultiFeeDistribution as RamsesMfdTemplate,
-} from "../../../generated/templates";
+import { Hypervisor as HypervisorTemplate } from "../../../generated/templates";
 import { Pool as PoolContract } from "../../../generated/templates/Pool/Pool";
 import { getOrCreateHypervisor } from "../../utils/uniswapV3/hypervisor";
 import { UniswapV3Hypervisor } from "../../../generated/schema";
-import {
-  getOrCreateProtocol,
-  getOrCreateRamsesHypervisor,
-} from "../../utils/entities";
+import { getOrCreateProtocol } from "../../utils/entities";
 import { processPoolQueue } from "../../utils/pool";
 
 export function handleHypeAdded(event: HypeAdded): void {
@@ -56,11 +49,4 @@ export function handleHypeAdded(event: HypeAdded): void {
 
   HypervisorTemplate.create(event.params.hype);
   log.info("Hypervisor added: {}", [event.address.toHex()]);
-
-  if (protocol.name == "ramses") {
-    const ramsesHypervisor = getOrCreateRamsesHypervisor(event.params.hype);
-    RamsesGaugeTemplate.create(Address.fromString(ramsesHypervisor.gauge));
-    RamsesMfdTemplate.create(Address.fromString(ramsesHypervisor.receiver));
-    log.warning("Tracking receiver: {}", [ramsesHypervisor.receiver]);
-  }
 }

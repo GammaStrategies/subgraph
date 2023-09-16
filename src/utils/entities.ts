@@ -15,11 +15,6 @@ import {
   RewardHypervisorShare,
   UniswapV3Pool,
   UniswapV3FeeUpdate,
-  RamsesHypervisor,
-  RamsesGauge,
-  RamsesReceiver,
-  RamsesClaimRewardsEvent,
-  RamsesReceiverAccount,
   _PoolQueue,
 } from "../../generated/schema";
 import {
@@ -32,8 +27,6 @@ import {
 } from "../config/constants";
 import { getOrCreateToken } from "./tokens";
 import { protocolLookup } from "../config/lookups";
-import { RamsesHypervisor as RamsesHypervisorContract } from "../../generated/templates/Hypervisor/RamsesHypervisor";
-import { ClaimRewards } from "../../generated/templates/RamsesGaugeV2/RamsesGaugeV2";
 
 export function getOrCreateProtocol(): Protocol {
   let protocol = Protocol.load("0");
@@ -234,90 +227,6 @@ export function getOrCreateFeeUpdate(
     feeUpdate.save();
   }
   return feeUpdate;
-}
-
-export function getOrCreateRamsesHypervisor(
-  hypervisorAddress: Address
-): RamsesHypervisor {
-  const id = hypervisorAddress.toHex();
-  let ramsesHypervisor = RamsesHypervisor.load(id);
-  if (!ramsesHypervisor) {
-    const ramsesHypervisorContract =
-      RamsesHypervisorContract.bind(hypervisorAddress);
-    const gaugeAddress = ramsesHypervisorContract.gauge();
-    const receiverAddress = ramsesHypervisorContract.receiver();
-
-    ramsesHypervisor = new RamsesHypervisor(id);
-    ramsesHypervisor.gauge = gaugeAddress.toHex();
-    ramsesHypervisor.receiver = receiverAddress.toHex();
-    ramsesHypervisor.save();
-
-    const gauge = getOrCreateRamsesGauge(gaugeAddress);
-    gauge.hypervisor = id;
-    gauge.save();
-
-    const receiver = getOrCreateRamsesReceiver(receiverAddress);
-    receiver.hypervisor = id;
-    receiver.save();
-  }
-  return ramsesHypervisor;
-}
-
-export function getOrCreateRamsesGauge(gaugeAddress: Address): RamsesGauge {
-  const id = gaugeAddress.toHex();
-  let gauge = RamsesGauge.load(id);
-  if (!gauge) {
-    gauge = new RamsesGauge(id);
-    gauge.hypervisor = ADDRESS_ZERO;
-    gauge.save();
-  }
-  return gauge;
-}
-
-export function getOrCreateRamsesReceiver(
-  receiverAddress: Address
-): RamsesReceiver {
-  const id = receiverAddress.toHex();
-  let receiver = RamsesReceiver.load(id);
-  if (!receiver) {
-    receiver = new RamsesReceiver(id);
-    receiver.hypervisor = ADDRESS_ZERO;
-    receiver.totalStaked = ZERO_BI;
-    receiver.save();
-  }
-  return receiver;
-}
-
-export function createRamsesClaimRewardsEvent(event: ClaimRewards): void {
-  const id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
-  getOrCreateToken(event.params.reward);
-
-  const claimRewards = new RamsesClaimRewardsEvent(id);
-  claimRewards.block = event.block.number;
-  claimRewards.timestamp = event.block.timestamp;
-  claimRewards.gauge = event.address.toHex();
-  claimRewards.period = event.params.period;
-  claimRewards.positionHash = event.params._positionHash;
-  claimRewards.receiver = event.params.receiver.toHex();
-  claimRewards.rewardToken = event.params.reward.toHex();
-  claimRewards.amount = event.params.amount;
-  claimRewards.save();
-}
-
-export function getOrCreateRamsesReceiverAccount(
-  receiverAddress: Address,
-  accountAddress: Address
-): RamsesReceiverAccount {
-  const id = receiverAddress.toHex() + "-" + accountAddress.toHex();
-  let receiverAccount = RamsesReceiverAccount.load(id);
-  if (!receiverAccount) {
-    receiverAccount = new RamsesReceiverAccount(id);
-    receiverAccount.receiver = receiverAddress.toHex();
-    receiverAccount.account = accountAddress.toHex();
-    receiverAccount.stakedAmount = ZERO_BI;
-    receiverAccount.save();
-  }
-  return receiverAccount;
 }
 
 export function getOrCreatePoolQueue(): _PoolQueue {

@@ -791,7 +791,7 @@ export class BaseTokenDefinition {
     const WETH = "0x4200000000000000000000000000000000000006";
 
     const DAI_USDbC = "0x2c1e1a69ee809d3062ace40fb83a9bfb59623d95";
-    const WETH_USDbC = "0x3458ffdc3b2cc274a9d8aa8d9b0b934558b7a498";
+    const WETH_USDbC = "0xe0712c087ecb8a0dd20914626152ebf4890708c2";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDbC, {
@@ -809,7 +809,7 @@ export class BaseTokenDefinition {
     lookup.set(WETH, {
       pathIdx: [1],
       path: [WETH_USDbC],
-      pathStartBlock: [2526643],
+      pathStartBlock: [2614415],
       priority: 0,
     });
 

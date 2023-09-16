@@ -272,6 +272,5 @@
   ],
   "masterChefTemplate": true,
   "masterChefV2Template": true,
-  "hypervisorTemplateUseCallHandlers": false,
-  "RamsesRewardsTemplate": true
+  "hypervisorTemplateUseCallHandlers": false
 }

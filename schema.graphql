@@ -126,8 +126,6 @@ type Account @entity {
   mcv2PoolAccounts: [MasterChefV2PoolAccount!]! @derivedFrom(field: "account")
   mcv2RewarderPoolAccounts: [MasterChefV2RewarderPoolAccount!]!
     @derivedFrom(field: "account")
-  ramsesReceiverAccounts: [RamsesReceiverAccount!]!
-    @derivedFrom(field: "account")
 }
 
 type VisorTemplate @entity {
@@ -480,46 +478,6 @@ type MasterChefV2RewarderPoolAccount @entity {
   account: Account!
   rewarderPool: MasterChefV2RewarderPool!
   amount: BigInt!
-}
-
-type RamsesHypervisor @entity {
-  "Hypervisor Address"
-  id: ID!
-  gauge: RamsesGauge!
-  receiver: RamsesReceiver!
-}
-
-type RamsesGauge @entity {
-  id: ID!
-  hypervisor: RamsesHypervisor!
-  rewardsClaimed: [RamsesClaimRewardsEvent!]! @derivedFrom(field: "gauge")
-}
-
-type RamsesClaimRewardsEvent @entity(immutable: true) {
-  "transaction hash - logIndex"
-  id: ID!
-  block: BigInt!
-  timestamp: BigInt!
-  gauge: RamsesGauge!
-  period: BigInt!
-  positionHash: Bytes!
-  receiver: RamsesReceiver!
-  rewardToken: Token!
-  amount: BigInt!
-}
-
-type RamsesReceiver @entity {
-  id: ID!
-  hypervisor: RamsesHypervisor!
-  totalStaked: BigInt!
-  accounts: [RamsesReceiverAccount!]! @derivedFrom(field: "receiver")
-}
-
-type RamsesReceiverAccount @entity {
-  id: ID!
-  receiver: RamsesReceiver!
-  account: Account!
-  stakedAmount: BigInt!
 }
 
 type _PoolQueue @entity {

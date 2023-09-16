@@ -92,6 +92,5 @@
     }
   ],
   "masterChefTemplate": true,
-  "masterChefV2Template": true,
-  "RamsesRewardsTemplate": true
+  "masterChefV2Template": true
 }
