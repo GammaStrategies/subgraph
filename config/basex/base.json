@@ -1,0 +1,12 @@
+{
+  "network": "base",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xb24dc81f8be7284c76c7cf865b803807b3c2ef55",
+      "startBlock": 4249062
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
+}

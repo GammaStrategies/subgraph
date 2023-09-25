@@ -95,3 +95,7 @@ protocolLookup.set("syscoin:0x683292172e2175bd08e3927a5e72fc301b161300", {
   name: "pegasys",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("base:0xb24dc81f8be7284c76c7cf865b803807b3c2ef55", {
+  name: "basex",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});

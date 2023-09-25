@@ -37,10 +37,11 @@
     "deploy:loc:ramses:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-ramses-arbitrum",
     "deploy:loc:ascent:polygon": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-ascent-polygon",
     "deploy:loc:synthswap:base": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-synthswap-base",
-    "deploy:fusionx:mantle": "graph deploy --node https://deploy.graph.fusionx.finance gamma-fusionx-mantle",
+    "deploy:fusionx:mantle": "graph deploy --node https://deploy.graphv3.fusionx.finance gamma-fusionx-mantle",
     "deploy:fusionx-dev:mantle": "graph deploy --node https://deploy.graph.fusionx.finance gamma-dev",
     "deploy:lynex:linea": "graph deploy --node https://graph-deploy.linea.build --ipfs https://graph-ipfs.linea.build gammastrategies/lynex-linea",
     "deploy:pegasys:rollux": "graph deploy --node https://rollux.graph.pegasys.fi/deploy --ipfs https://rollux.ipfs.pegasys.fi/ gammastrategies/pegasys-rollux",
+    "deploy:loc:basex:base": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-basex-base",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -70,19 +71,20 @@
     "prepare:lynex:linea": "mustache config/lynex/linea.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:synthswap:base": "mustache config/synthswap/base.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:pegasys:rollux": "mustache config/pegasys/rollux.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:basex:base": "mustache config/basex/base.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.55.0",
+    "@graphprotocol/graph-cli": "^0.58.0",
     "@graphprotocol/graph-ts": "^0.31.0",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "@typescript-eslint/parser": "^6.4.0",
-    "eslint": "^8.47.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "matchstick-as": "^0.5.2",
     "mustache": "^4.2.0",
-    "prettier": "3.0.2",
+    "prettier": "3.0.3",
     "rimraf": "^5.0.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }
