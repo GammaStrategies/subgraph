@@ -99,3 +99,7 @@ protocolLookup.set("base:0xb24dc81f8be7284c76c7cf865b803807b3c2ef55", {
   name: "basex",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("moonbeam:0x688cb9492bd2c72016f1765d813b2d713aa1f4c7", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
