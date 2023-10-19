@@ -18,7 +18,8 @@ export function createUniV3Pool(poolAddress: Address): UniswapV3Pool | null {
     poolContract.token0(),
     poolContract.token1(),
     poolContract.fee(),
-    slot0.value.getSqrtPriceX96()
+    slot0.value.getSqrtPriceX96(),
+    slot0.value.getTick(),
   );
 
   return pool as UniswapV3Pool;

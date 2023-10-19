@@ -5,6 +5,7 @@ export function handleSwap(event: Swap): void {
     processSwap(
         event.address,
         event.params.price,
+        event.params.tick,
         event.block
     )
 }

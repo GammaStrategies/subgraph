@@ -1,4 +1,4 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, log } from "@graphprotocol/graph-ts";
 import {
   MasterChefV2,
   MasterChefV2Pool,
@@ -9,8 +9,8 @@ import {
 } from "../../generated/schema";
 import { MasterChefV2 as MasterChefContract } from "../../generated/templates/MasterChefV2/MasterChefV2";
 import { MasterChefV2Rewarder as RewarderContract } from "../../generated/templates/Rewarder/MasterChefV2Rewarder";
-import { ZERO_BI } from "../config/constants";
-import { getOrCreateAccount } from "./entities";
+import { ONE_BI, ZERO_BI } from "../config/constants";
+import { getOrCreateAccount, getOrCreateProtocol } from "./entities";
 import { getOrCreateToken } from "./tokens";
 import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";
 
@@ -176,6 +176,17 @@ export function getHypervisorFromPoolId(
   masterChefAddress: Address,
   poolId: BigInt
 ): Address | null {
+
+  const protocol = getOrCreateProtocol()
+
+  log.warning("Getting Hypervisor from pool ID: {}, {}", [masterChefAddress.toHexString(), poolId.toString()])
+  if (protocol.name == "stellaswap" && protocol.network == "moonbeam") {
+    if (masterChefAddress == Address.fromString("0x97840df3944445c684c3977eaa0890aa29d71f73") && poolId == ONE_BI) {
+      log.warning("Bypassing moonbeam RPC issue", [])
+      return Address.fromString("0x8cacde53d63fda23a8f802653eeef931c8528cac")
+    }
+  }
+
   const masterChefContract = MasterChefContract.bind(masterChefAddress);
   const lpToken = masterChefContract.try_lpToken(poolId);
   if (lpToken.reverted) {

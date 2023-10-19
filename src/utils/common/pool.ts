@@ -8,11 +8,13 @@ const hypervisorUpdateIntervalSeconds = BigInt.fromI32(600);
 export function processSwap(
   poolAddress: Address,
   poolPrice: BigInt,
+  poolTick: i32,
   block: ethereum.Block
 ): void {
   const pool = getOrCreatePool(poolAddress);
   pool.lastSwapTime = block.timestamp;
   pool.sqrtPriceX96 = poolPrice;
+  pool.tick = poolTick;
   pool.save();
 
   const elapsedSinceLastHypervisorRefresh = block.timestamp.minus(

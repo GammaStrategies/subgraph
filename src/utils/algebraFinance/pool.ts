@@ -27,7 +27,8 @@ export function createAlgebraV1Pool(
     poolContract.token0(),
     poolContract.token1(),
     0,
-    globalState.value.getPrice()
+    globalState.value.getPrice(),
+    globalState.value.getTick()
   );
 
   return pool as UniswapV3Pool;
@@ -56,7 +57,8 @@ export function createAlgebraV2Pool(
     poolContract.token0(),
     poolContract.token1(),
     0,
-    globalState.value.getPrice()
+    globalState.value.getPrice(),
+    globalState.value.getTick()
   );
 
   return pool as UniswapV3Pool;

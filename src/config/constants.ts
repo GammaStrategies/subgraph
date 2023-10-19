@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { Address, BigInt, BigDecimal, TypedMap } from "@graphprotocol/graph-ts";
 
-export const VERSION = "1.4.0";
+export const VERSION = "1.5.0";
 
 export const PROTOCOL_ALGEBRA_V1 = "algebraV1";
 export const PROTOCOL_ALGEBRA_V2 = "algebraV2";

@@ -190,7 +190,8 @@ export function createPool(
   token0Address: Address,
   token1Address: Address,
   fee: i32,
-  sqrtPriceX96: BigInt
+  sqrtPriceX96: BigInt,
+  tick: i32
 ): UniswapV3Pool {
   const token0 = getOrCreateToken(token0Address);
   const token1 = getOrCreateToken(token1Address);
@@ -204,6 +205,7 @@ export function createPool(
   pool.token1 = token1.id;
   pool.fee = fee;
   pool.sqrtPriceX96 = sqrtPriceX96;
+  pool.tick = tick;
   pool.lastSwapTime = ZERO_BI;
   pool.lastHypervisorRefreshTime = ZERO_BI;
 
