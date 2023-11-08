@@ -19,6 +19,9 @@ enum Network {
   syscoin
   linea
   base
+  kava
+  opbnb
+  manta
 }
 
 type Protocol @entity(immutable: true) {
