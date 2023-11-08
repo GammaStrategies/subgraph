@@ -146,6 +146,27 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static kava(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xeb466342c4d449bc9f53a865d5cb90586f405215");
+
+    return lookup as TypedMap<string, string>;
+  }
+
+  static metis(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xea32a96608495e54156ae48931a7c20f0dcc1a21");
+
+    return lookup as TypedMap<string, string>;
+  }
+
+  static manta(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xb73603c5d87fa094b7314c74ace2e64d165016fb");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -176,6 +197,12 @@ export class constantAddresses {
       mapping = this.base();
     } else if (network == "syscoin") {
       mapping = this.rollux();
+    } else if (network == "kava") {
+      mapping = this.kava();
+    } else if (network == "metis") {
+      mapping = this.metis();
+    } else if (network == "manta") {
+      mapping = this.manta();
     }
 
     return mapping as TypedMap<string, string>;

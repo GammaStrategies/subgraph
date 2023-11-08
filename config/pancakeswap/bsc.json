@@ -1,0 +1,10 @@
+{
+  "network": "bsc",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0x8d7884666C056555fDD423Cd37846968040651b3",
+      "startBlock": 32490558
+    }
+  ]
+}

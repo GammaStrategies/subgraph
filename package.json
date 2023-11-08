@@ -43,6 +43,9 @@
     "deploy:lynex:linea": "graph deploy --node https://graph-deploy.linea.build --ipfs https://graph-ipfs.linea.build gammastrategies/lynex-linea",
     "deploy:pegasys:rollux": "graph deploy --node https://rollux.graph.pegasys.fi/deploy --ipfs https://rollux.ipfs.pegasys.fi/ gammastrategies/pegasys-rollux",
     "deploy:loc:basex:base": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-basex-base",
+    "deploy:pancakeswap:kava": "graph deploy gamma-pancakeswap-kava --node https://the-graph-admin.kava.io",
+    "deploy:loc:pancakeswap:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-pancakeswap-arbitrum",
+    "deploy:aperture:manta": "goldsky subgraph deploy gamma-aperture-manta/{version} --path .",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -74,6 +77,9 @@
     "prepare:synthswap:base": "mustache config/synthswap/base.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:pegasys:rollux": "mustache config/pegasys/rollux.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:basex:base": "mustache config/basex/base.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:pancakeswap:kava": "mustache config/pancakeswap/kava.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:pancakeswap:arbitrum": "mustache config/pancakeswap/arbitrum.json templates/fusionx.template.yaml > subgraph.yaml",
+    "prepare:aperture:manta": "mustache config/aperture/manta.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

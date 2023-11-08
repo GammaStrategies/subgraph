@@ -1,0 +1,20 @@
+{
+    "network": "opbnb-mainnet",
+    "hypeRegistry": [
+      {
+        "name": "HypeRegistry",
+        "address": "0x683292172E2175bd08e3927a5e72FC301b161300",
+        "startBlock": 5150910
+      }
+    ],
+    "masterChefV2Registry": [
+      {
+        "name": "MasterChefV2Registry",
+        "address": "0x38f61169D8bcc08cE303401A13332259F557B35f",
+        "startBlock": 5151256
+      }
+    ],
+    "masterChefTemplate": true,
+    "masterChefV2Template": true
+  }
+  

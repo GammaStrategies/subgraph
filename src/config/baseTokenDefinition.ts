@@ -877,6 +877,57 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static kava(): TypedMap<string, BasePool> {
+    const USDC = "0xeb466342c4d449bc9f53a865d5cb90586f405215";
+    const USDT = "0x919c1c267bc06a7039e03fcc2ef738525769109c";
+  
+    const USDT_USDC = "0x4a18f16b6a4f695639b0d1390263def2e91fc60f";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+    lookup.set(USDT, {
+      pathIdx: [1],
+      path: [USDT_USDC],
+      pathStartBlock: [0],
+      priority: 0,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
+  static metis(): TypedMap<string, BasePool> {
+    const USDC = "0xea32a96608495e54156ae48931a7c20f0dcc1a21";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
+  static manta(): TypedMap<string, BasePool> {
+    const USDC = "0xb73603c5d87fa094b7314c74ace2e64d165016fb";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -917,6 +968,12 @@ export class BaseTokenDefinition {
       mapping = this.base();
     } else if (network == "syscoin") {
       mapping = this.rollux();
+    } else if (network == "kava") {
+      mapping = this.kava();
+    } else if (network == "metis") {
+      mapping = this.metis();
+    } else if (network == "manta") {
+      mapping = this.manta();
     }
 
     return mapping as TypedMap<string, BasePool>;

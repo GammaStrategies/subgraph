@@ -57,6 +57,12 @@ export function getOrCreateProtocol(): Protocol {
       networkName = "linea";
     } else if (name == "fusionx") {
       networkName = "mantle";
+    } else if (name == "kava-evm") {
+      networkName = "kava";
+    } else if (name = "opbnb-mainnet") {
+      networkName = "opbnb"
+    } else if (name == "manta-pacific-mainnet") {
+      networkName = "manta"
     }
 
     protocol.name = name;
