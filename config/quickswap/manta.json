@@ -1,0 +1,20 @@
+{
+    "network": "manta-pacific-mainnet",
+    "hypeRegistry": [
+      {
+        "name": "HypeRegistry",
+        "address": "0x8a9570ec97534277Ade6e46d100939FbCE4968f0",
+        "startBlock": 689622
+      }
+    ],
+    "masterChefV2Registry": [
+      {
+        "name": "MasterChefV2Registry",
+        "address": "0xD6Cc4a33dA7557A629e819c68fB805ddB225f517",
+        "startBlock": 689628
+      }
+    ],
+    "masterChefTemplate": true,
+    "masterChefV2Template": true
+  }
+  

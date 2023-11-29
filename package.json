@@ -46,6 +46,8 @@
     "deploy:pancakeswap:kava": "graph deploy gamma-pancakeswap-kava --node https://the-graph-admin.kava.io",
     "deploy:loc:pancakeswap:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-pancakeswap-arbitrum",
     "deploy:aperture:manta": "goldsky subgraph deploy gamma-aperture-manta/{version} --path .",
+    "deploy:hercules:metis": "graph deploy --node https://metisapi.0xgraph.xyz/deploy --ipfs https://metisapi.0xgraph.xyz/ipfs gamma-hercules-metis",
+    "deploy:quickswap:manta": "goldsky subgraph deploy gamma-quickswap-manta/{version} --path .",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -80,6 +82,8 @@
     "prepare:pancakeswap:kava": "mustache config/pancakeswap/kava.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:pancakeswap:arbitrum": "mustache config/pancakeswap/arbitrum.json templates/fusionx.template.yaml > subgraph.yaml",
     "prepare:aperture:manta": "mustache config/aperture/manta.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:hercules:metis": "mustache config/hercules/metis.json templates/algebraV1.template.yaml > subgraph.yaml",
+    "prepare:quickswap:manta": "mustache config/quickswap/manta.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

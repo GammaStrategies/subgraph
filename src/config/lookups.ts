@@ -115,3 +115,11 @@ protocolLookup.set("manta-pacific-mainnet:0x683292172e2175bd08e3927a5e72fc301b16
   name: "aperture",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("metis:0xfc13ebe7feb9595d70195e9168aa7f3ace153621", {
+  name: "hercules",
+  underlyingProtocol: PROTOCOL_ALGEBRA_V1,
+});
+protocolLookup.set("manta-pacific-mainnet:0x8a9570ec97534277ade6e46d100939fbce4968f0", {
+  name: "quickswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
