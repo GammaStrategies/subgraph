@@ -167,6 +167,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static opbnb(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDT_OPBNB", "0x9e5aac1ba1a2e6aed6b32689dfcf62a509ca96f3");
+
+    return lookup as TypedMap<string, string>;
+  }  
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -203,6 +210,8 @@ export class constantAddresses {
       mapping = this.metis();
     } else if (network == "manta") {
       mapping = this.manta();
+    } else if (network == "opbnb") {
+      mapping = this.opbnb();
     }
 
     return mapping as TypedMap<string, string>;

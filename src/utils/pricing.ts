@@ -15,7 +15,7 @@ import { getOrCreateHypervisor } from "./uniswapV3/hypervisor";
 import { getOrCreateProtocol } from "./entities";
 
 function getUsdcDecimalFactor(): BigInt {
-  if (dataSource.network() == "bsc") {
+  if (dataSource.network() == "bsc" || dataSource.network() == "opbnb") {
     return BigInt.fromString("1000000000000000000");
   }
   return BigInt.fromString("1000000");

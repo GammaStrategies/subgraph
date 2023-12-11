@@ -16,6 +16,7 @@
     "deploy:quickswap:polygon": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/algebra-polygon",
     "deploy:zyberswap:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/zyberswap-arbitrum",
     "deploy:thena:bsc": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/thena",
+    "deploy:thena:opbnb": "graph deploy -i https://ipfs.network.thegraph.com -g https://open-platform-ap.nodereal.io/{NodeReal_API_KEY}/opbnb-mainnet-graph-indexer/ gamma-thena-opbnb",
     "deploy:camelot:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/camelot-arbitrum",
     "deploy:quickswap:pzke": "graph deploy --studio gamma-quickswap-pzke",
     "deploy:loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
@@ -48,6 +49,8 @@
     "deploy:aperture:manta": "goldsky subgraph deploy gamma-aperture-manta/{version} --path .",
     "deploy:hercules:metis": "graph deploy --node https://metisapi.0xgraph.xyz/deploy --ipfs https://metisapi.0xgraph.xyz/ipfs gamma-hercules-metis",
     "deploy:quickswap:manta": "goldsky subgraph deploy gamma-quickswap-manta/{version} --path .",
+    "deploy:loc:baseswap:base": "graph deploy --studio  gamma-baseswap-base",
+    "deploy:loc:swapbased:base": "graph deploy --studio  gamma-swapbased-base",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -61,6 +64,7 @@
     "prepare:quickswap:polygon": "mustache config/quickswap/polygon.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:zyberswap:arbitrum": "mustache config/zyberswap/arbitrum.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:thena:bsc": "mustache config/thena/bsc.json templates/algebraV1.template.yaml > subgraph.yaml",
+    "prepare:thena:opbnb": "mustache config/thena/opbnb.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:polygon-restart": "mustache config/uniswapV3/polygon-restart.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:quickswap:pzke": "mustache config/quickswap/pzke.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:camelot:arbitrum": "mustache config/camelot/arbitrum.json templates/algebraV1.template.yaml > subgraph.yaml",
@@ -84,6 +88,8 @@
     "prepare:aperture:manta": "mustache config/aperture/manta.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:hercules:metis": "mustache config/hercules/metis.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:quickswap:manta": "mustache config/quickswap/manta.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:baseswap:base": "mustache config/baseswap/base.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:swapbased:base": "mustache config/swapbased/base.json templates/algebraV1.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

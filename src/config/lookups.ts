@@ -31,6 +31,10 @@ protocolLookup.set("bsc:0xd4bcfc023736db5617e5638748e127581d5929bd", {
   name: "thena",
   underlyingProtocol: PROTOCOL_ALGEBRA_V1,
 });
+protocolLookup.set("opbnb-mainnet:0xf14fb95d6e7e1ab5fcdfff7ab203a84b9361e6fc", {
+  name: "thena",
+  underlyingProtocol: PROTOCOL_ALGEBRA_V1,
+});
 protocolLookup.set("polygon-zkevm:0xd08b593eb3460b7aa5ce76ffb0a3c5c938fd89b8", {
   name: "quickswap",
   underlyingProtocol: PROTOCOL_ALGEBRA_V1,
@@ -122,4 +126,12 @@ protocolLookup.set("metis:0xfc13ebe7feb9595d70195e9168aa7f3ace153621", {
 protocolLookup.set("manta-pacific-mainnet:0x8a9570ec97534277ade6e46d100939fbce4968f0", {
   name: "quickswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("base:0x8118c33513fec13f8cf488ccb4509190650f0e92", {
+  name: "baseswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("base:0x39ce2eb762e7bfe19b6ad4d5ba384c67ce4051f0", {
+  name: "swapbased",
+  underlyingProtocol: PROTOCOL_ALGEBRA_V1,
 });

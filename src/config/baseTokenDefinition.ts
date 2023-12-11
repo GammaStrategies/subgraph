@@ -928,6 +928,20 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static opbnb(): TypedMap<string, BasePool> {
+    const USDT = "0x9e5aac1ba1a2e6aed6b32689dfcf62a509ca96f3";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDT, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -974,6 +988,8 @@ export class BaseTokenDefinition {
       mapping = this.metis();
     } else if (network == "manta") {
       mapping = this.manta();
+    } else if (network == "opbnb") {
+      mapping = this.opbnb();
     }
 
     return mapping as TypedMap<string, BasePool>;

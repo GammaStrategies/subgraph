@@ -1,0 +1,19 @@
+{
+  "network": "base",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0x39ce2eb762e7bfe19b6ad4d5ba384c67ce4051f0",
+      "startBlock": 7310157
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x1de56231be01e4d91a085e68e573e4adaf78693a",
+      "startBlock": 7310203
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
+}

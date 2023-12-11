@@ -1,0 +1,10 @@
+{
+  "network": "opbnb-mainnet",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xf14fb95d6e7e1ab5fcdfff7ab203a84b9361e6fc",
+      "startBlock": 10038113
+    }
+  ]
+}

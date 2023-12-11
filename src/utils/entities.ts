@@ -63,6 +63,8 @@ export function getOrCreateProtocol(): Protocol {
       networkName = "opbnb"
     } else if (network == "manta-pacific-mainnet") {
       networkName = "manta"
+    } else if (network == "opbnb-mainnet") {
+      networkName = "opbnb"
     }
 
     protocol.name = name;
