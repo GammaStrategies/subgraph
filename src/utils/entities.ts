@@ -63,8 +63,6 @@ export function getOrCreateProtocol(): Protocol {
       networkName = "opbnb"
     } else if (network == "manta-pacific-mainnet") {
       networkName = "manta"
-    } else if (network == "opbnb-mainnet") {
-      networkName = "opbnb"
     }
 
     protocol.name = name;
@@ -234,6 +232,9 @@ export function getOrCreateFeeUpdate(
     feeUpdate.hypervisor = hypervisorAddress.toHex();
     feeUpdate.block = block.number;
     feeUpdate.timestamp = block.timestamp;
+    feeUpdate.fees0 = ZERO_BI;
+    feeUpdate.fees1 = ZERO_BI;
+    feeUpdate.feesUSD = ZERO_BD;
     feeUpdate.save();
   }
   return feeUpdate;

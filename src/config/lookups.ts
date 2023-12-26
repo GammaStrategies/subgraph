@@ -135,3 +135,7 @@ protocolLookup.set("base:0x39ce2eb762e7bfe19b6ad4d5ba384c67ce4051f0", {
   name: "swapbased",
   underlyingProtocol: PROTOCOL_ALGEBRA_V1,
 });
+protocolLookup.set("avalanche:0x71ea9545ed7f8662a8b461d7cb0899745e3fb3e6", {
+  name: "pharaoh",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});

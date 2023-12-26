@@ -3,7 +3,7 @@ import { Account, UniswapV3HypervisorShare } from "../../../generated/schema";
 import { resetAggregates, updateAggregates, updateTvl } from "../aggregation";
 import { updateAlgebraFeeGrowth } from "../algebraFinance/hypervisor";
 import { ADDRESS_ZERO, ONE_BI, ZERO_BD, ZERO_BI } from "../../config/constants";
-import { getOrCreateProtocol } from "../entities";
+import { getOrCreateFeeUpdate, getOrCreateProtocol } from "../entities";
 import { splitFees } from "../fees";
 import { updateAndGetUniswapV3HypervisorDayData } from "../intervalUpdates";
 import { calcTwoTokenUSD } from "../pricing";
@@ -136,6 +136,7 @@ export function processRebalance(
 
 export function processFees(
   hypervisorAddress: Address,
+  block: ethereum.Block,
   amount0: BigInt,
   amount1: BigInt
 ): void {
@@ -191,6 +192,14 @@ export function processFees(
   hypervisor.feesReinvestedUSD = hypervisor.feesReinvestedUSD.plus(netFeesUSD);
 
   hypervisor.save();
+
+  // Track FeeUpdate in block
+  updateFeeUpdate(
+    hypervisorAddress,
+    block,
+    collectedFees0.grossFees,
+    collectedFees1.grossFees
+  );
 
   updateAggregates(hypervisor.id);
 
@@ -415,7 +424,10 @@ export function updateFeeGrowth(
   isRebalance: boolean = false
 ): void {
   const protocol = getOrCreateProtocol();
-  if (protocol.underlyingProtocol == "algebraV1" || protocol.underlyingProtocol == "algebraV2") {
+  if (
+    protocol.underlyingProtocol == "algebraV1" ||
+    protocol.underlyingProtocol == "algebraV2"
+  ) {
     updateAlgebraFeeGrowth(hypervisorAddress, isRebalance);
   } else {
     updateUniV3FeeGrowth(hypervisorAddress, isRebalance);
@@ -431,4 +443,19 @@ export function setHypervisorVersion(
     hypervisor.version = version;
     hypervisor.save();
   }
+}
+
+export function updateFeeUpdate(
+  hypervisorAddress: Address,
+  block: ethereum.Block,
+  fee0: BigInt,
+  fee1: BigInt
+): void {
+  const feeUpdate = getOrCreateFeeUpdate(hypervisorAddress, block);
+  feeUpdate.fees0 = feeUpdate.fees0.plus(fee0);
+  feeUpdate.fees1 = feeUpdate.fees1.plus(fee1);
+  feeUpdate.feesUSD = feeUpdate.feesUSD.plus(
+    calcTwoTokenUSD(hypervisorAddress, fee0, fee1)
+  );
+  feeUpdate.save();
 }

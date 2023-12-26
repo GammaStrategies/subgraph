@@ -3,7 +3,7 @@ import {
   Withdraw as WithdrawEvent,
   Rebalance as RebalanceEvent,
   Transfer as TransferEvent,
-  TransferReceiver,
+  // TransferReceiver,
   // SetDepositMaxCall,
   // SetMaxTotalSupplyCall,
 } from "../../../generated/templates/Hypervisor/UniswapV3Hypervisor";
@@ -25,7 +25,7 @@ import {
   ZeroBurn,
 } from "../../../generated/templates/Hypervisor/Hypervisor";
 import { getOrCreateFeeUpdate } from "../../utils/entities";
-import { Address } from "@graphprotocol/graph-ts";
+
 
 export function handleDeposit(event: DepositEvent): void {
   processDeposit(
@@ -58,6 +58,7 @@ export function handleRebalance(event: RebalanceEvent): void {
   if (hypervisor.version !== "ZeroBurn") {
     processFees(
       event.address,
+      event.block,
       event.params.feeAmount0,
       event.params.feeAmount1
     );
@@ -95,7 +96,7 @@ export function handleTransfer(event: TransferEvent): void {
 
 export function handleZeroBurn(event: ZeroBurn): void {
   setHypervisorVersion(event.address, "ZeroBurn");
-  processFees(event.address, event.params.fees0, event.params.fees1);
+  processFees(event.address, event.block, event.params.fees0, event.params.fees1);
   updatePositions(event.address);
   updateFeeGrowth(event.address);
 }

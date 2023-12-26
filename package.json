@@ -51,6 +51,7 @@
     "deploy:quickswap:manta": "goldsky subgraph deploy gamma-quickswap-manta/{version} --path .",
     "deploy:loc:baseswap:base": "graph deploy --studio  gamma-baseswap-base",
     "deploy:loc:swapbased:base": "graph deploy --studio  gamma-swapbased-base",
+    "deploy:loc:pharaoh:avalanche": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-pharaoh-avax",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -90,6 +91,7 @@
     "prepare:quickswap:manta": "mustache config/quickswap/manta.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:baseswap:base": "mustache config/baseswap/base.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:swapbased:base": "mustache config/swapbased/base.json templates/algebraV1.template.yaml > subgraph.yaml",
+    "prepare:pharaoh:avalanche": "mustache config/pharaoh/avalanche.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

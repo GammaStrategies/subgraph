@@ -169,6 +169,7 @@ export class constantAddresses {
 
   static opbnb(): TypedMap<string, string> {
     let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x0000000000000000000000000000000000000000");
     lookup.set("USDT_OPBNB", "0x9e5aac1ba1a2e6aed6b32689dfcf62a509ca96f3");
 
     return lookup as TypedMap<string, string>;

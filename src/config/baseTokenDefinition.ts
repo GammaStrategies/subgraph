@@ -930,11 +930,20 @@ export class BaseTokenDefinition {
 
   static opbnb(): TypedMap<string, BasePool> {
     const USDT = "0x9e5aac1ba1a2e6aed6b32689dfcf62a509ca96f3";
+    const WBNB = "0x4200000000000000000000000000000000000006"
+
+    const WBNB_USDT = "0xc4f981189558682f15f60513158b699354b30204";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDT, {
       pathIdx: [-1],
       path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WBNB, {
+      pathIdx: [1],
+      path: [WBNB_USDT],
       pathStartBlock: [0],
       priority: 1,
     });

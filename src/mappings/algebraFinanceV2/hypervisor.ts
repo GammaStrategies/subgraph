@@ -19,7 +19,6 @@ import {
   setHypervisorVersion,
   updateFeeGrowth,
 } from "../../utils/common/hypervisor";
-import { getOrCreateFeeUpdate } from "../../utils/entities";
 
 export function handleDeposit(event: Deposit): void {
   processDeposit(
@@ -72,8 +71,7 @@ export function handleTransfer(event: Transfer): void {
 
 export function handleZeroBurn(event: ZeroBurn): void {
   setHypervisorVersion(event.address, "ZeroBurn");
-  processFees(event.address, event.params.fees0, event.params.fees1);
-  getOrCreateFeeUpdate(event.address, event.block); // Track fee collected
+  processFees(event.address, event.block, event.params.fees0, event.params.fees1);
   updatePositions(event.address);
   updateFeeGrowth(event.address);
 }

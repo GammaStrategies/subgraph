@@ -332,6 +332,9 @@ type UniswapV3FeeUpdate @entity {
   hypervisor: UniswapV3Hypervisor!
   block: BigInt!
   timestamp: BigInt!
+  fees0: BigInt!
+  fees1: BigInt!
+  feesUSD: BigDecimal!
 }
 
 type UniswapV3HypervisorDayData @entity {

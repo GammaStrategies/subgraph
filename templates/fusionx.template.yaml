@@ -346,8 +346,6 @@ templates:
           handler: handleZeroBurn
         - event: SetFee(uint8)
           handler: handleSetFee
-        - event: TransferReceiver(address)
-          handler: handleTransferReceiver
       {{#hypervisorTemplateUseCallHandlers}}
       callHandlers:
         - function: setDepositMax(uint256,uint256)
