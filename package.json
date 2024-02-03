@@ -17,7 +17,6 @@
     "deploy:zyberswap:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/zyberswap-arbitrum",
     "deploy:thena:bsc": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/thena",
     "deploy:thena:opbnb": "graph deploy -i https://ipfs.network.thegraph.com -g https://open-platform-ap.nodereal.io/{NodeReal_API_KEY}/opbnb-mainnet-graph-indexer/ gamma-thena-opbnb",
-    "deploy:camelot:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/camelot-arbitrum",
     "deploy:quickswap:pzke": "graph deploy --studio gamma-quickswap-pzke",
     "deploy:loc": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/gamma",
     "deploy:lab": "graph deploy --node https://api.thegraph.com/deploy/ l0c4t0r/laboratory",
@@ -52,6 +51,8 @@
     "deploy:loc:baseswap:base": "graph deploy --studio  gamma-baseswap-base",
     "deploy:loc:swapbased:base": "graph deploy --studio  gamma-swapbased-base",
     "deploy:loc:pharaoh:avalanche": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-pharaoh-avax",
+    "deploy:loc:swapr:gnosis": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-swapr-gnosis",
+    "deploy:loc:thick:base": "graph deploy --studio  gamma-thick-base",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -92,6 +93,8 @@
     "prepare:baseswap:base": "mustache config/baseswap/base.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:swapbased:base": "mustache config/swapbased/base.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:pharaoh:avalanche": "mustache config/pharaoh/avalanche.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:swapr:gnosis": "mustache config/swapr/gnosis.json templates/algebraV1.template.yaml > subgraph.yaml",
+    "prepare:thick:base": "mustache config/thick/base.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

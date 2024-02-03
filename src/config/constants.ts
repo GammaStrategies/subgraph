@@ -173,7 +173,14 @@ export class constantAddresses {
     lookup.set("USDT_OPBNB", "0x9e5aac1ba1a2e6aed6b32689dfcf62a509ca96f3");
 
     return lookup as TypedMap<string, string>;
-  }  
+  }
+
+  static gnosis(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83");
+
+    return lookup as TypedMap<string, string>;
+  }
 
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
@@ -213,6 +220,8 @@ export class constantAddresses {
       mapping = this.manta();
     } else if (network == "opbnb") {
       mapping = this.opbnb();
+    } else if (network == "gnosis") {
+      mapping = this.gnosis();
     }
 
     return mapping as TypedMap<string, string>;

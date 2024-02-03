@@ -139,3 +139,11 @@ protocolLookup.set("avalanche:0x71ea9545ed7f8662a8b461d7cb0899745e3fb3e6", {
   name: "pharaoh",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("gnosis:0x683292172e2175bd08e3927a5e72fc301b161300", {
+  name: "swapr",
+  underlyingProtocol: PROTOCOL_ALGEBRA_V1,
+});
+protocolLookup.set("base:0xf1df4f17e34ba710dffc487f73f1e19476e815a6", {
+  name: "thick",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});

@@ -23,6 +23,7 @@ enum Network {
   opbnb
   manta
   metis
+  gnosis
 }
 
 type Protocol @entity(immutable: true) {

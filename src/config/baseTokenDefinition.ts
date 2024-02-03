@@ -880,7 +880,7 @@ export class BaseTokenDefinition {
   static kava(): TypedMap<string, BasePool> {
     const USDC = "0xeb466342c4d449bc9f53a865d5cb90586f405215";
     const USDT = "0x919c1c267bc06a7039e03fcc2ef738525769109c";
-  
+
     const USDT_USDC = "0x4a18f16b6a4f695639b0d1390263def2e91fc60f";
 
     let lookup = new TypedMap<string, BasePool>();
@@ -916,6 +916,9 @@ export class BaseTokenDefinition {
 
   static manta(): TypedMap<string, BasePool> {
     const USDC = "0xb73603c5d87fa094b7314c74ace2e64d165016fb";
+    const wUSDM = "0xbdad407f77f44f7da6684b416b1951eca461fb07";
+
+    const USDC_wUSDM = "0xd48deca9daa46dad52a5aaa8e62060df367b08e8";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDC, {
@@ -924,13 +927,19 @@ export class BaseTokenDefinition {
       pathStartBlock: [0],
       priority: 1,
     });
+    lookup.set(wUSDM, {
+      pathIdx: [0],
+      path: [USDC_wUSDM],
+      pathStartBlock: [0],
+      priority: 0,
+    });
 
     return lookup as TypedMap<string, BasePool>;
   }
 
   static opbnb(): TypedMap<string, BasePool> {
     const USDT = "0x9e5aac1ba1a2e6aed6b32689dfcf62a509ca96f3";
-    const WBNB = "0x4200000000000000000000000000000000000006"
+    const WBNB = "0x4200000000000000000000000000000000000006";
 
     const WBNB_USDT = "0xc4f981189558682f15f60513158b699354b30204";
 
@@ -946,6 +955,37 @@ export class BaseTokenDefinition {
       path: [WBNB_USDT],
       pathStartBlock: [0],
       priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
+  static gnosis(): TypedMap<string, BasePool> {
+    const USDC = "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83";
+    const WXDAI = "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d";
+    const WETH = "0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1";
+
+    const USDC_WXDAI = "0x6a1507579b50abfc7ccc8f9e2b428095b5063538";
+    const WETH_WXDAI = "0x4a3fec341be7134b8ef9e9edb6bf63ae2ba17f43";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WXDAI, {
+      pathIdx: [0],
+      path: [USDC_WXDAI],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+    lookup.set(WETH, {
+      pathIdx: [1, 0],
+      path: [WETH_WXDAI, USDC_WXDAI],
+      pathStartBlock: [0, 0],
+      priority: 0,
     });
 
     return lookup as TypedMap<string, BasePool>;
@@ -999,6 +1039,8 @@ export class BaseTokenDefinition {
       mapping = this.manta();
     } else if (network == "opbnb") {
       mapping = this.opbnb();
+    } else if (network == "gnosis") {
+      mapping = this.gnosis();
     }
 
     return mapping as TypedMap<string, BasePool>;
