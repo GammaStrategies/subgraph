@@ -1,12 +1,12 @@
 import { Address, BigInt, log } from "@graphprotocol/graph-ts";
 import { UniswapV3Pool } from "../../generated/schema";
-import { Pool as PoolTemplate } from "../../generated/templates";
 import {
   createAlgebraV1Pool,
   createAlgebraV2Pool,
 } from "./algebraFinance/pool";
 import { createUniV3Pool } from "./uniswapV3/pool";
 import { getOrCreatePoolQueue } from "./entities";
+import { poolTemplateCreate } from "./common/pool";
 
 export function getOrCreatePool(poolAddress: Address): UniswapV3Pool {
   let pool = UniswapV3Pool.load(poolAddress.toHex());
@@ -35,7 +35,7 @@ export function processPoolQueue(blockNumber: BigInt): void {
       const poolAddress = Address.fromString(queue.addresses[i]);
       const pool = getOrCreatePool(poolAddress);
       pool.save();
-      PoolTemplate.create(poolAddress);
+      poolTemplateCreate(poolAddress);
     } else {
       newAddresses.push(queue.addresses[i]);
       newStartBlocks.push(queue.startBlocks[i]);

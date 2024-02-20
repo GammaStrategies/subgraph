@@ -916,21 +916,53 @@ export class BaseTokenDefinition {
 
   static manta(): TypedMap<string, BasePool> {
     const USDC = "0xb73603c5d87fa094b7314c74ace2e64d165016fb";
+    const WETH = "0x0dc808adce2099a9f62aa87d9670745aba741746";
+    const STONE = "0xec901da9c68e90798bbbb74c11406a32a70652c3";
+    const WBTC = "0x305e88d809c9dc03179554bfbf85ac05ce8f18d6";
     const wUSDM = "0xbdad407f77f44f7da6684b416b1951eca461fb07";
+    const MANTA = "0x95cef13441be50d20ca4558cc0a27b601ac544e5";
 
+    const WETH_USDC = "0x12cdded759b14bf6a34fbf6638aec9b735824a9e";
+    const WETH_STONE = "0xa5101d48355d5d731c2bedd273aa0eb7ed55d0c7";
+    const WETH_WBTC = "0xfc9ffc1c6e0ebf7be3ce93245b309f4d3b593101";
     const USDC_wUSDM = "0xd48deca9daa46dad52a5aaa8e62060df367b08e8";
+    const WETH_MANTA = "0x97433019b560c1c20055ba5edc8eef226f2d1be7";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDC, {
       pathIdx: [-1],
       path: [ADDRESS_ZERO],
       pathStartBlock: [0],
-      priority: 1,
+      priority: 5,
+    });
+    lookup.set(WETH, {
+      pathIdx: [1],
+      path: [WETH_USDC],
+      pathStartBlock: [505816],
+      priority: 4,
+    });
+    lookup.set(STONE, {
+      pathIdx: [0, 1],
+      path: [WETH_STONE, WETH_USDC],
+      pathStartBlock: [847285, 505816],
+      priority: 3,
+    });
+    lookup.set(WBTC, {
+      pathIdx: [0, 1],
+      path: [WETH_WBTC, WETH_USDC],
+      pathStartBlock: [511582, 505816],
+      priority: 2,
     });
     lookup.set(wUSDM, {
       pathIdx: [0],
       path: [USDC_wUSDM],
-      pathStartBlock: [0],
+      pathStartBlock: [978774],
+      priority: 1,
+    });
+    lookup.set(MANTA, {
+      pathIdx: [0, 1],
+      path: [WETH_MANTA, WETH_USDC],
+      pathStartBlock: [1136768, 505816],
       priority: 0,
     });
 

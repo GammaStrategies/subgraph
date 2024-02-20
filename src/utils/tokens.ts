@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, log } from "@graphprotocol/graph-ts";
 import { ERC20 } from "../../generated/HypeRegistry/ERC20";
 import { ERC20SymbolBytes } from "../../generated/HypeRegistry/ERC20SymbolBytes";
 import { ERC20NameBytes } from "../../generated/HypeRegistry/ERC20NameBytes";
@@ -12,7 +12,6 @@ import {
   RewardedToken,
   UniswapV3HypervisorConversion,
 } from "../../generated/schema";
-import { Pool as PoolTemplate } from "../../generated/templates";
 import { Token as TokenTemplate } from "../../generated/templates";
 import { getOrCreatePool } from "./pool";
 import {
@@ -23,6 +22,7 @@ import {
   constantAddresses,
 } from "../config/constants";
 import { getOrCreatePoolQueue, getOrCreateProtocol } from "./entities";
+import { poolTemplateCreate } from "./common/pool";
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
   let contract = ERC20.bind(tokenAddress);
@@ -290,7 +290,8 @@ export function createConversion(address: string, blockNumber: BigInt): void {
           let pathPoolAddress = Address.fromString(conversion.usdPath[i]);
           let pool = getOrCreatePool(pathPoolAddress);
           pool.save();
-          PoolTemplate.create(pathPoolAddress);
+          log.warning("Creating pool template for {}", [pathPoolAddress.toHex()])
+          poolTemplateCreate(pathPoolAddress);
         } else {
           // Add pool to queue to be created
           queueAddresses.push(conversion.usdPath[i]);

@@ -179,7 +179,6 @@ export function getHypervisorFromPoolId(
 
   const protocol = getOrCreateProtocol()
 
-  log.warning("Getting Hypervisor from pool ID: {}, {}", [masterChefAddress.toHexString(), poolId.toString()])
   if (protocol.name == "stellaswap" && protocol.network == "moonbeam") {
     if (masterChefAddress == Address.fromString("0x97840df3944445c684c3977eaa0890aa29d71f73") && poolId == ONE_BI) {
       log.warning("Bypassing moonbeam RPC issue", [])

@@ -1,4 +1,8 @@
 import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
+import {
+  Pool as PoolTemplate,
+  AlternatePool as AlternatePoolTemplate,
+} from "../../../generated/templates";
 import { resetAggregates, updateAggregates, updateTvl } from "../aggregation";
 import { updateAndGetUniswapV3HypervisorDayData } from "../intervalUpdates";
 import { getOrCreatePool } from "../pool";
@@ -44,13 +48,18 @@ export function processCollect(poolAddress: Address): void {
   const pool = getOrCreatePool(poolAddress);
 
   const hypervisors = pool.hypervisors;
-    for (let i = 0; i < hypervisors.length; i++) {
-      resetAggregates(hypervisors[i]);
-      updateTvl(Address.fromString(hypervisors[i]));
-      updateAggregates(hypervisors[i]);
-      const hypervisorDayData = updateAndGetUniswapV3HypervisorDayData(
-        hypervisors[i]
-      );
-      hypervisorDayData.save();
-    }
+  for (let i = 0; i < hypervisors.length; i++) {
+    resetAggregates(hypervisors[i]);
+    updateTvl(Address.fromString(hypervisors[i]));
+    updateAggregates(hypervisors[i]);
+    const hypervisorDayData = updateAndGetUniswapV3HypervisorDayData(
+      hypervisors[i]
+    );
+    hypervisorDayData.save();
+  }
+}
+
+export function poolTemplateCreate(poolAddress: Address): void {
+  PoolTemplate.create(poolAddress);
+  AlternatePoolTemplate.create(poolAddress);
 }
