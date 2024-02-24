@@ -1,4 +1,4 @@
-import { Swap } from "../../../generated/templates/Pool/Pool"
+import { Swap } from "../../../generated/templates/Pool/FusionxPool"
 import { processSwap } from '../../utils/common/pool'
 
 export function handleSwap(event: Swap): void {

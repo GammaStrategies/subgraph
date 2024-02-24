@@ -40,7 +40,7 @@
     "deploy:loc:synthswap:base": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-synthswap-base",
     "deploy:fusionx:mantle": "graph deploy --node https://deploy.graphv3.fusionx.finance gamma-fusionx-mantle",
     "deploy:fusionx-dev:mantle": "graph deploy --node https://deploy.graph.fusionx.finance gamma-dev",
-    "deploy:lynex:linea": "graph deploy --node https://graph-deploy.linea.build --ipfs https://graph-ipfs.linea.build gammastrategies/lynex-linea",
+    "deploy:lynex:linea": "graph deploy --studio  gamma-lynex-linea",
     "deploy:pegasys:rollux": "graph deploy --node https://rollux.graph.pegasys.fi/deploy --ipfs https://rollux.ipfs.pegasys.fi/ gammastrategies/pegasys-rollux",
     "deploy:loc:basex:base": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-basex-base",
     "deploy:pancakeswap:kava": "graph deploy gamma-pancakeswap-kava --node https://the-graph-admin.kava.io",
@@ -98,15 +98,15 @@
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.58.0",
-    "@graphprotocol/graph-ts": "^0.31.0",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
+    "@graphprotocol/graph-cli": "^0.68.1",
+    "@graphprotocol/graph-ts": "^0.33.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
-    "matchstick-as": "^0.5.2",
+    "matchstick-as": "^0.6.0",
     "mustache": "^4.2.0",
-    "prettier": "3.0.3",
+    "prettier": "3.2.5",
     "rimraf": "^5.0.1",
     "typescript": "^5.2.2"
   }

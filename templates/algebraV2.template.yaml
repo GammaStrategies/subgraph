@@ -482,6 +482,8 @@ templates:
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
           file: ./abis/UniswapV3Pool.json
+        - name: FusionxPool
+          file: ./abis/UniswapV3Pool.json
       eventHandlers:
         - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
           handler: handleSwap
@@ -494,7 +496,7 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinanceV1/pool.ts
+      file: ./src/mappings/fusionx/pool.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -512,6 +514,8 @@ templates:
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
+          file: ./abis/UniswapV3Pool.json
+        - name: FusionxPool
           file: ./abis/UniswapV3Pool.json
       eventHandlers:
         - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24,uint128,uint128)

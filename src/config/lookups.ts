@@ -87,7 +87,7 @@ protocolLookup.set("mainnet:0x683292172e2175bd08e3927a5e72fc301b161300", {
   name: "fusionx",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
-protocolLookup.set("linea-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
+protocolLookup.set("linea:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
   name: "lynex",
   underlyingProtocol: PROTOCOL_ALGEBRA_V1,
 });
