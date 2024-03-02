@@ -1,0 +1,10 @@
+{
+  "network": "mantle",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xa5E9006C17740Cb9e4898657721c4dFE103d8456",
+      "startBlock": 58580400
+    }
+  ]
+}

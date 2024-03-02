@@ -147,3 +147,7 @@ protocolLookup.set("base:0xf1df4f17e34ba710dffc487f73f1e19476e815a6", {
   name: "thick",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("mantle:0xa5e9006c17740cb9e4898657721c4dfe103d8456", {
+  name: "pharaoh",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
