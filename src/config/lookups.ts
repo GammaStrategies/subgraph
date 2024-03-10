@@ -151,3 +151,7 @@ protocolLookup.set("mantle:0xa5e9006c17740cb9e4898657721c4dfe103d8456", {
   name: "pharaoh",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("astar-zkevm-mainnet:0x683292172e2175bd08e3927a5e72fc301b161300", {
+  name: "quickswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});

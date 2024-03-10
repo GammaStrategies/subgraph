@@ -53,6 +53,8 @@ export function getOrCreateProtocol(): Protocol {
       networkName = "arbitrum";
     } else if (network == "polygon-zkevm") {
       networkName = "pzke";
+    } else if (network == "astar-zkevm-mainnet") {
+      networkName = "azke";
     } else if (name == "fusionx") {
       networkName = "mantle";
     } else if (network == "kava-evm") {

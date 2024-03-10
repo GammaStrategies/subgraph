@@ -24,6 +24,7 @@ enum Network {
   manta
   metis
   gnosis
+  azke
 }
 
 type Protocol @entity(immutable: true) {

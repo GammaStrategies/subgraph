@@ -48,6 +48,7 @@
     "deploy:aperture:manta": "goldsky subgraph deploy gamma-aperture-manta/{version} --path .",
     "deploy:hercules:metis": "graph deploy --node https://metisapi.0xgraph.xyz/deploy --ipfs https://metisapi.0xgraph.xyz/ipfs gamma-hercules-metis",
     "deploy:quickswap:manta": "goldsky subgraph deploy gamma-quickswap-manta/{version} --path .",
+    "deploy:quickswap:azke": "graph deploy --studio  gamma-quickswap-azke",
     "deploy:loc:baseswap:base": "graph deploy --studio  gamma-baseswap-base",
     "deploy:loc:swapbased:base": "graph deploy --studio  gamma-swapbased-base",
     "deploy:loc:pharaoh:avalanche": "graph deploy --node https://api.thegraph.com/deploy/  l0c4t0r/gamma-pharaoh-avax",
@@ -91,6 +92,7 @@
     "prepare:aperture:manta": "mustache config/aperture/manta.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:hercules:metis": "mustache config/hercules/metis.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:quickswap:manta": "mustache config/quickswap/manta.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:quickswap:azke": "mustache config/quickswap/azke.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:baseswap:base": "mustache config/baseswap/base.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:swapbased:base": "mustache config/swapbased/base.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:pharaoh:avalanche": "mustache config/pharaoh/avalanche.json templates/uniV3.template.yaml > subgraph.yaml",
@@ -100,16 +102,16 @@
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.68.1",
+    "@graphprotocol/graph-cli": "^0.68.5",
     "@graphprotocol/graph-ts": "^0.33.0",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "eslint": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.0.0",
     "matchstick-as": "^0.6.0",
     "mustache": "^4.2.0",
     "prettier": "3.2.5",
     "rimraf": "^5.0.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.2"
   }
 }

@@ -182,6 +182,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static astarZkEvm(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -222,6 +229,8 @@ export class constantAddresses {
       mapping = this.opbnb();
     } else if (network == "gnosis") {
       mapping = this.gnosis();
+    } else if (network == "azke") {
+      mapping = this.astarZkEvm();
     }
 
     return mapping as TypedMap<string, string>;
