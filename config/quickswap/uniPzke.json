@@ -1,0 +1,10 @@
+{
+  "network": "polygon-zkevm",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xf9aDaa55014242c1005dB307C4e41c541f26bAAA",
+      "startBlock": 10725633
+    }
+  ]
+}

@@ -39,6 +39,10 @@ protocolLookup.set("polygon-zkevm:0xd08b593eb3460b7aa5ce76ffb0a3c5c938fd89b8", {
   name: "quickswap",
   underlyingProtocol: PROTOCOL_ALGEBRA_V1,
 });
+protocolLookup.set("polygon-zkevm:0xf9adaa55014242c1005db307c4e41c541f26baaa", {
+  name: "quickswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
 protocolLookup.set("arbitrum-one:0xa216c2b6554a0293f69a1555dd22f4b7e60fe907", {
   name: "camelot",
   underlyingProtocol: PROTOCOL_ALGEBRA_V1,
