@@ -49,6 +49,7 @@
     "deploy:aperture:manta": "goldsky subgraph deploy gamma-aperture-manta/{version} --path .",
     "deploy:hercules:metis": "graph deploy --node https://metisapi.0xgraph.xyz/deploy --ipfs https://metisapi.0xgraph.xyz/ipfs gamma-hercules-metis",
     "deploy:quickswap:manta": "goldsky subgraph deploy gamma-quickswap-manta/{version} --path .",
+    "deploy:quickswap:immutable": "goldsky subgraph deploy gamma-quickswap-imtblzke/{version} --path .",
     "deploy:quickswap:azke": "graph deploy --studio  gamma-quickswap-azke",
     "deploy:loc:baseswap:base": "graph deploy --studio  gamma-baseswap-base",
     "deploy:loc:swapbased:base": "graph deploy --studio  gamma-swapbased-base",
@@ -101,6 +102,7 @@
     "prepare:swapr:gnosis": "mustache config/swapr/gnosis.json templates/algebraV1.template.yaml > subgraph.yaml",
     "prepare:thick:base": "mustache config/thick/base.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:cleopatra:mantle": "mustache config/cleopatra/mantle.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:quickswap:immutable": "mustache config/quickswap/imtblZke.json templates/uniV3.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

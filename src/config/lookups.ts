@@ -159,3 +159,8 @@ protocolLookup.set("astar-zkevm-mainnet:0x683292172e2175bd08e3927a5e72fc301b1613
   name: "quickswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("imtbl-zkevm:0x683292172e2175bd08e3927a5e72fc301b161300", {
+  name: "quickswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+

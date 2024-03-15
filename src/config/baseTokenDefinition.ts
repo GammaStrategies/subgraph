@@ -1113,6 +1113,37 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static immutableZkEvm(): TypedMap<string, BasePool> {
+    const USDC = "0x6de8acc0d406837030ce4dd28e7c08c5a96a30d2";
+    const WETH = "0x52a6c53869ce09a731cd772f245b97a4401d3348";
+    const WIMX = "0x525299ce36040baee478d17ec26fe5962a75a304";
+
+    const WETH_USDC = "0xb80121a9a29259796df6439896b1da6f5342c658";
+    const WIMX_USDC = "0x9331b844a67accddcc103b6a84237a589f8c1d96";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 3,
+    });
+    lookup.set(WETH, {
+      pathIdx: [1],
+      path: [WETH_USDC],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WIMX, {
+      pathIdx: [1],
+      path: [WIMX_USDC],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -1165,6 +1196,8 @@ export class BaseTokenDefinition {
       mapping = this.gnosis();
     } else if (network == "azke") {
       mapping = this.astarZkEvm();
+    } else if (network == "imtblZke") {
+      mapping = this.immutableZkEvm();
     }
 
     return mapping as TypedMap<string, BasePool>;

@@ -189,6 +189,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static immutableZkEvm(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x6de8acc0d406837030ce4dd28e7c08c5a96a30d2");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -231,6 +238,8 @@ export class constantAddresses {
       mapping = this.gnosis();
     } else if (network == "azke") {
       mapping = this.astarZkEvm();
+    } else if (network == "imtblZke") {
+      mapping = this.immutableZkEvm();
     }
 
     return mapping as TypedMap<string, string>;
