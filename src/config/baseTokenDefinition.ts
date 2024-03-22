@@ -1143,6 +1143,29 @@ export class BaseTokenDefinition {
 
     return lookup as TypedMap<string, BasePool>;
   }
+  
+  static blast(): TypedMap<string, BasePool> {
+    const USDB = "0x4300000000000000000000000000000000000003";
+    const WETH = "0x4300000000000000000000000000000000000004";
+
+    const USDB_WETH = "0xf00da13d2960cf113edcef6e3f30d92e52906537";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDB, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WETH, {
+      pathIdx: [1],
+      path: [USDB_WETH],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
 
   static nonBase(): BasePool {
     let lookup: BasePool = {
@@ -1198,6 +1221,8 @@ export class BaseTokenDefinition {
       mapping = this.astarZkEvm();
     } else if (network == "imtblZke") {
       mapping = this.immutableZkEvm();
+    } else if (network == "blast") {
+      mapping = this.blast();
     }
 
     return mapping as TypedMap<string, BasePool>;

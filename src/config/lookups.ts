@@ -163,4 +163,11 @@ protocolLookup.set("imtbl-zkevm:0x683292172e2175bd08e3927a5e72fc301b161300", {
   name: "quickswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
-
+protocolLookup.set("avalanche:0xbf145c5239b1327909f3e37ca0cf890d014105e2", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("blast-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
+  name: "blast",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});

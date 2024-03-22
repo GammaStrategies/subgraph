@@ -196,6 +196,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static blast(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDB", "0x4300000000000000000000000000000000000003");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -240,6 +247,8 @@ export class constantAddresses {
       mapping = this.astarZkEvm();
     } else if (network == "imtblZke") {
       mapping = this.immutableZkEvm();
+    } else if (network == "blast") {
+      mapping = this.blast();
     }
 
     return mapping as TypedMap<string, string>;

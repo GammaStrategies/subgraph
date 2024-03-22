@@ -1,0 +1,19 @@
+{
+  "network": "avalanche",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xbF145c5239B1327909f3e37CA0cF890d014105E2",
+      "startBlock": 43083367
+    }
+  ],
+  "masterChefV2Registry": [
+    {
+      "name": "MasterChefV2Registry",
+      "address": "0x7e55f975eb29DadE1B581FB2087A70188ED2Ecb8",
+      "startBlock": 43105341
+    }
+  ],
+  "masterChefTemplate": true,
+  "masterChefV2Template": true
+}
