@@ -56,7 +56,7 @@ export function getOrCreateProtocol(): Protocol {
     } else if (network == "astar-zkevm-mainnet") {
       networkName = "azke";
     } else if (network == "imtbl-zkevm") {
-      networkName = "imtblZke";
+      networkName = "imtblzke";
     } else if (name == "fusionx") {
       networkName = "mantle";
     } else if (network == "kava-evm") {

@@ -245,7 +245,7 @@ export class constantAddresses {
       mapping = this.gnosis();
     } else if (network == "azke") {
       mapping = this.astarZkEvm();
-    } else if (network == "imtblZke") {
+    } else if (network == "imtblzke") {
       mapping = this.immutableZkEvm();
     } else if (network == "blast") {
       mapping = this.blast();
