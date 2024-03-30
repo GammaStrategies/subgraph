@@ -79,7 +79,8 @@ export class BaseTokenDefinition {
     const WETH = "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619";
     const DAI = "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063";
     const USDT = "0xc2132d05d31c914a87c6611c10748aeb04b58e8f";
-    const USDC = "0x2791bca1f2de4661ed88a30c99a7a9449aa84174";
+    const USDCe = "0x2791bca1f2de4661ed88a30c99a7a9449aa84174";
+    const USDC = "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359";
     const WMATIC = "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270";
     const MIMATIC = "0xa3fa99a148fa48d14ed51d610c367c61876997f1"; // MAI
     const MATICX = "0xfa68fb4628dff1028cfec22b4162fccd0d45efb6";
@@ -91,22 +92,28 @@ export class BaseTokenDefinition {
     const STAR = "0xc19669a405067927865b40ea045a2baabbbe57f5";
     const ERN = "0xc3a9a54c043f348027fffaac0f2f996123a19bf4";
 
-    const WBTC_USDC = "0x847b64f9d3a95e977d157866447a5c0a5dfa0ee5";
-    const USDC_WETH = "0x45dda9cb7c25131df268515131f647d726f50608";
-    const DAI_USDC = "0x5f69c2ec01c22843f8273838d570243fd1963014";
-    const USDC_USDT = "0x3f5228d0e7d75467366be7de2c31d0d098ba2c23";
-    const WMATIC_USDC = "0xa374094527e1673a86de625aa59517c5de346d32";
-    const USDC_MIMATIC = "0x7de263d0ad6e5d208844e65118c3a02a9a5d56b6";
+    const WBTC_USDCe = "0x847b64f9d3a95e977d157866447a5c0a5dfa0ee5";
+    const USDCe_WETH = "0x45dda9cb7c25131df268515131f647d726f50608";
+    const DAI_USDCe = "0x5f69c2ec01c22843f8273838d570243fd1963014";
+    const USDCe_USDT = "0x3f5228d0e7d75467366be7de2c31d0d098ba2c23";
+    const WMATIC_USDCe = "0xa374094527e1673a86de625aa59517c5de346d32";
+    const USDCe_MIMATIC = "0x7de263d0ad6e5d208844e65118c3a02a9a5d56b6";
     const WMATIC_MATICX = "0x05bfe97bf794a4db69d3059091f064ea0a5e538e";
     const WMATIC_STMATIC = "0x64c01d2b748e5deba661ce58393e6ee0e151a1ee";
-    const USDC_RETRO = "0xc7d8b9c270d0e31a6a0cf4496fe019766be42e15";
-    const USDC_CASH = "0x619259f699839dd1498ffc22297044462483bd27";
+    const USDCe_RETRO = "0xc7d8b9c270d0e31a6a0cf4496fe019766be42e15";
+    const USDCe_CASH = "0x619259f699839dd1498ffc22297044462483bd27";
     const FRAX_CASH = "0x72289129dc4937a5d406d1eced8b2a17d007a650";
     const LINK_WETH = "0xab52931301078e2405c3a3ebb86e11ad0dfd2cfd";
-    const USDC_STAR = "0x6de0ca91ef19a6ce9f02a423ae2df89fe09bff0f";
+    const USDCe_STAR = "0x6de0ca91ef19a6ce9f02a423ae2df89fe09bff0f";
     const CASH_ERN = "0x777a87889f42c33f9a1e5c117774694bbd857075";
 
     let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDCe, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 15,
+    });
     lookup.set(USDC, {
       pathIdx: [-1],
       path: [ADDRESS_ZERO],
@@ -115,85 +122,85 @@ export class BaseTokenDefinition {
     });
     lookup.set(USDT, {
       pathIdx: [0],
-      path: [USDC_USDT],
+      path: [USDCe_USDT],
       pathStartBlock: [0],
       priority: 13,
     });
     lookup.set(DAI, {
       pathIdx: [0],
-      path: [DAI_USDC],
+      path: [DAI_USDCe],
       pathStartBlock: [0],
       priority: 12,
     });
     lookup.set(WMATIC, {
       pathIdx: [1],
-      path: [WMATIC_USDC],
+      path: [WMATIC_USDCe],
       pathStartBlock: [0],
       priority: 11,
     });
     lookup.set(WETH, {
       pathIdx: [0],
-      path: [USDC_WETH],
+      path: [USDCe_WETH],
       pathStartBlock: [0],
       priority: 10,
     });
     lookup.set(WBTC, {
       pathIdx: [1],
-      path: [WBTC_USDC],
+      path: [WBTC_USDCe],
       pathStartBlock: [0],
       priority: 9,
     });
     lookup.set(MIMATIC, {
       pathIdx: [0],
-      path: [USDC_MIMATIC],
+      path: [USDCe_MIMATIC],
       pathStartBlock: [0],
       priority: 8,
     });
     lookup.set(CASH, {
       pathIdx: [0],
-      path: [USDC_CASH],
+      path: [USDCe_CASH],
       pathStartBlock: [44937000],
       priority: 7,
     });
     lookup.set(FRAX, {
       pathIdx: [1, 0],
-      path: [FRAX_CASH, USDC_CASH],
+      path: [FRAX_CASH, USDCe_CASH],
       pathStartBlock: [0, 0],
       priority: 6,
     });
     lookup.set(RETRO, {
       pathIdx: [0],
-      path: [USDC_RETRO],
+      path: [USDCe_RETRO],
       pathStartBlock: [0],
       priority: 5,
     });
     lookup.set(LINK, {
       pathIdx: [1, 0],
-      path: [LINK_WETH, USDC_WETH],
+      path: [LINK_WETH, USDCe_WETH],
       pathStartBlock: [0, 0],
       priority: 4,
     });
     lookup.set(MATICX, {
       pathIdx: [0, 1],
-      path: [WMATIC_MATICX, WMATIC_USDC],
+      path: [WMATIC_MATICX, WMATIC_USDCe],
       pathStartBlock: [0, 0],
       priority: 3,
     });
     lookup.set(STMATIC, {
       pathIdx: [0, 1],
-      path: [WMATIC_STMATIC, WMATIC_USDC],
+      path: [WMATIC_STMATIC, WMATIC_USDCe],
       pathStartBlock: [0, 0],
       priority: 2,
     });
     lookup.set(STAR, {
       pathIdx: [0],
-      path: [USDC_STAR],
+      path: [USDCe_STAR],
       pathStartBlock: [46110898],
       priority: 1,
     });
     lookup.set(ERN, {
       pathIdx: [0, 0],
-      path: [CASH_ERN, USDC_CASH],
+      path: [CASH_ERN, USDCe_CASH],
       pathStartBlock: [45606061, 44937000],
       priority: 0,
     });
