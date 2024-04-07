@@ -203,6 +203,12 @@ export class constantAddresses {
 
     return lookup as TypedMap<string, string>;
   }
+  static scroll(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4");
+
+    return lookup as TypedMap<string, string>;
+  }
 
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
@@ -250,6 +256,8 @@ export class constantAddresses {
       mapping = this.immutableZkEvm();
     } else if (network == "blast") {
       mapping = this.blast();
+    } else if (network == "scroll") {
+      mapping = this.scroll();
     }
 
     return mapping as TypedMap<string, string>;

@@ -27,6 +27,7 @@ enum Network {
   azke
   imtblzke
   blast
+  scroll
 }
 
 type Protocol @entity(immutable: true) {

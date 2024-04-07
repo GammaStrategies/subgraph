@@ -168,6 +168,22 @@ protocolLookup.set("avalanche:0xbf145c5239b1327909f3e37ca0cf890d014105e2", {
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
 protocolLookup.set("blast-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
-  name: "blast",
+  name: "blaster",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("base:0x829432679f69dbd8b2575f006ec0129894a39d86", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("blast-mainnet:0xfc13ebe7feb9595d70195e9168aa7f3ace153621", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("scroll:0x683292172e2175bd08e3927a5e72fc301b161300", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("blast:0xf44cecb1cf40ee12303e85eb8651263c01812ead", {
+  name: "thruster",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
