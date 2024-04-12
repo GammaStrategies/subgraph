@@ -187,3 +187,15 @@ protocolLookup.set("blast-mainnet:0xf44cecb1cf40ee12303e85eb8651263c01812ead", {
   name: "thruster",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("linea:0xa8e2fd481342976a3259591fbc08999369a43c5a", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("mantle:0x849214c123ba690d5fbc9301ef2e66491fcd6fe6", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("polygon-zkevm:0xff8fae227edb4ab23e61ec6cf0a65f3bcdcf45bd", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
