@@ -190,14 +190,16 @@ function isToken(tokenAddress: Address, refAddress: Address): boolean {
 export function isUSDC(tokenAddress: Address): boolean {
   const protocol = getOrCreateProtocol();
   const addressLookup = constantAddresses.network(protocol.network);
-  const usdcAddress = addressLookup.get("USDC") as string;
+  const usdcAddress = addressLookup.get("USDC");
   const usdceAddress = addressLookup.get("USDCe");
   const usdtMantleAddress = addressLookup.get("USDT_MANTLE");
   const usdtOpbnbAddress = addressLookup.get("USDT_OPBNB");
   const usdbAddress = addressLookup.get("USDB");
 
-  if (tokenAddress == Address.fromString(usdcAddress)) {
-    return true;
+  if (usdcAddress) {
+    if (tokenAddress == Address.fromString(usdcAddress)) {
+      return true;
+    }
   }
 
   if (usdceAddress) {

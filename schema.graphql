@@ -4,32 +4,6 @@ enum UnderlyingProtocol {
   algebraV2
 }
 
-enum Network {
-  mainnet
-  arbitrum
-  celo
-  matic
-  optimism
-  bsc
-  pzke
-  avalanche
-  fantom
-  moonbeam
-  mantle
-  syscoin
-  linea
-  base
-  kava
-  opbnb
-  manta
-  metis
-  gnosis
-  azke
-  imtblzke
-  blast
-  scroll
-}
-
 type Protocol @entity(immutable: true) {
   "Hypervisor registry address"
   id: String!
@@ -39,7 +13,7 @@ type Protocol @entity(immutable: true) {
   "Underlying infrastructure protocol"
   underlyingProtocol: UnderlyingProtocol!
   "Network/chain"
-  network: Network!
+  network: String!
   "Subgraph version"
   version: String!
 }

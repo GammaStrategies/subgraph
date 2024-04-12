@@ -216,7 +216,7 @@ export class constantAddresses {
       mapping = this.mainnet();
     } else if (network == "matic") {
       mapping = this.polygon();
-    } else if (network == "arbitrum") {
+    } else if (network == "arbitrum-one") {
       mapping = this.arbitrum_one();
     } else if (network == "optimism") {
       mapping = this.optimism();
@@ -224,7 +224,7 @@ export class constantAddresses {
       mapping = this.celo();
     } else if (network == "bsc") {
       mapping = this.bsc();
-    } else if (network == "pzke") {
+    } else if (network == "polygon-zkevm") {
       mapping = this.polygonZkEvm();
     } else if (network == "avalanche") {
       mapping = this.avalanche();
@@ -240,21 +240,21 @@ export class constantAddresses {
       mapping = this.base();
     } else if (network == "syscoin") {
       mapping = this.rollux();
-    } else if (network == "kava") {
+    } else if (network == "kava-evm") {
       mapping = this.kava();
     } else if (network == "metis") {
       mapping = this.metis();
-    } else if (network == "manta") {
+    } else if (network == "manta-pacific-mainnet") {
       mapping = this.manta();
-    } else if (network == "opbnb") {
+    } else if (network == "opbnb-mainnet") {
       mapping = this.opbnb();
     } else if (network == "gnosis") {
       mapping = this.gnosis();
-    } else if (network == "azke") {
+    } else if (network == "astar-zkevm-mainnet") {
       mapping = this.astarZkEvm();
-    } else if (network == "imtblzke") {
+    } else if (network == "imtbl-zkevm") {
       mapping = this.immutableZkEvm();
-    } else if (network == "blast") {
+    } else if (network == "blast-mainnet") {
       mapping = this.blast();
     } else if (network == "scroll") {
       mapping = this.scroll();

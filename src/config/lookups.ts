@@ -183,7 +183,7 @@ protocolLookup.set("scroll:0x683292172e2175bd08e3927a5e72fc301b161300", {
   name: "uniswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
-protocolLookup.set("blast:0xf44cecb1cf40ee12303e85eb8651263c01812ead", {
+protocolLookup.set("blast-mainnet:0xf44cecb1cf40ee12303e85eb8651263c01812ead", {
   name: "thruster",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
