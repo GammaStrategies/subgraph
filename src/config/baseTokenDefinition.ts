@@ -1131,10 +1131,10 @@ export class BaseTokenDefinition {
   static immutableZkEvm(): TypedMap<string, BasePool> {
     const USDC = "0x6de8acc0d406837030ce4dd28e7c08c5a96a30d2";
     const WETH = "0x52a6c53869ce09a731cd772f245b97a4401d3348";
-    const WIMX = "0x525299ce36040baee478d17ec26fe5962a75a304";
+    const WIMX = "0x3a0c2ba54d6cbd3121f01b96dfd20e99d1696c9d";
 
     const WETH_USDC = "0xb80121a9a29259796df6439896b1da6f5342c658";
-    const WIMX_USDC = "0x9331b844a67accddcc103b6a84237a589f8c1d96";
+    const WIMX_USDC = "0x525299ce36040baee478d17ec26fe5962a75a304";
 
     let lookup = new TypedMap<string, BasePool>();
     lookup.set(USDC, {

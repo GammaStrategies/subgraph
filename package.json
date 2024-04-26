@@ -66,6 +66,7 @@
     "deploy:cleopatra:mantle": "graph deploy gamma-cleopatra-mantle --node https://subgraph-api.mantle.xyz/deploy --ipfs https://subgraph-api.mantle.xyz/ipfs",
     "deploy:blaster:blast": "graph deploy --studio gamma-blaster-blast",
     "deploy:thruster:blast": "graph deploy --studio gamma-thruster-blast",
+    "deploy:nile:linea": "graph deploy --studio gamma-nile-linea",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -100,6 +101,7 @@
     "prepare:sushi:arbitrum": "mustache config/sushi/arbitrum.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:sushi:base": "mustache config/sushi/base.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:ramses:arbitrum": "mustache config/ramses/arbitrum.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:nile:linea": "mustache config/nile/linea.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:ascent:polygon": "mustache config/ascent/polygon.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:fusionx:mantle": "mustache config/fusionx/mantle.json templates/fusionx.template.yaml > subgraph.yaml",
     "prepare:lynex:linea": "mustache config/lynex/linea.json templates/algebraV1.template.yaml > subgraph.yaml",
@@ -124,16 +126,16 @@
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.68.5",
-    "@graphprotocol/graph-ts": "^0.33.0",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
-    "eslint": "^8.57.0",
+    "@graphprotocol/graph-cli": "^0.71.0",
+    "@graphprotocol/graph-ts": "^0.35.1",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "@typescript-eslint/parser": "^7.7.1",
+    "eslint": "^9.1.1",
     "eslint-config-prettier": "^9.0.0",
     "matchstick-as": "^0.6.0",
     "mustache": "^4.2.0",
     "prettier": "3.2.5",
     "rimraf": "^5.0.1",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.5"
   }
 }

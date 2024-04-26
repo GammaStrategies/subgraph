@@ -199,3 +199,7 @@ protocolLookup.set("polygon-zkevm:0xff8fae227edb4ab23e61ec6cf0a65f3bcdcf45bd", {
   name: "uniswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("linea:0x9c3e0445559e6de1fe6391e8e018dca02b480836", {
+  name: "nile",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
