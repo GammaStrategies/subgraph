@@ -239,6 +239,7 @@ type UniswapV3Hypervisor @entity {
   dayData: [UniswapV3HypervisorDayData!]! @derivedFrom(field: "hypervisor")
   feeUpdates: [UniswapV3FeeUpdate!]! @derivedFrom(field: "hypervisor")
   lastUpdated: BigInt!
+  active: Boolean!
 }
 
 type UniswapV3Deposit @entity {

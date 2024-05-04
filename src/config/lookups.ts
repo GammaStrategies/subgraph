@@ -212,3 +212,7 @@ protocolLookup.set("xlayer-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", 
   name: "xtrade",
   underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
 });
+protocolLookup.set("blast-mainnet:0x6c509511672f3cdc0440c219169e4367425870a8", {
+  name: "fenix",
+  underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
+});

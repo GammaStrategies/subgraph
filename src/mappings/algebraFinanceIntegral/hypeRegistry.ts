@@ -1,6 +1,9 @@
 /* eslint-disable prefer-const */
 import { log } from "@graphprotocol/graph-ts";
-import { HypeAdded } from "../../../generated/HypeRegistry/HypeRegistry";
+import {
+  HypeAdded,
+  HypeRemoved,
+} from "../../../generated/HypeRegistry/HypeRegistry";
 import { Hypervisor as HypervisorContract } from "../../../generated/templates/Hypervisor/Hypervisor";
 import { Hypervisor as HypervisorTemplate } from "../../../generated/templates";
 import { AlgebraIntegralPool as PoolContract } from "../../../generated/templates/Pool/AlgebraIntegralPool";
@@ -49,4 +52,12 @@ export function handleHypeAdded(event: HypeAdded): void {
 
   HypervisorTemplate.create(event.params.hype);
   log.info("Hypervisor added: {}", [event.address.toHex()]);
+}
+
+export function handleHypeRemoved(event: HypeRemoved): void {
+  const hypervisor = getOrCreateHypervisor(event.params.hype);
+  hypervisor.active = false;
+  hypervisor.save();
+
+  log.info("Hypervisor removed: {}", [event.address.toHex()]);
 }

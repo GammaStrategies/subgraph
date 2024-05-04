@@ -1,4 +1,6 @@
-specVersion: 0.0.5
+specVersion: 1.1.0
+indexerHints:
+  prune: {{prune}}
 features:
   - nonFatalErrors
 {{#graft}}
@@ -150,6 +152,8 @@ dataSources:
       eventHandlers:
         - event: HypeAdded(address,uint256)
           handler: handleHypeAdded
+        - event: HypeRemoved(address,uint256)
+          handler: handleHypeRemoved
   {{/hypeRegistry}}
   {{#feeDistributor}}
   - kind: ethereum/contract

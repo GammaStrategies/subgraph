@@ -95,6 +95,7 @@ export function getOrCreateHypervisor(
     hypervisor.accountCount = ZERO_BI;
     hypervisor.conversion = hypervisorId;
     hypervisor.lastUpdated = timestamp;
+    hypervisor.active = true;
     hypervisor.save();
 
     // Create Conversion entity to track path to USD calculations
