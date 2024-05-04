@@ -1,9 +1,3 @@
-enum UnderlyingProtocol {
-  uniswapV3
-  algebraV1
-  algebraV2
-}
-
 type Protocol @entity(immutable: true) {
   "Hypervisor registry address"
   id: String!
@@ -11,7 +5,7 @@ type Protocol @entity(immutable: true) {
   slug: String!
   name: String!
   "Underlying infrastructure protocol"
-  underlyingProtocol: UnderlyingProtocol!
+  underlyingProtocol: String!
   "Network/chain"
   network: String!
   "Subgraph version"

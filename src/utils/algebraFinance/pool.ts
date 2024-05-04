@@ -2,6 +2,7 @@ import { Address, Bytes, log } from "@graphprotocol/graph-ts";
 import { UniswapV3Pool } from "../../../generated/schema";
 import { AlgebraV1Pool as V1PoolContract } from "../../../generated/templates/Pool/AlgebraV1Pool";
 import { AlgebraV2Pool as V2PoolContract } from "../../../generated/templates/Pool/AlgebraV2Pool";
+import { AlgebraIntegralPool as IntegralPoolContract } from "../../../generated/templates/Pool/AlgebraIntegralPool";
 import { encodeKey } from "../common/positions";
 import { createPool } from "../entities";
 
@@ -38,11 +39,38 @@ export function createAlgebraV2Pool(
   poolAddress: Address
 ): UniswapV3Pool | null {
   const poolContract = V2PoolContract.bind(poolAddress);
+  const dataStorageOperator =
+    poolContract.try_dataStorageOperator();
 
-  const communityFeeLastTimestamp =
-    poolContract.try_communityFeeLastTimestamp();
+  if (dataStorageOperator.reverted) {
+    return null;
+  }
 
-  if (communityFeeLastTimestamp.reverted) {
+  const globalState = poolContract.try_globalState(); // Equivalent to slot0
+
+  if (globalState.reverted) {
+    return null;
+  }
+
+  const pool = createPool(
+    poolAddress,
+    poolContract.token0(),
+    poolContract.token1(),
+    0,
+    globalState.value.getPrice(),
+    globalState.value.getTick()
+  );
+
+  return pool as UniswapV3Pool;
+}
+
+export function createAlgebraIntegralPool(
+  poolAddress: Address
+): UniswapV3Pool | null {
+  const poolContract = IntegralPoolContract.bind(poolAddress);
+  const fee = poolContract.try_fee();
+
+  if (fee.reverted) {
     return null;
   }
 

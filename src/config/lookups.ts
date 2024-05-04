@@ -3,6 +3,7 @@ import {
   PROTOCOL_ALGEBRA_V1,
   PROTOCOL_ALGEBRA_V2,
   PROTOCOL_UNISWAP_V3,
+  PROTOCOL_ALGEBRA_INTEGRAL
 } from "./constants";
 
 class protocolInfo {
@@ -202,4 +203,12 @@ protocolLookup.set("polygon-zkevm:0xff8fae227edb4ab23e61ec6cf0a65f3bcdcf45bd", {
 protocolLookup.set("linea:0x9c3e0445559e6de1fe6391e8e018dca02b480836", {
   name: "nile",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("xlayer-mainnet:0x683292172e2175bd08e3927a5e72fc301b161300", {
+  name: "quickswap",
+  underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
+});
+protocolLookup.set("xlayer-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
+  name: "xtrade",
+  underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
 });

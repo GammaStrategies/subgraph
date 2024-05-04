@@ -18,7 +18,8 @@ function getUsdcDecimalFactor(): BigInt {
   if (
     dataSource.network() == "bsc" ||
     dataSource.network() == "opbnb-mainnet" ||
-    dataSource.network() == "blast-mainnet"
+    dataSource.network() == "blast-mainnet" ||
+    dataSource.network() == "xlayer-mainnet"
   ) {
     return BigInt.fromString("1000000000000000000");
   }

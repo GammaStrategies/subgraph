@@ -15,7 +15,8 @@ export function positionKey(
   );
   if (
     protocol.underlyingProtocol == "algebraV1" ||
-    protocol.underlyingProtocol == "algebraV2"
+    protocol.underlyingProtocol == "algebraV2" ||
+    protocol.underlyingProtocol == "algebraIntegral"
   ) {
     key = algebraPositionKey(ownerAddress, tickLower, tickUpper);
   } else {

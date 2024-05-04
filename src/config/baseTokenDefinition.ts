@@ -1213,6 +1213,52 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static xlayer(): TypedMap<string, BasePool> {
+    // const USDC = "0x74b7f16337b8972027f6196a17a631ac6de26d22";
+    const USDT = "0x1e4a5963abfd975d8c9021ce480b42188849d41d";
+    const WETH = "0x5a77f1443d16ee5761d310e38b62f77f726bc71c"
+    const WOKB = "0xe538905cf8410324e03a5a23c1c177a474d59b2b"
+    const WBTC = "0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1"
+
+    const USDT_WETH = "0xd77b2ed70271cd1fef1e81a4303d21b0824aefc4";
+    const USDT_WOKB = "0x2b59b462103efaa4d04e869d62985b43b46a93c9";
+    const WETH_WBTC = "0xe47121d706e3aeb4243f58551023c0849cda88ce";
+
+    let lookup = new TypedMap<string, BasePool>();
+    // lookup.set(USDC, {
+    //   pathIdx: [-1],
+    //   path: [ADDRESS_ZERO],
+    //   pathStartBlock: [0],
+    //   priority: 5,
+    // });
+    lookup.set(USDT, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 4,
+    });
+    lookup.set(WETH, {
+      pathIdx: [0],
+      path: [USDT_WETH],
+      pathStartBlock: [0],
+      priority: 3,
+    });
+    lookup.set(WOKB, {
+      pathIdx: [0],
+      path: [USDT_WOKB],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WBTC, {
+      pathIdx: [0, 0],
+      path: [WETH_WBTC, USDT_WETH],
+      pathStartBlock: [0, 0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -1271,6 +1317,8 @@ export class BaseTokenDefinition {
       mapping = this.blast();
     } else if (network == "scroll") {
       mapping = this.scroll();
+    } else if (network == "xlayer-mainnet") {
+      mapping = this.xlayer();
     }
 
     return mapping as TypedMap<string, BasePool>;

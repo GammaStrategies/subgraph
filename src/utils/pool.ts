@@ -3,6 +3,7 @@ import { UniswapV3Pool } from "../../generated/schema";
 import {
   createAlgebraV1Pool,
   createAlgebraV2Pool,
+  createAlgebraIntegralPool
 } from "./algebraFinance/pool";
 import { createUniV3Pool } from "./uniswapV3/pool";
 import { getOrCreatePoolQueue } from "./entities";
@@ -16,6 +17,9 @@ export function getOrCreatePool(poolAddress: Address): UniswapV3Pool {
       pool = createAlgebraV1Pool(poolAddress);
       if (!pool) {
         pool = createAlgebraV2Pool(poolAddress);
+        if (!pool) {
+          pool = createAlgebraIntegralPool(poolAddress);
+        }
       }
     }
   }

@@ -5,6 +5,7 @@ export const VERSION = "1.5.0";
 
 export const PROTOCOL_ALGEBRA_V1 = "algebraV1";
 export const PROTOCOL_ALGEBRA_V2 = "algebraV2";
+export const PROTOCOL_ALGEBRA_INTEGRAL = "algebraIntegral";
 export const PROTOCOL_UNISWAP_V3 = "uniswapV3";
 
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
@@ -210,6 +211,14 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static xlayer(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x74b7f16337b8972027f6196a17a631ac6de26d22");
+    lookup.set("USDT_XLAYER", "0x1e4a5963abfd975d8c9021ce480b42188849d41d");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -258,6 +267,8 @@ export class constantAddresses {
       mapping = this.blast();
     } else if (network == "scroll") {
       mapping = this.scroll();
+    } else if (network == "xlayer-mainnet") {
+      mapping = this.xlayer();
     }
 
     return mapping as TypedMap<string, string>;

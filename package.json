@@ -67,6 +67,7 @@
     "deploy:blaster:blast": "graph deploy --studio gamma-blaster-blast",
     "deploy:thruster:blast": "graph deploy --studio gamma-thruster-blast",
     "deploy:nile:linea": "graph deploy --studio gamma-nile-linea",
+    "deploy:quickswap:xlayer": "graph deploy --studio gamma-quickswap-xlayer",
     "create-local": "graph create --node http://localhost:8020/ gammastrategies/gamma",
     "remove-local": "graph remove --node http://localhost:8020/ gammastrategies/gamma",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 gammastrategies/gamma",
@@ -123,6 +124,7 @@
     "prepare:quickswap:immutable": "mustache config/quickswap/imtblZke.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:blaster:blast": "mustache config/blaster/blast.json templates/uniV3.template.yaml > subgraph.yaml",
     "prepare:thruster:blast": "mustache config/thruster/blast.json templates/uniV3.template.yaml > subgraph.yaml",
+    "prepare:quickswap:xlayer": "mustache config/quickswap/xlayer.json templates/algebraIntegral.template.yaml > subgraph.yaml",
     "test": "graph test"
   },
   "devDependencies": {

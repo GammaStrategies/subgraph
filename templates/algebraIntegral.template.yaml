@@ -22,7 +22,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinanceV1/hypervisor.ts
+      file: ./src/mappings/algebraFinanceIntegral/hypervisor.ts
       entities:
         - Account
         - UniswapV3Hypervisor
@@ -34,7 +34,7 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -79,7 +79,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinanceV1/pool.ts
+      file: ./src/mappings/algebraFinanceIntegral/pool.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -89,7 +89,7 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -118,7 +118,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinanceV1/hypeRegistry.ts
+      file: ./src/mappings/algebraFinanceIntegral/hypeRegistry.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -134,7 +134,7 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -172,7 +172,7 @@ dataSources:
         - name: FeeDistributor
           file: ./abis/FeeDistributor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraV1Pool
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
@@ -208,7 +208,7 @@ dataSources:
         - name: SwapContract
           file: ./abis/SwapContract.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraV1Pool
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
@@ -242,7 +242,7 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -389,7 +389,7 @@ dataSources:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -432,7 +432,7 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinanceV1/hypervisor.ts
+      file: ./src/mappings/algebraFinanceIntegral/hypervisor.ts
       entities:
         - Account
         - UniswapV3Hypervisor
@@ -444,7 +444,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -479,7 +479,7 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/algebraFinanceV1/pool.ts
+      file: ./src/mappings/algebraFinanceIntegral/pool.ts
       entities:
         - UniswapV3Hypervisor
         - UniswapV3HypervisorDayData
@@ -487,7 +487,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -581,7 +581,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -640,7 +640,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool
@@ -701,7 +701,7 @@ templates:
         - name: Hypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: Pool
-          file: ./abis/AlgebraFinance/V1Pool.json
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: AlgebraHypervisor
           file: ./abis/AlgebraFinance/Hypervisor.json
         - name: AlgebraV1Pool

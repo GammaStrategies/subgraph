@@ -41,6 +41,8 @@ dataSources:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -94,6 +96,8 @@ dataSources:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -137,6 +141,8 @@ dataSources:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -171,6 +177,8 @@ dataSources:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Pool
           file: ./abis/UniswapV3Pool.json
       eventHandlers:
@@ -205,6 +213,8 @@ dataSources:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Pool
           file: ./abis/UniswapV3Pool.json
       eventHandlers:
@@ -239,6 +249,8 @@ dataSources:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -384,6 +396,8 @@ dataSources:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -437,6 +451,8 @@ templates:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -478,6 +494,8 @@ templates:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -511,6 +529,8 @@ templates:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -568,6 +588,8 @@ templates:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -625,6 +647,8 @@ templates:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
@@ -684,6 +708,8 @@ templates:
           file: ./abis/AlgebraFinance/V1Pool.json
         - name: AlgebraV2Pool
           file: ./abis/AlgebraFinance/V2Pool.json
+        - name: AlgebraIntegralPool
+          file: ./abis/AlgebraFinance/IntegralPool.json
         - name: UniswapV3Hypervisor
           file: ./abis/UniswapV3Hypervisor.json
         - name: UniswapV3Pool
