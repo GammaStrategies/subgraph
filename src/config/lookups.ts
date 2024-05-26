@@ -206,7 +206,7 @@ protocolLookup.set("linea:0x9c3e0445559e6de1fe6391e8e018dca02b480836", {
 });
 protocolLookup.set("xlayer-mainnet:0x683292172e2175bd08e3927a5e72fc301b161300", {
   name: "quickswap",
-  underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
+  underlyingProtocol: PROTOCOL_ALGEBRA_V1,
 });
 protocolLookup.set("xlayer-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
   name: "xtrade",
@@ -214,5 +214,9 @@ protocolLookup.set("xlayer-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", 
 });
 protocolLookup.set("blast-mainnet:0x6c509511672f3cdc0440c219169e4367425870a8", {
   name: "fenix",
+  underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
+});
+protocolLookup.set("mode-mainnet:0x683292172e2175bd08e3927a5e72fc301b161300", {
+  name: "kim",
   underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
 });

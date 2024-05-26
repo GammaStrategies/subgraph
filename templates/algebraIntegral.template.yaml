@@ -1,6 +1,6 @@
 specVersion: 1.1.0
 indexerHints:
-  prune: {{prune}}
+  prune: auto
 features:
   - nonFatalErrors
 {{#graft}}

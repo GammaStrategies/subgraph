@@ -11,6 +11,7 @@ import { getOrCreateHypervisor } from "../../utils/uniswapV3/hypervisor";
 import { UniswapV3Hypervisor } from "../../../generated/schema";
 import { getOrCreateProtocol } from "../../utils/entities";
 import { processPoolQueue } from "../../utils/pool";
+import { processHypeRemoved } from "../common/hypeRegistry";
 
 export function handleHypeAdded(event: HypeAdded): void {
   // Try and clear pool queue
@@ -55,9 +56,5 @@ export function handleHypeAdded(event: HypeAdded): void {
 }
 
 export function handleHypeRemoved(event: HypeRemoved): void {
-  const hypervisor = getOrCreateHypervisor(event.params.hype);
-  hypervisor.active = false;
-  hypervisor.save();
-
-  log.info("Hypervisor removed: {}", [event.address.toHex()]);
+  processHypeRemoved(event.params.hype)
 }

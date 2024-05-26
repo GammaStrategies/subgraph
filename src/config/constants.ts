@@ -219,6 +219,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static mode(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xd988097fb8612cc24eec14542bc03424c656005f");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -268,6 +275,8 @@ export class constantAddresses {
     } else if (network == "scroll") {
       mapping = this.scroll();
     } else if (network == "xlayer-mainnet") {
+      mapping = this.xlayer();
+    } else if (network == "mode-mainnet") {
       mapping = this.xlayer();
     }
 

@@ -1259,6 +1259,29 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static mode(): TypedMap<string, BasePool> {
+    const USDC = "0xd988097fb8612cc24eec14542bc03424c656005f";
+    const WETH = "0x4200000000000000000000000000000000000006";
+
+    const WETH_USDC = "0x468cc91df6f669cae6cdce766995bd7874052fbc";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+    lookup.set(WETH, {
+      pathIdx: [1],
+      path: [WETH_USDC],
+      pathStartBlock: [0],
+      priority: 0,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -1319,6 +1342,8 @@ export class BaseTokenDefinition {
       mapping = this.scroll();
     } else if (network == "xlayer-mainnet") {
       mapping = this.xlayer();
+    } else if (network == "mode-mainnet") {
+      mapping = this.mode();
     }
 
     return mapping as TypedMap<string, BasePool>;
