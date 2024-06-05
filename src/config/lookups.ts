@@ -220,3 +220,15 @@ protocolLookup.set("mode-mainnet:0x683292172e2175bd08e3927a5e72fc301b161300", {
   name: "kim",
   underlyingProtocol: PROTOCOL_ALGEBRA_INTEGRAL,
 });
+protocolLookup.set("linea:0xff0d3abfd3003d4d5ad7d57c912cca02eba6036b", {
+  name: "linehub",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("manta-pacific-mainnet:0x670003267ddff9c2c740ec9a1645569cccdc6bf7", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("base:0xe1cd1c2d2e4b44de211d554649bc7dc49ef07784", {
+  name: "kinetix",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
