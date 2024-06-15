@@ -17,7 +17,7 @@ export function handleHypeAdded(event: HypeAdded): void {
   // Try and clear pool queue
   processPoolQueue(event.block.number);
 
-  log.info("Adding hypervisor: {}", [event.address.toHex()]);
+  log.info("Adding hypervisor: {}", [event.params.hype.toHex()]);
   let hypervisor = UniswapV3Hypervisor.load(event.params.hype.toHex());
   if (hypervisor) {
     return; // No need to add if hype was already added manually as orphan.
@@ -52,7 +52,7 @@ export function handleHypeAdded(event: HypeAdded): void {
   hypervisor.save();
 
   HypervisorTemplate.create(event.params.hype);
-  log.info("Hypervisor added: {}", [event.address.toHex()]);
+  log.info("Hypervisor added: {}", [event.params.hype.toHex()]);
 }
 
 export function handleHypeRemoved(event: HypeRemoved): void {

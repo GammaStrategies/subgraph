@@ -1282,6 +1282,37 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static rootstock(): TypedMap<string, BasePool> {
+    const RUSDT = "0xef213441a85df4d7acbdae0cf78004e1e486bb96"
+    const WRBTC = "0x542fda317318ebf1d3deaf76e0b632741a7e677d"
+    const ETHS = "0x1d931bf8656d795e50ef6d639562c5bd8ac2b78f"
+
+    const WRBTC_RUSDT = "0xd2ffe51ab4e622a411abbe634832a19d919e9c55";
+    const ETHS_WRBTC = "0xcba7abe98fd6a65259837d76a3409841c1dd4288";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(RUSDT, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 3,
+    });
+    lookup.set(WRBTC, {
+      pathIdx: [1],
+      path: [WRBTC_RUSDT],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(ETHS, {
+      pathIdx: [1, 1],
+      path: [ETHS_WRBTC, WRBTC_RUSDT],
+      pathStartBlock: [0, 0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -1344,6 +1375,8 @@ export class BaseTokenDefinition {
       mapping = this.xlayer();
     } else if (network == "mode-mainnet") {
       mapping = this.mode();
+    } else if (network == "rootstock") {
+      mapping = this.rootstock();
     }
 
     return mapping as TypedMap<string, BasePool>;

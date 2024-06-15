@@ -168,7 +168,7 @@ protocolLookup.set("avalanche:0xbf145c5239b1327909f3e37ca0cf890d014105e2", {
   name: "uniswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
-protocolLookup.set("blast-mainnet:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
+protocolLookup.set("blast-mainnet:0x659e5a593d6b88db44c67acce7febaab2aa4b8de", {
   name: "blaster",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
@@ -230,5 +230,9 @@ protocolLookup.set("manta-pacific-mainnet:0x670003267ddff9c2c740ec9a1645569cccdc
 });
 protocolLookup.set("base:0xe1cd1c2d2e4b44de211d554649bc7dc49ef07784", {
   name: "kinetix",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});
+protocolLookup.set("rootstock:0x683292172e2175bd08e3927a5e72fc301b161300", {
+  name: "uniswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
