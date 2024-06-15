@@ -1,5 +1,6 @@
 {
   "network": "xlayer-mainnet",
+  "subgraphTemplate": "algebraV1",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

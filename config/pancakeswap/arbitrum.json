@@ -1,5 +1,6 @@
 {
     "network": "arbitrum-one",
+    "subgraphTemplate": "fusionx",
     "hypeRegistry": [
       {
         "name": "HypeRegistry",

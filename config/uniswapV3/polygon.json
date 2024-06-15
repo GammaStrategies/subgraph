@@ -1,5 +1,6 @@
 {
   "network": "matic",
+  "subgraphTemplate": "uniV3",
   "uniswapV3HypervisorOrphan": [
     {
       "name": "USDC-ETH-500",

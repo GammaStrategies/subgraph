@@ -1,5 +1,6 @@
 {
   "network": "linea",
+  "subgraphTemplate": "algebraV1",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

@@ -1,5 +1,6 @@
 {
   "network": "mainnet",
+  "subgraphTemplate": "uniV3",
   "gammaToken": [
     {
       "name": "GammaToken",

@@ -1,5 +1,6 @@
 {
   "network": "scroll",
+  "subgraphTemplate": "uniV3",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

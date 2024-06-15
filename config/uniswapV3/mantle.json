@@ -1,5 +1,6 @@
 {
   "network": "mantle",
+  "subgraphTemplate": "uniV3",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

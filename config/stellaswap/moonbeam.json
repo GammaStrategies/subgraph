@@ -1,5 +1,6 @@
 {
   "network": "moonbeam",
+  "subgraphTemplate": "algebraV1",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

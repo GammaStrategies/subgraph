@@ -1,5 +1,6 @@
 {
   "network": "astar-zkevm-mainnet",
+  "subgraphTemplate": "uniV3",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

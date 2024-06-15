@@ -1,5 +1,6 @@
 {
   "network": "celo",
+  "subgraphTemplate": "uniV3",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

@@ -1,5 +1,6 @@
 {
   "network": "optimism",
+  "subgraphTemplate": "uniV3",
   "uniswapV3HypervisorOrphan": [
     {
       "name": "xsUSD-DAI05",

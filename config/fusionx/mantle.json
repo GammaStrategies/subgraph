@@ -1,5 +1,6 @@
 {
     "network": "mainnet",
+    "subgraphTemplate": "fusionx",
     "hypeRegistry": [
       {
         "name": "HypeRegistry",

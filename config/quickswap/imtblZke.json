@@ -1,5 +1,6 @@
 {
   "network": "imtbl-zkevm",
+  "subgraphTemplate": "uniV3",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

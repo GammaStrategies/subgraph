@@ -1,5 +1,6 @@
 {
   "network": "polygon-zkevm",
+  "subgraphTemplate": "algebraV1",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

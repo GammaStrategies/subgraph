@@ -1,5 +1,6 @@
 {
   "network": "arbitrum-one",
+  "subgraphTemplate": "uniV3",
   "uniswapV3PoolOrphan": [
     {
       "name": "WETH-USDC",
