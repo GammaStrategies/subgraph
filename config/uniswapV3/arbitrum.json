@@ -1,6 +1,7 @@
 {
   "network": "arbitrum-one",
   "subgraphTemplate": "uniV3",
+  "deploymentName": "gamma-uniswap-arbitrum1",
   "uniswapV3PoolOrphan": [
     {
       "name": "WETH-USDC",

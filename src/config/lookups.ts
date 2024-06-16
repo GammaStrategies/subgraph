@@ -236,3 +236,7 @@ protocolLookup.set("rootstock:0x683292172e2175bd08e3927a5e72fc301b161300", {
   name: "uniswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("taiko:0xc27ddd78fc49875fe6f844b72bbf31dfbb099881", {
+  name: "uniswap",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});

@@ -1216,9 +1216,9 @@ export class BaseTokenDefinition {
   static xlayer(): TypedMap<string, BasePool> {
     // const USDC = "0x74b7f16337b8972027f6196a17a631ac6de26d22";
     const USDT = "0x1e4a5963abfd975d8c9021ce480b42188849d41d";
-    const WETH = "0x5a77f1443d16ee5761d310e38b62f77f726bc71c"
-    const WOKB = "0xe538905cf8410324e03a5a23c1c177a474d59b2b"
-    const WBTC = "0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1"
+    const WETH = "0x5a77f1443d16ee5761d310e38b62f77f726bc71c";
+    const WOKB = "0xe538905cf8410324e03a5a23c1c177a474d59b2b";
+    const WBTC = "0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1";
 
     const USDT_WETH = "0xd77b2ed70271cd1fef1e81a4303d21b0824aefc4";
     const USDT_WOKB = "0x2b59b462103efaa4d04e869d62985b43b46a93c9";
@@ -1283,9 +1283,9 @@ export class BaseTokenDefinition {
   }
 
   static rootstock(): TypedMap<string, BasePool> {
-    const RUSDT = "0xef213441a85df4d7acbdae0cf78004e1e486bb96"
-    const WRBTC = "0x542fda317318ebf1d3deaf76e0b632741a7e677d"
-    const ETHS = "0x1d931bf8656d795e50ef6d639562c5bd8ac2b78f"
+    const RUSDT = "0xef213441a85df4d7acbdae0cf78004e1e486bb96";
+    const WRBTC = "0x542fda317318ebf1d3deaf76e0b632741a7e677d";
+    const ETHS = "0x1d931bf8656d795e50ef6d639562c5bd8ac2b78f";
 
     const WRBTC_RUSDT = "0xd2ffe51ab4e622a411abbe634832a19d919e9c55";
     const ETHS_WRBTC = "0xcba7abe98fd6a65259837d76a3409841c1dd4288";
@@ -1306,6 +1306,45 @@ export class BaseTokenDefinition {
     lookup.set(ETHS, {
       pathIdx: [1, 1],
       path: [ETHS_WRBTC, WRBTC_RUSDT],
+      pathStartBlock: [0, 0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
+  static taiko(): TypedMap<string, BasePool> {
+    const USDC = "0x07d83526730c7438048d55a4fc0b850e2aab6f0b";
+    const USDT = "0x2def195713cf4a606b49d07e520e22c17899a736";
+    const WETH = "0xa51894664a773981c6c112c43ce576f315d5b1b6";
+    const WBTC = "0xc4c410459fbaf8f7f86b6cee52b4fa1282ff9704";
+
+    const USDC_USDT = "0x4e35666b3ebf367842b9b6d5b297a2a069f862f5";
+    const USDC_WETH = "0xe47a76e15a6f3976c8dc070b3a54c7f7083d668b";
+    const WETH_WBTC = "0xcbf2e8520b88c4ec30b2b6ddfaa2900087b42d55";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 4,
+    });
+    lookup.set(USDT, {
+      pathIdx: [0],
+      path: [USDC_USDT],
+      pathStartBlock: [0],
+      priority: 3,
+    });
+    lookup.set(WETH, {
+      pathIdx: [0],
+      path: [USDC_WETH],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WBTC, {
+      pathIdx: [0, 0],
+      path: [WETH_WBTC, USDC_WETH],
       pathStartBlock: [0, 0],
       priority: 1,
     });
@@ -1377,6 +1416,8 @@ export class BaseTokenDefinition {
       mapping = this.mode();
     } else if (network == "rootstock") {
       mapping = this.rootstock();
+    } else if (network == "taiko") {
+      mapping = this.taiko();
     }
 
     return mapping as TypedMap<string, BasePool>;
