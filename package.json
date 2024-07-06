@@ -25,7 +25,6 @@
     "deploy:uniswap:pzke": "graph deploy --studio gamma-uniswap-pzke",
     "deploy:uniswap:manta": "goldsky subgraph deploy gamma-uniswap-manta/{version} --path .",
     "deploy:uniswap:mantle": "graph deploy gamma-uniswap-mantle --node https://subgraph-api.mantle.xyz/deploy --ipfs https://subgraph-api.mantle.xyz/ipfs",
-    "deploy:uniswap:rootstock": "goldsky subgraph deploy gamma-uniswap-rootstock/{version} --path .",
     "deploy:quickswap:polygon": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/algebra-polygon",
     "deploy:zyberswap:arbitrum": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/zyberswap-arbitrum",
     "deploy:thena:bsc": "graph deploy --node https://api.thegraph.com/deploy/  gammastrategies/thena",
@@ -85,18 +84,18 @@
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.74.1",
+    "@graphprotocol/graph-cli": "^0.77.0",
     "@graphprotocol/graph-ts": "^0.35.1",
-    "@types/node": "20.14.2",
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
+    "@types/node": "20.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.14.1",
     "commander": "^12.1.0",
-    "eslint": "^9.5.0",
+    "eslint": "^9.6.0",
     "eslint-config-prettier": "^9.0.0",
     "matchstick-as": "^0.6.0",
     "mustache": "^4.2.0",
     "prettier": "3.3.2",
     "rimraf": "^5.0.7",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   }
 }

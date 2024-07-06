@@ -241,6 +241,13 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static sei(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0x3894085ef7ff0f0aedf52e2a2704928d1ec074f1");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -297,6 +304,8 @@ export class constantAddresses {
       mapping = this.rootstock();
     } else if (network == "taiko") {
       mapping = this.taiko();
+    } else if (network == "sei-mainnet") {
+      mapping = this.sei();
     }
 
     return mapping as TypedMap<string, string>;

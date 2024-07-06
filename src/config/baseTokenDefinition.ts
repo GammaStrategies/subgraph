@@ -1352,6 +1352,45 @@ export class BaseTokenDefinition {
     return lookup as TypedMap<string, BasePool>;
   }
 
+  static sei(): TypedMap<string, BasePool> {
+    const USDC = "0x3894085ef7ff0f0aedf52e2a2704928d1ec074f1";
+    const USDT = "0xb75d0b03c06a926e488e2659df1a861f860bd3d1";
+    const WETH = "0x160345fc359604fc6e70e3c5facbde5f7a9342d8";
+    const WSEI = "0xe30fedd158a2e3b13e9badaeabafc5516e95e8c7";
+
+    const USDC_USDT = "0x41eea09c971294fcde3b6e553902b04a47be7442";
+    const USDC_WETH = "0x8a1a9efb7f7f74ace10a31f2f5f9f7e804f957b1";
+    const USDC_WSEI = "0x5cfa8db453c9904511c4ea9eb0bfc903e36b9f5f";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 4,
+    });
+    lookup.set(USDT, {
+      pathIdx: [0],
+      path: [USDC_USDT],
+      pathStartBlock: [0],
+      priority: 3,
+    });
+    lookup.set(WETH, {
+      pathIdx: [0],
+      path: [USDC_WETH],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WSEI, {
+      pathIdx: [0],
+      path: [USDC_WSEI],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
   static nonBase(): BasePool {
     let lookup: BasePool = {
       path: [ADDRESS_ZERO],
@@ -1418,6 +1457,8 @@ export class BaseTokenDefinition {
       mapping = this.rootstock();
     } else if (network == "taiko") {
       mapping = this.taiko();
+    } else if (network == "sei-mainnet") {
+      mapping = this.sei();
     }
 
     return mapping as TypedMap<string, BasePool>;

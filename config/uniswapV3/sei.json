@@ -1,0 +1,13 @@
+{
+  "network": "sei-mainnet",
+  "subgraphTemplate": "uniV3",
+  "deploymentService": "studio",
+  "deploymentName": "gamma-uniswap-sei",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0x1E86A593E55215957C4755f1BE19a229AF3286f6",
+      "startBlock": 86766078
+    }
+  ]
+}
