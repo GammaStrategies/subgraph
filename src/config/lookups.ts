@@ -248,3 +248,7 @@ protocolLookup.set("sei-mainnet:0x1e86a593e55215957c4755f1be19a229af3286f6", {
   name: "uniswap",
   underlyingProtocol: PROTOCOL_UNISWAP_V3,
 });
+protocolLookup.set("iota:0xf44cecb1cf40ee12303e85eb8651263c01812ead", {
+  name: "wagmi",
+  underlyingProtocol: PROTOCOL_UNISWAP_V3,
+});

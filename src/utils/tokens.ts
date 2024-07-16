@@ -197,6 +197,7 @@ export function isUSDC(tokenAddress: Address): boolean {
   const usdtXlayerAddress = addressLookup.get("USDT_XLAYER");
   const usdbAddress = addressLookup.get("USDB");
   const usdtRootstock = addressLookup.get("RUSDT")
+  const usdtIota = addressLookup.get("USDT")
 
   if (usdcAddress) {
     if (tokenAddress == Address.fromString(usdcAddress)) {
@@ -236,6 +237,12 @@ export function isUSDC(tokenAddress: Address): boolean {
 
   if (usdtRootstock) {
     if (tokenAddress == Address.fromString(usdtRootstock)) {
+      return true;
+    }
+  }
+
+  if (usdtIota) {
+    if (tokenAddress == Address.fromString(usdtIota)) {
       return true;
     }
   }

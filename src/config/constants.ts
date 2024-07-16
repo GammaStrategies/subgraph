@@ -248,6 +248,14 @@ export class constantAddresses {
     return lookup as TypedMap<string, string>;
   }
 
+  static iota(): TypedMap<string, string> {
+    let lookup = new TypedMap<string, string>();
+    lookup.set("USDC", "0xfbda5f676cb37624f28265a144a48b0d6e87d3b6");
+    lookup.set("USDT", "0xc1b8045a6ef2934cf0f78b0dbd489969fa9be7e4");
+
+    return lookup as TypedMap<string, string>;
+  }
+
   static network(network: string): TypedMap<string, string> {
     let mapping = new TypedMap<string, string>();
     if (network == "mainnet") {
@@ -306,6 +314,8 @@ export class constantAddresses {
       mapping = this.taiko();
     } else if (network == "sei-mainnet") {
       mapping = this.sei();
+    } else if (network == "iota") {
+      mapping = this.iota();
     }
 
     return mapping as TypedMap<string, string>;

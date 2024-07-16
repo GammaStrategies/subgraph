@@ -1359,7 +1359,7 @@ export class BaseTokenDefinition {
     const WSEI = "0xe30fedd158a2e3b13e9badaeabafc5516e95e8c7";
 
     const USDC_USDT = "0x41eea09c971294fcde3b6e553902b04a47be7442";
-    const USDC_WETH = "0x8a1a9efb7f7f74ace10a31f2f5f9f7e804f957b1";
+    const WETH_USDC = "0x8a1a9efb7f7f74ace10a31f2f5f9f7e804f957b1";
     const USDC_WSEI = "0x5cfa8db453c9904511c4ea9eb0bfc903e36b9f5f";
 
     let lookup = new TypedMap<string, BasePool>();
@@ -1376,14 +1376,52 @@ export class BaseTokenDefinition {
       priority: 3,
     });
     lookup.set(WETH, {
-      pathIdx: [0],
-      path: [USDC_WETH],
+      pathIdx: [1],
+      path: [WETH_USDC],
       pathStartBlock: [0],
       priority: 2,
     });
     lookup.set(WSEI, {
       pathIdx: [0],
       path: [USDC_WSEI],
+      pathStartBlock: [0],
+      priority: 1,
+    });
+
+    return lookup as TypedMap<string, BasePool>;
+  }
+
+  static iota(): TypedMap<string, BasePool> {
+    const USDC = "0xfbda5f676cb37624f28265a144a48b0d6e87d3b6";
+    const USDT = "0xc1b8045a6ef2934cf0f78b0dbd489969fa9be7e4";
+    const WETH = "0x160345fc359604fc6e70e3c5facbde5f7a9342d8";
+    const WIOTA = "0x6e47f8d48a01b44df3fff35d258a10a3aedc114c";
+
+    const WETH_USDT = "0x38f7eb78dbd6032ee8c24590b0162f95bd5f557c";
+    const WIOTA_USDT = "0x02edcb27fccc80adc71640971dbc711ec39810e0";
+
+    let lookup = new TypedMap<string, BasePool>();
+    lookup.set(USDC, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 4,
+    });
+    lookup.set(USDT, {
+      pathIdx: [-1],
+      path: [ADDRESS_ZERO],
+      pathStartBlock: [0],
+      priority: 3,
+    });
+    lookup.set(WETH, {
+      pathIdx: [1],
+      path: [WETH_USDT],
+      pathStartBlock: [0],
+      priority: 2,
+    });
+    lookup.set(WIOTA, {
+      pathIdx: [1],
+      path: [WIOTA_USDT],
       pathStartBlock: [0],
       priority: 1,
     });
@@ -1459,6 +1497,8 @@ export class BaseTokenDefinition {
       mapping = this.taiko();
     } else if (network == "sei-mainnet") {
       mapping = this.sei();
+    } else if (network == "iota") {
+      mapping = this.iota();
     }
 
     return mapping as TypedMap<string, BasePool>;

@@ -1,0 +1,13 @@
+{
+  "network": "iota",
+  "subgraphTemplate": "uniV3",
+  "deploymentService": "goldsky",
+  "deploymentName": "gamma-wagmi-iota",
+  "hypeRegistry": [
+    {
+      "name": "HypeRegistry",
+      "address": "0xF44cECB1CF40ee12303E85Eb8651263c01812EaD",
+      "startBlock": 223591
+    }
+  ]
+}

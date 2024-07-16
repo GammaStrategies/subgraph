@@ -84,7 +84,7 @@
     "test": "graph test"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.77.0",
+    "@graphprotocol/graph-cli": "0.78.0",
     "@graphprotocol/graph-ts": "^0.35.1",
     "@types/node": "20.14.9",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
@@ -97,5 +97,9 @@
     "prettier": "3.3.2",
     "rimraf": "^5.0.7",
     "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "global": "^4.4.0",
+    "upgrade": "^1.1.0"
   }
 }
