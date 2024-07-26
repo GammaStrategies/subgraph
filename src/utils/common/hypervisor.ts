@@ -1,5 +1,9 @@
 import { Address, BigInt, ethereum, store } from "@graphprotocol/graph-ts";
-import { Account, UniswapV3HypervisorShare } from "../../../generated/schema";
+import {
+  Account,
+  HypervisorStaking,
+  UniswapV3HypervisorShare,
+} from "../../../generated/schema";
 import { resetAggregates, updateAggregates, updateTvl } from "../aggregation";
 import { updateAlgebraFeeGrowth } from "../algebraFinance/hypervisor";
 import { ADDRESS_ZERO, ONE_BI, ZERO_BD, ZERO_BI } from "../../config/constants";
@@ -318,15 +322,6 @@ export function processTransfer(
   const toAddress = to.toHexString();
   const shares = value;
 
-  // // Check from and to address are not masterchef
-  // let fromCheck = MasterChef.load(fromAddress)
-  // let toCheck = MasterChef.load(toAddress)
-
-  // if (fromCheck || toCheck) {
-  // 	// This means it is a masterchef transfer
-  // 	return
-  // }
-
   let initialToken0 = ZERO_BI;
   let initialToken1 = ZERO_BI;
   let initialUSD = ZERO_BD;
@@ -334,6 +329,23 @@ export function processTransfer(
     const fromShare = getOrCreateHypervisorShare(hypervisorId, fromAddress);
     const toShare = getOrCreateHypervisorShare(hypervisorId, toAddress);
 
+    
+    // Check if this is a transfer to stake shares
+    const toGauge = HypervisorStaking.load(to);
+    const fromGauge = HypervisorStaking.load(from);
+    if (toGauge) {
+      // Transferring to gauge, keep shares under the user
+      fromShare.sharesStaked = fromShare.sharesStaked.plus(value);
+      fromShare.save();
+      return;
+    } else if (fromGauge) {
+      //Transfering from gauge back
+      toShare.sharesStaked = fromShare.sharesStaked.minus(value);
+      toShare.save();
+      return;
+    }
+
+    // Real transfer, do accounting for both accounts       
     if (shares >= fromShare.shares) {
       initialToken0 = fromShare.initialToken0;
       initialToken1 = fromShare.initialToken1;

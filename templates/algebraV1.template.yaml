@@ -426,6 +426,28 @@ dataSources:
         - event: UpdateEmissionRate(indexed address,uint256)
           handler: handleUpdateEmissionRate
   {{/masterChefOrphan}}
+  {{#hypeStaking}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: LineaVoterV5
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/staking/voterV5.ts
+      entities:
+        - HypervisorStaking
+      abis:
+        - name: LineaVoterV5
+          file: ./abis/LineaVoterV5.json
+      eventHandlers:
+        - event: GaugeCreated(indexed address,address,address,indexed address,indexed address)
+          handler: handleGaugeCreated
+  {{/hypeStaking}}
 templates:
   - name: Hypervisor
     kind: ethereum/contract

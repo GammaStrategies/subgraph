@@ -222,6 +222,7 @@ export function getOrCreateHypervisorShare(
     hypervisorShare.hypervisor = hypervisorAddress;
     hypervisorShare.account = accountAddress;
     hypervisorShare.shares = ZERO_BI;
+    hypervisorShare.sharesStaked = ZERO_BI;
     hypervisorShare.initialToken0 = ZERO_BI;
     hypervisorShare.initialToken1 = ZERO_BI;
     hypervisorShare.initialUSD = ZERO_BD;

@@ -352,6 +352,7 @@ type UniswapV3HypervisorShare @entity {
   account: Account!
   hypervisor: UniswapV3Hypervisor!
   shares: BigInt!
+  sharesStaked: BigInt!
   initialToken0: BigInt!
   initialToken1: BigInt!
   initialUSD: BigDecimal!
@@ -461,6 +462,11 @@ type MasterChefV2RewarderPoolAccount @entity {
   account: Account!
   rewarderPool: MasterChefV2RewarderPool!
   amount: BigInt!
+}
+
+type HypervisorStaking @entity(immutable: true) {
+  id: Bytes!
+  hypervisor: Hypervisor!
 }
 
 type _PoolQueue @entity {

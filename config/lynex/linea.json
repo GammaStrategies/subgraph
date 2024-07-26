@@ -7,5 +7,12 @@
       "address": "0xC27DDd78FC49875Fe6F844B72bbf31DFBB099881",
       "startBlock": 163300
     }
+  ],
+  "hypeStaking": [
+    {
+      "name": "LineaVoterV5",
+      "address": "0x0B2c83B6e39E32f694a86633B4d1Fe69d13b63c5",
+      "startBlock": 2207763
+    }
   ]
 }

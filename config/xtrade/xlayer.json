@@ -1,6 +1,8 @@
 {
   "network": "xlayer-mainnet",
   "subgraphTemplate": "algebraIntegral",
+  "deploymentService": "studio",
+  "deploymentName": "gamma-xtrade-xlayer",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",
