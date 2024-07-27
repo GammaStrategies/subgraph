@@ -19,7 +19,6 @@ function getUsdcDecimalFactor(): BigInt {
     dataSource.network() == "bsc" ||
     dataSource.network() == "opbnb-mainnet" ||
     dataSource.network() == "blast-mainnet" ||
-    dataSource.network() == "xlayer-mainnet" ||
     dataSource.network() == "rootstock"
   ) {
     return BigInt.fromString("1000000000000000000");

@@ -1,6 +1,8 @@
 {
   "network": "mode-mainnet",
   "subgraphTemplate": "algebraIntegral",
+  "deploymentService": "studio",
+  "deploymentName": "gamma-kim-mode",
   "hypeRegistry": [
     {
       "name": "HypeRegistry",

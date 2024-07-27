@@ -307,7 +307,7 @@ export class constantAddresses {
     } else if (network == "xlayer-mainnet") {
       mapping = this.xlayer();
     } else if (network == "mode-mainnet") {
-      mapping = this.xlayer();
+      mapping = this.mode();
     } else if (network == "rootstock") {
       mapping = this.rootstock();
     } else if (network == "taiko") {

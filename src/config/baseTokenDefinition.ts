@@ -1238,13 +1238,13 @@ export class BaseTokenDefinition {
     lookup.set(WETH, {
       pathIdx: [0],
       path: [USDT_WETH],
-      pathStartBlock: [0],
+      pathStartBlock: [2711376],
       priority: 3,
     });
     lookup.set(WOKB, {
       pathIdx: [0],
       path: [USDT_WOKB],
-      pathStartBlock: [0],
+      pathStartBlock: [2156668],
       priority: 2,
     });
 
